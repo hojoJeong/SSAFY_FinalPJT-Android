@@ -3,4 +3,11 @@
     <string name="bnv_home">홈</string>
     <string name="bnv_menu">메뉴</string>
     <string name="bnv_mypage">내정보</string>
+    <string name="id_hint">ID</string>
+    <string name="pw_hint">PW</string>
+    <string name="button_login">Login</string>
+    <string name="button_join">Join</string>
+    <string name="nickname_hint">Nickname</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
