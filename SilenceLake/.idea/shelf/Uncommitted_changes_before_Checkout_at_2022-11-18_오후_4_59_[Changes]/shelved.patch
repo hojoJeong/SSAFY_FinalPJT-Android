@@ -1,0 +1,196 @@
+Index: settings.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>pluginManagement {\r\n    repositories {\r\n        gradlePluginPortal()\r\n        google()\r\n        mavenCentral()\r\n    }\r\n}\r\ndependencyResolutionManagement {\r\n    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)\r\n    repositories {\r\n        google()\r\n        mavenCentral()\r\n    }\r\n}\r\nrootProject.name = \"SilenceLake\"\r\ninclude ':app'\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/settings.gradle b/settings.gradle
+--- a/settings.gradle	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
++++ b/settings.gradle	(date 1668756059284)
+@@ -3,6 +3,7 @@
+         gradlePluginPortal()
+         google()
+         mavenCentral()
++
+     }
+ }
+ dependencyResolutionManagement {
+@@ -10,6 +11,7 @@
+     repositories {
+         google()
+         mavenCentral()
++        maven { url 'https://jitpack.io' }
+     }
+ }
+ rootProject.name = "SilenceLake"
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'org.jetbrains.kotlin.android'\r\n}\r\n\r\nandroid {\r\n    namespace 'com.ssafy.silencelake'\r\n    compileSdk 32\r\n\r\n    defaultConfig {\r\n        applicationId \"com.ssafy.silencelake\"\r\n        minSdk 21\r\n        targetSdk 32\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n\r\n    viewBinding{\r\n        enabled = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.core:core-ktx:1.7.0'\r\n    implementation 'androidx.appcompat:appcompat:1.5.1'\r\n    implementation 'com.google.android.material:material:1.7.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.4'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
++++ b/app/build.gradle	(date 1668758092756)
+@@ -45,4 +45,6 @@
+     testImplementation 'junit:junit:4.13.2'
+     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
++
++    implementation 'com.sunzn:banner:2.2.9'
+ }
+\ No newline at end of file
+Index: .idea/.gitignore
+===================================================================
+diff --git a/.idea/.gitignore b/.idea/.gitignore
+deleted file mode 100644
+--- a/.idea/.gitignore	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
++++ /dev/null	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
+@@ -1,3 +0,0 @@
+-# Default ignored files
+-/shelf/
+-/workspace.xml
+Index: .idea/vcs.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"VcsDirectoryMappings\">\r\n    <mapping directory=\"$PROJECT_DIR$/../..\" vcs=\"Git\" />\r\n    <mapping directory=\"$PROJECT_DIR$/..\" vcs=\"Git\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/vcs.xml b/.idea/vcs.xml
+--- a/.idea/vcs.xml	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
++++ b/.idea/vcs.xml	(date 1668756740655)
+@@ -1,7 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+   <component name="VcsDirectoryMappings">
+-    <mapping directory="$PROJECT_DIR$/../.." vcs="Git" />
+     <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+   </component>
+ </project>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleMigrationSettings\" migrationVersion=\"1\" />\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"GRADLE\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	(revision 49afe8fa6c064bbbe6881b8a48c51a7b6f8c12e6)
++++ b/.idea/gradle.xml	(date 1668756740688)
+@@ -1,6 +1,5 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
+-  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: app/src/main/res/layout/fragment_home.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_home.xml b/app/src/main/res/layout/fragment_home.xml
+new file mode 100644
+--- /dev/null	(date 1668758213877)
++++ b/app/src/main/res/layout/fragment_home.xml	(date 1668758213877)
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    tools:context=".HomeFragment">
++
++    <com.sunzn.banner.library.Banner
++        android:id="@+id/banner"
++        android:layout_width="match_parent"
++        android:layout_height="120dp"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:indicator_gravity="right"
++        app:indicator_gain="@drawable/svg_indicator_icon_gain"
++        app:indicator_miss="@drawable/svg_indicator_icon_miss" />
++    <TextView
++        android:id="@+id/tv_banner_homefg"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toTopOf="@+id/banner"/>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt b/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt
+new file mode 100644
+--- /dev/null	(date 1668758390933)
++++ b/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt	(date 1668758390933)
+@@ -0,0 +1,58 @@
++package com.ssafy.silencelake
++
++import android.content.Context
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import com.ssafy.silencelake.databinding.FragmentHomeBinding
++
++private const val ARG_PARAM1 = "param1"
++private const val ARG_PARAM2 = "param2"
++
++class HomeFragment : Fragment() {
++    private var param1: String? = null
++    private var param2: String? = null
++    private lateinit var binding: FragmentHomeBinding
++
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        arguments?.let {
++            param1 = it.getString(ARG_PARAM1)
++            param2 = it.getString(ARG_PARAM2)
++        }
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        binding = FragmentHomeBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++
++    inner class Bean{
++        var url = ""
++        constructor(url: String){
++            this.url = url
++        }
++        @JvmName("getUrl1")
++        fun getUrl(): String{
++            return url
++        }
++    }
++
++    companion object {
++        @JvmStatic
++        fun newInstance(param1: String, param2: String) =
++            HomeFragment().apply {
++                arguments = Bundle().apply {
++                    putString(ARG_PARAM1, param1)
++                    putString(ARG_PARAM2, param2)
++                }
++            }
++    }
++}
+\ No newline at end of file
