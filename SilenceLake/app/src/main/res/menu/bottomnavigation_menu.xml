@@ -3,13 +3,13 @@
     <item
         android:id="@+id/item_bnv_main"
         android:icon="@drawable/ic_baseline_home_24"
-        android:title="홈"/>
+        android:title="@string/bnv_home"/>
     <item
         android:id="@+id/item_bnv_menu"
         android:icon="@drawable/ic_baseline_coffee_24"
-        android:title="메뉴"/>
+        android:title="@string/bnv_menu"/>
     <item
         android:id="@+id/item_bnv_mypage"
         android:icon="@drawable/ic_baseline_person_24"
-        android:title="내정보"/>
+        android:title="@string/bnv_mypage"/>
 </menu>

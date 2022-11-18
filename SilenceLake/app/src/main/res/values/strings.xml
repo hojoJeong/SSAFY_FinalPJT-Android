@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">SilenceLake</string>
+    <string name="bnv_home">홈</string>
+    <string name="bnv_menu">메뉴</string>
+    <string name="bnv_mypage">내정보</string>
 </resources>
