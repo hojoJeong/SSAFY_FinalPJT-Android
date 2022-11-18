@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
                 }
 
                 R.id.item_bnv_menu -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, MenuFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, ProductMenuFragment()).commit()
                 }
 
                 R.id.item_bnv_mypage -> {
@@ -43,5 +43,12 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+    fun openShoppingList(){
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom, R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+        transaction.add(R.id.fragment_container_main, ShoppingListFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

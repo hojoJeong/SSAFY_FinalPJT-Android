@@ -11,5 +11,6 @@
     <color name="background_bnv">#B3442008</color>
     <color name="background_banner">#f2edeb</color>
     <color name="bnv_unselected">#b99d8d</color>
+    <color name="product_name_eng">#ACACAC</color>
 </resources>
 

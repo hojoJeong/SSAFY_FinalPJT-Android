@@ -22,4 +22,5 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+
 }
