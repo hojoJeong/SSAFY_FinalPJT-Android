@@ -11,4 +11,6 @@
     <string name="product_name_kor">아이스 초코라떼</string>
     <string name="product_name_eng">Iced Chocolate Latte</string>
     <string name="recommended_title">추천 메뉴</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="content_welcome_mypage">환영합니다</string>
 </resources>

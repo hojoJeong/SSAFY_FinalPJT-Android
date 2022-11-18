@@ -1,13 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".MypageFragment">
 
     <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="mypage" />
+        android:id="@+id/tv_username_mypage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/tv_nameserve_mypage"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="40dp"
+        tools:text="이수용가리"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:textColor="@color/user_name_mypage"/>
+    <TextView
+        android:id="@+id/tv_nameserve_mypage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_username_mypage"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginStart="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_username_mypage"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_username_mypage"
+        android:text="님"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
 
-</FrameLayout>
+    <TextView
+        android:id="@+id/tv_welcome_mypage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_username_mypage"
+        android:layout_marginTop="10dp"
+        android:text="@string/content_welcome_mypage"
+        android:textSize="26sp"
+        android:textStyle="bold"/>
+
+
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
