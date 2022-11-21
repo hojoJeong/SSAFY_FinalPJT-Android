@@ -10,7 +10,7 @@
         android:id="@+id/viewpager_banner_homefg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:indicatorRes="@drawable/default_indicator"
+        app:indicatorRes="@drawable/color_item_checkbox"
         app:enableLooping="true"
         app:bottomMargin="@dimen/default_bottom_margin"
         app:enableIndicator="true"
