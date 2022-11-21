@@ -5,24 +5,27 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <pyxis.uzuki.live.rollingbanner.RollingBanner
         android:id="@+id/viewpager_banner_homefg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_margin="12dp"
+        app:indicatorRes="@drawable/default_indicator"
+        app:enableLooping="true"
         app:bottomMargin="@dimen/default_bottom_margin"
         app:enableIndicator="true"
-        app:enableLooping="true"
         app:enableRolling="true"
         app:flingAble="true"
         app:indicatorMargin="@dimen/default_indicator_margin"
-        app:indicatorRes="@drawable/default_indicator"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:rollingDelay="3000"
         app:scrollingDelay="250"
-        app:smoothScroll="true" />
+        app:smoothScroll="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="12dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="12dp"/>
 
     <TextView
         android:id="@+id/tv_recommended_homefg"

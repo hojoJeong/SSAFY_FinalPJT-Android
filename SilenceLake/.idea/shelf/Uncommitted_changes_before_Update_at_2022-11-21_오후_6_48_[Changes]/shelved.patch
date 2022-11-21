@@ -1,0 +1,37 @@
+Index: app/src/main/java/com/ssafy/silencelake/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake\r\n\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.ssafy.silencelake.databinding.FragmentHomeBinding\r\n\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\nclass HomeFragment : Fragment() {\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n    private lateinit var binding: FragmentHomeBinding\r\n\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n\r\n    companion object {\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            HomeFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt b/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/HomeFragment.kt	
+@@ -15,7 +15,7 @@
+     private var param1: String? = null
+     private var param2: String? = null
+     private lateinit var binding: FragmentHomeBinding
+-
++    lateinit var activity: Context
+ 
+     override fun onCreate(savedInstanceState: Bundle?) {
+         super.onCreate(savedInstanceState)
+@@ -23,6 +23,7 @@
+             param1 = it.getString(ARG_PARAM1)
+             param2 = it.getString(ARG_PARAM2)
+         }
++        activity = requireContext()
+     }
+ 
+     override fun onCreateView(
+@@ -33,6 +34,11 @@
+         return binding.root
+     }
+ 
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++
++    }
++
+ 
+     companion object {
+         @JvmStatic

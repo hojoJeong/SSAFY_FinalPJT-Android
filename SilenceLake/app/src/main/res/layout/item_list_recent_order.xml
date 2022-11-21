@@ -80,6 +80,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cdv_content_recentorder">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_recentdetail_recentorder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
