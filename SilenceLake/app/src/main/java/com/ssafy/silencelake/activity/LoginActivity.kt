@@ -17,17 +17,27 @@ class LoginActivity : AppCompatActivity() {
         var user = sharedPreferencesUtil.getUser()
 
         //로그인 상태 확인. id가 있다면 로그인 된 상태.
-        if(user.id != ""){
+        if (user.id != "") {
             openFragment(3)
-        }else{
+        } else {
             openFragment(1)
         }
     }
-    fun openFragment(number: Int){
+
+    fun openFragment(number: Int) {
         val transaction = supportFragmentManager.beginTransaction()
-        when(number) {
-            1 -> transaction.replace(R.id.fragment_container_login, LoginFragment()).addToBackStack(null)
-            2 -> transaction.replace(R.id.fragment_container_login, JoinFragment()).addToBackStack(null)
+        when (number) {
+            1 -> transaction.replace(R.id.fragment_container_login, LoginFragment())
+            2 -> {
+                transaction.setCustomAnimations(
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_right,
+                    R.anim.enter_from_right,
+                    R.anim.exit_to_right
+                )
+                transaction.replace(R.id.fragment_container_login, JoinFragment())
+                transaction.addToBackStack(null)
+            }
             3 -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);

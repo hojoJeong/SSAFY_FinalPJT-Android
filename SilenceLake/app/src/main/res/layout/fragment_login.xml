@@ -20,13 +20,14 @@
         android:id="@+id/textfield_id_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary"
         android:hint="@string/id_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textfield_id_login_value"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="50dp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -35,14 +36,15 @@
         android:id="@+id/textfield_pw_login"
         app:layout_constraintTop_toBottomOf="@id/textfield_id_login"
         android:layout_width="match_parent"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxStrokeColor="@color/primary"
         android:layout_height="wrap_content"
         android:hint="@string/pw_hint">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textfield_pw_login_value"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/white"
+            android:layout_height="50dp"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
