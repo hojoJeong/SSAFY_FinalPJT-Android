@@ -25,7 +25,6 @@ class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerVi
             productNameKor.text = context.getString(R.string.product_name_kor)
             productNameEng.text = context.getString(R.string.product_name_eng)
             btnPlus.setOnClickListener {
-
                 quantity.text = "${quantity.text.toString().toInt() + 1}"
                 totalPrice.text = "${quantity.text.toString().toInt() * 1200}원"
             }
