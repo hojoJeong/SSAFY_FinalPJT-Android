@@ -9,9 +9,12 @@
     <color name="white">#FFFFFFFF</color>
     <color name="primary">#442008</color>
     <color name="background_bnv">#B3442008</color>
-    <color name="background_banner">#f2edeb</color>
+    <color name="lightbrown">#f2edeb</color>
     <color name="bnv_unselected">#b99d8d</color>
     <color name="product_name_eng">#ACACAC</color>
-    <color name="user_name_mypage">#216b3c</color>
+    <color name="darkgray">#959595</color>
+    <color name="lightgray">#DFDFDF</color>
+    <color name="darkgreen">#006213 </color>
+
 </resources>
 
