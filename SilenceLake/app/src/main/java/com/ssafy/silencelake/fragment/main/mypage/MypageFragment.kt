@@ -6,13 +6,16 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.databinding.FragmentMypageBinding
+import com.ssafy.silencelake.dto.GradeDto
+import com.ssafy.silencelake.dto.UserDto
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 class MypageFragment : Fragment() {
+    private lateinit var binding: FragmentMypageBinding
+    private lateinit var userInfo: UserDto
     private var param1: String? = null
     private var param2: String? = null
 
@@ -22,16 +25,33 @@ class MypageFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        initUserData()
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_mypage, container, false)
+    ): View {
+        binding = FragmentMypageBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        initView()
+    }
+    private fun initUserData(){
+        userInfo = UserDto("id 01", "이수용", "pass 01", 63)
+    }
+
+    private fun initView(){
+        binding.apply {
+            tvUsernameMypage.text = userInfo.name
+            tvLevelMypagefg.text = (userInfo.stamps / 10).toString()
+            progressLevelMypagefg.progress = (userInfo.stamps % 10) * 10
+        }
+    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
