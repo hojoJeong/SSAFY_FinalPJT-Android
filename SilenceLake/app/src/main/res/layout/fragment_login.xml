@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".activity.LoginActivity">
     <ImageView
-        android:id="@+id/img_logo_join"
+        android:id="@+id/img_logo_login"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_marginTop="64dp"
@@ -16,13 +16,14 @@
         android:src="@drawable/logo"/>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_marginHorizontal="32dp"
-        app:layout_constraintTop_toBottomOf="@id/img_logo_join"
-        android:id="@+id/textfield_id_join"
+        app:layout_constraintTop_toBottomOf="@id/img_logo_login"
+        android:id="@+id/textfield_id_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/id_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfield_id_login_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -31,13 +32,14 @@
     </com.google.android.material.textfield.TextInputLayout>
     <com.google.android.material.textfield.TextInputLayout
         android:layout_marginHorizontal="32dp"
-        android:id="@+id/textfield_pw_join"
-        app:layout_constraintTop_toBottomOf="@id/textfield_id_join"
+        android:id="@+id/textfield_pw_login"
+        app:layout_constraintTop_toBottomOf="@id/textfield_id_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/pw_hint">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/textfield_pw_login_value"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
@@ -46,7 +48,7 @@
     <LinearLayout
         android:id="@+id/linearlayout_btn_login"
         android:layout_marginHorizontal="32dp"
-        app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
+        app:layout_constraintTop_toBottomOf="@id/textfield_pw_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         >
@@ -57,7 +59,7 @@
             android:layout_height="wrap_content"
             android:text="@string/button_login"
             android:textColor="@color/primary"
-            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
+            app:layout_constraintTop_toBottomOf="@id/textfield_pw_login"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/button_join_login"
             style="?attr/materialButtonOutlinedStyle"
@@ -69,7 +71,7 @@
             android:layout_height="wrap_content"
             android:textColor="@color/primary"
             android:text="@string/button_join"
-            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
+            app:layout_constraintTop_toBottomOf="@id/textfield_pw_login"
             app:layout_constraintStart_toEndOf="@id/button_login_login"
             app:layout_constraintEnd_toEndOf="parent"
             style="?attr/materialButtonOutlinedStyle"

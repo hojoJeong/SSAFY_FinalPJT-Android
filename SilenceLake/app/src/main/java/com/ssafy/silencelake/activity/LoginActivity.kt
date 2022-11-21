@@ -6,17 +6,28 @@ import android.os.Bundle
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.fragment.login.JoinFragment
 import com.ssafy.silencelake.fragment.login.LoginFragment
+import com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil
 
 class LoginActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-        supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
+
+        //로그인 상태 체크
+        var user = sharedPreferencesUtil.getUser()
+
+        //로그인 상태 확인. id가 있다면 로그인 된 상태.
+        if(user.id != ""){
+            openFragment(3)
+        }else{
+            openFragment(1)
+        }
     }
     fun openFragment(number: Int){
+        val transaction = supportFragmentManager.beginTransaction()
         when(number) {
-            1 -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
-            2 -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, JoinFragment()).commit()
+            1 -> transaction.replace(R.id.fragment_container_login, LoginFragment()).addToBackStack(null)
+            2 -> transaction.replace(R.id.fragment_container_login, JoinFragment()).addToBackStack(null)
             3 -> {
                 val intent = Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -24,6 +35,7 @@ class LoginActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+        transaction.commit()
     }
 
 }
