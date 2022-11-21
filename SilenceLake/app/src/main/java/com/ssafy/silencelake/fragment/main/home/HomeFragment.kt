@@ -85,7 +85,7 @@ class HomeFragment : Fragment() {
         adapter.itemlist.addAll(recommendedItemList)
         adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
             override fun onClick(product: ProductDto) {
-                parentFragmentManager.beginTransaction().add(R.id.fragment_container_main, ProductDetailFragment()).commit()
+                parentFragmentManager.beginTransaction().replace(R.id.fragment_container_main, ProductDetailFragment()).addToBackStack(null).commit()
             }
         }
 
@@ -98,7 +98,6 @@ class HomeFragment : Fragment() {
 
         override fun getView(position: Int, item: String): View {
             val view = LayoutInflater.from(mContext).inflate(R.layout.container_banner, null, false)
-            val container = view.findViewById<FrameLayout>(R.id.container_banner)
             val bannerImg = view.findViewById<ImageView>(R.id.img_banner_container)
 
             val bannerItem = getItem(position)
