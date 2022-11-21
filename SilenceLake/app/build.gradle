@@ -31,7 +31,7 @@ android {
         jvmTarget = '1.8'
     }
 
-    viewBinding{
+    viewBinding {
         enabled = true
     }
 }
@@ -46,4 +46,10 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
+
+    // androidx + API 28
+    implementation 'com.github.WindSekirun:RollingBanner:1.0.7-androidx'
+
+// support library
+    implementation 'com.github.WindSekirun:RollingBanner:1.0.7'
 }
