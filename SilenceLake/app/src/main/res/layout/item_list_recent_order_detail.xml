@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:animateLayoutChanges="true">
+    <ImageView
+        android:id="@+id/img_item_recentorder_detail"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:src="@drawable/iceamericano"
+        android:padding="10dp"
+        android:background="@drawable/background_circle"/>
+
+    <TextView
+        android:id="@+id/tv_productname_title_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/img_item_recentorder_detail"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="20dp"
+        android:text="상품명 : "
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_productname_recentorde_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="@+id/tv_productname_title_recentorder_detail"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_productname_title_recentorder_detail"
+        app:layout_constraintStart_toEndOf="@+id/tv_productname_title_recentorder_detail"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_productname_title_recentorder_detail"
+        tools:text="아이스 아메리카노"
+        android:textSize="16sp"/>
+
+    <TextView
+        android:id="@+id/tv_quantity_title_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_productname_title_recentorder_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_productname_title_recentorder_detail"
+        android:layout_marginTop="6dp"
+        android:text="수량 : "
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_quantity_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_quantity_title_recentorder_detail"
+        app:layout_constraintTop_toTopOf="@+id/tv_quantity_title_recentorder_detail"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_quantity_title_recentorder_detail"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_quantity_title_recentorder_detail"
+        tools:text="1"
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_unitprice_title_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_quantity_title_recentorder_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_quantity_title_recentorder_detail"
+        android:layout_marginTop="6dp"
+        android:text="단가 : "
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_unitprice_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_unitprice_title_recentorder_detail"
+        app:layout_constraintTop_toTopOf="@+id/tv_unitprice_title_recentorder_detail"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_unitprice_title_recentorder_detail"
+        tools:text="1500 원"/>
+    <TextView
+        android:id="@+id/tv_price_title_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_unitprice_title_recentorder_detail"
+        app:layout_constraintTop_toBottomOf="@+id/tv_unitprice_title_recentorder_detail"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="6dp"
+        android:text="가격 : "
+        android:textSize="16sp"/>
+    <TextView
+        android:id="@+id/tv_price_recentorder_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@+id/tv_price_title_recentorder_detail"
+        app:layout_constraintTop_toTopOf="@+id/tv_price_title_recentorder_detail"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_price_title_recentorder_detail"
+        android:layout_marginBottom="10dp"
+        tools:text="6000 원"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -22,8 +22,8 @@ class RecommendedMenuAdapter(val context: Context): RecyclerView.Adapter<Recomme
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecommendedMenuViewHolder {
-        val binding = ItemListRecommendedmenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return RecommendedMenuViewHolder(binding)
+        val view = ItemListRecommendedmenuBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return RecommendedMenuViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: RecommendedMenuViewHolder, position: Int) {

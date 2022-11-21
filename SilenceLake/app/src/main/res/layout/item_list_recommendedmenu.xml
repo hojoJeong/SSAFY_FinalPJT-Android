@@ -23,5 +23,4 @@
         android:textSize="20dp"
         android:layout_gravity="center"
         android:layout_marginTop="6dp"/>
-
 </androidx.appcompat.widget.LinearLayoutCompat>

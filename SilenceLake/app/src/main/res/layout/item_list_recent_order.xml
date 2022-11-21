@@ -10,8 +10,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardElevation="4dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -42,8 +42,27 @@
                 app:layout_constraintStart_toEndOf="@+id/tv_ordername_recentorder"
                 tools:text="2022.03.18" />
 
+            <TextView
+                android:id="@+id/tv_totalprice_title_recentorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:text="총 가격 : "
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tv_ordername_recentorder"
+                app:layout_constraintTop_toBottomOf="@+id/tv_ordername_recentorder" />
+
+            <TextView
+                android:id="@+id/tv_totalprice_recentorder"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBaseline_toBaselineOf="@+id/tv_totalprice_title_recentorder"
+                app:layout_constraintBottom_toBottomOf="@+id/tv_totalprice_title_recentorder"
+                app:layout_constraintStart_toEndOf="@+id/tv_totalprice_title_recentorder"
+                tools:text="9000 원" />
+
             <androidx.appcompat.widget.AppCompatButton
-                android:id="@+id/btn_select_recentorder"
+                android:id="@+id/btn_fold_recentorder"
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/ic_baseline_keyboard_arrow_down_24"
@@ -52,30 +71,37 @@
                 app:layout_constraintTop_toTopOf="parent" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cdv_content_recentorder">
-        <TextView
-            android:id="@+id/tv_productname_title_recentorder"
+
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="상품명 : "
-            android:textSize="16sp"/>
-        <TextView
-            android:id="@+id/tv_productname_recentorder"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="@+id/tv_productname_title_recentorder"
-            app:layout_constraintBottom_toBottomOf="@+id/tv_productname_title_recentorder"
-            app:layout_constraintStart_toEndOf="@+id/tv_productname_title_recentorder"
-            app:layout_constraintBaseline_toBaselineOf="@+id/tv_productname_title_recentorder"
-            tools:text="아이스 아메리카노"/>
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            android:orientation="vertical"
+            android:nestedScrollingEnabled="false">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rcv_recentdetail_recentorder"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                />
+            <View
+                android:id="@+id/divider_recentorder"
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@drawable/divider"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rcv_recentdetail_recentorder" />
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </androidx.core.widget.NestedScrollView>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
