@@ -1,8 +1,13 @@
-package com.ssafy.silencelake
+package com.ssafy.silencelake.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
+import com.ssafy.silencelake.fragment.HomeFragment
+import com.ssafy.silencelake.fragment.MypageFragment
+import com.ssafy.silencelake.fragment.ProductMenuFragment
+import com.ssafy.silencelake.fragment.ShoppingListFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -46,7 +51,12 @@ class MainActivity : AppCompatActivity() {
     }
     fun openShoppingList(){
         val transaction = supportFragmentManager.beginTransaction()
-        transaction.setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom, R.anim.enter_from_bottom, R.anim.exit_to_bottom)
+        transaction.setCustomAnimations(
+            R.anim.enter_from_bottom,
+            R.anim.exit_to_bottom,
+            R.anim.enter_from_bottom,
+            R.anim.exit_to_bottom
+        )
         transaction.add(R.id.fragment_container_main, ShoppingListFragment())
         transaction.addToBackStack(null)
         transaction.commit()

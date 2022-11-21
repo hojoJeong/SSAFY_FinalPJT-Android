@@ -1,8 +1,7 @@
-package com.ssafy.silencelake
+package com.ssafy.silencelake.fragment
 
 import android.content.Context
 import android.os.Bundle
-import android.text.Layout
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,7 +9,9 @@ import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.TextView
 import android.widget.Toast
+import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentHomeBinding
+import com.ssafy.silencelake.dto.ProductDto
 import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
 
 private const val ARG_PARAM1 = "param1"
@@ -22,6 +23,7 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     lateinit var mContext: Context
     private var bannerItemList = arrayListOf<String>()
+    private var recommendedItemList = mutableListOf<ProductDto>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,8 +37,9 @@ class HomeFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        initData()
         return binding.root
     }
 
@@ -47,21 +50,32 @@ class HomeFragment : Fragment() {
     }
 
     private fun initBanner() {
-        initBannerItem()
-
         val banner = binding.viewpagerBannerHomefg
         val bannerAdapter = BannerAdapter(requireContext(), bannerItemList)
         banner.setAdapter(bannerAdapter)
     }
 
-    private fun initBannerItem() {
-        bannerItemList.add("수용이~")
-        bannerItemList.add("호조~")
-        bannerItemList.add("수용이~")
-        bannerItemList.add("호조~")
-        bannerItemList.add("수용이~")
-
+    private fun initData(){
+        initBannerItemData()
+        initRecommendedItemData()
     }
+    private fun initBannerItemData(){
+        bannerItemList.add("수용이~")
+        bannerItemList.add("호조~")
+        bannerItemList.add("수용이~")
+        bannerItemList.add("호조~")
+        bannerItemList.add("수용이~")
+    }
+
+    private fun initRecommendedItemData(){
+        recommendedItemList.add(ProductDto(1, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(2, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(3, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(4, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+    }
+
 
     inner class BannerAdapter : RollingViewPagerAdapter<String> {
         constructor(context: Context, itemList: ArrayList<String>) : super(context, itemList)

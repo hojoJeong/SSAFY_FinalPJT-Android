@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".HomeFragment">
+    tools:context=".fragment.HomeFragment">
 
     <pyxis.uzuki.live.rollingbanner.RollingBanner
         android:id="@+id/viewpager_banner_homefg"
@@ -46,7 +46,6 @@
         android:layout_marginTop="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_recommended_homefg"
-        android:background="@color/lightbrown"/>
+        app:layout_constraintTop_toBottomOf="@+id/tv_recommended_homefg"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,16 +1,15 @@
-package com.ssafy.silencelake
+package com.ssafy.silencelake.fragment
 
-import android.app.ActivityOptions
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DividerItemDecoration
-import androidx.recyclerview.widget.RecyclerView.ItemDecoration
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
+import com.ssafy.silencelake.activity.MainActivity
+import com.ssafy.silencelake.util.ProductMenuAdapter
 import com.ssafy.silencelake.databinding.FragmentProductMenuBinding
 
 class ProductMenuFragment : Fragment() {

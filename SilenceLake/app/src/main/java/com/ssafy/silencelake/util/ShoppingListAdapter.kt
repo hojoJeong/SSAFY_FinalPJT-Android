@@ -1,14 +1,14 @@
-package com.ssafy.silencelake
+package com.ssafy.silencelake.util
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ShoppingListItemBinding
 
 class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
