@@ -8,8 +8,8 @@
 
     <ImageView
         android:id="@+id/img_item_list_recommendedmenu"
-        android:layout_width="140dp"
-        android:layout_height="140dp"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
         android:background="@drawable/background_circle"
         android:layout_gravity="center"
         tools:src="@drawable/coldbrew"
@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         tools:text="아메리카노"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="16dp"
         android:layout_gravity="center"
         android:layout_marginTop="6dp"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

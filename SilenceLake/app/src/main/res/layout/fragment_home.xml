@@ -10,33 +10,40 @@
         android:id="@+id/viewpager_banner_homefg"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        app:indicatorRes="@drawable/color_item_checkbox"
-        app:enableLooping="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginEnd="12dp"
         app:bottomMargin="@dimen/default_bottom_margin"
         app:enableIndicator="true"
+        app:enableLooping="true"
         app:enableRolling="true"
         app:flingAble="true"
         app:indicatorMargin="@dimen/default_indicator_margin"
+        app:indicatorRes="@drawable/color_item_indicator"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:rollingDelay="3000"
         app:scrollingDelay="250"
-        app:smoothScroll="true"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginStart="12dp"
-        android:layout_marginEnd="12dp"
-        android:layout_marginTop="12dp"/>
+        app:smoothScroll="true" />
 
-    <TextView
+    <androidx.cardview.widget.CardView
         android:id="@+id/tv_recommended_homefg"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:text="@string/recommended_title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="@+id/viewpager_banner_homefg"
-        app:layout_constraintTop_toBottomOf="@+id/viewpager_banner_homefg" />
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@+id/viewpager_banner_homefg">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/recommended_title"
+            android:layout_marginVertical="12dp"
+            android:layout_marginStart="12dp"
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+    </androidx.cardview.widget.CardView>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_recommended_home"
@@ -48,38 +55,45 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_recommended_homefg" />
-
-    <TextView
+    <androidx.cardview.widget.CardView
         android:id="@+id/tv_nfc_home"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="@string/nfc_title"
-        android:textSize="20sp"
-        android:layout_marginStart="12dp"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@+id/rcv_recommended_home" />
-
+        app:layout_constraintTop_toBottomOf="@+id/rcv_recommended_home"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginVertical="12dp"
+            android:textColor="@color/primary"
+            android:text="@string/nfc_title"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            />
+    </androidx.cardview.widget.CardView>
     <androidx.appcompat.widget.LinearLayoutCompat
         android:id="@+id/linearlayout_nfc_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingHorizontal="12dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_nfc_home">
+        android:layout_height="0dp"
+        android:padding="32dp"
+        app:layout_constraintTop_toBottomOf="@id/tv_nfc_home"
+        app:layout_constraintBottom_toBottomOf="parent"
+        >
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:adjustViewBounds="true"
-            android:padding="12dp"
             android:src="@drawable/ic_baseline_wifi_password_24" />
 
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
             android:layout_weight="1"
-            android:padding="12dp"
             android:src="@drawable/ic_baseline_family_restroom_24" />
     </androidx.appcompat.widget.LinearLayoutCompat>
 </androidx.constraintlayout.widget.ConstraintLayout>
