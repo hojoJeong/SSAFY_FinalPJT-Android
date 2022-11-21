@@ -2,6 +2,7 @@ package com.ssafy.silencelake.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ssafy.silencelake.ProductDetailFragment
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
 import com.ssafy.silencelake.fragment.HomeFragment
@@ -19,37 +20,42 @@ class MainActivity : AppCompatActivity() {
         init()
     }
 
-    private fun init(){
+    private fun init() {
         initView()
         initBottomNavigation()
     }
 
-    private fun initView(){
+    private fun initView() {
         val initFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_main)
-        if(initFragment == null){
-            supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, HomeFragment()).commit()
+        if (initFragment == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container_main, HomeFragment()).commit()
         }
     }
 
-    private fun initBottomNavigation(){
+    private fun initBottomNavigation() {
         binding.bottomnvMain.setOnItemSelectedListener {
-            when(it.itemId){
+            when (it.itemId) {
                 R.id.item_bnv_main -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, HomeFragment()).commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, HomeFragment()).commit()
                 }
 
                 R.id.item_bnv_menu -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, ProductMenuFragment()).commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, ProductMenuFragment()).commit()
                 }
 
                 R.id.item_bnv_mypage -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, MypageFragment()).commit()
+                    supportFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, MypageFragment()).commit()
                 }
             }
             true
         }
     }
-    fun openShoppingList(){
+
+    fun openShoppingList() {
         val transaction = supportFragmentManager.beginTransaction()
         transaction.setCustomAnimations(
             R.anim.enter_from_bottom,
@@ -60,5 +66,11 @@ class MainActivity : AppCompatActivity() {
         transaction.add(R.id.fragment_container_main, ShoppingListFragment())
         transaction.addToBackStack(null)
         transaction.commit()
+    }
+
+    fun openProductDetail() {
+        supportFragmentManager.beginTransaction()
+            .add(R.id.fragment_container_main, ProductDetailFragment()).addToBackStack(null)
+            .commit()
     }
 }

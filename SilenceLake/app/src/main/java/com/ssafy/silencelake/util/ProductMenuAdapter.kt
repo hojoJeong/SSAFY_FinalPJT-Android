@@ -8,6 +8,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.ProductMenuItemBinding
 
 class ProductMenuAdapter(val context: Context, var list: List<Int>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
@@ -19,6 +20,10 @@ class ProductMenuAdapter(val context: Context, var list: List<Int>):RecyclerView
             imgProductMenu.setImageResource(R.drawable.choco)
             productNameKor.text = context.getString(R.string.product_name_kor)
             productNameEng.text = context.getString(R.string.product_name_eng)
+            itemView.setOnClickListener {
+                val mainActivity = context as MainActivity
+                mainActivity.openProductDetail()
+            }
         }
     }
 
