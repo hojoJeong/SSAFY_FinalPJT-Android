@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.util
+package com.ssafy.silencelake.fragment.main.home
 
 import com.ssafy.silencelake.dto.ProductDto
 

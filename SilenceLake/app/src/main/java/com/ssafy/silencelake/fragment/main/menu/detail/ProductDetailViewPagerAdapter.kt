@@ -1,11 +1,9 @@
-package com.ssafy.silencelake.util
+package com.ssafy.silencelake.fragment.main.menu.detail
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
-import com.ssafy.silencelake.fragment.CommentFragment
-import com.ssafy.silencelake.fragment.OrderFragment
 
 private const val NUM_TABS = 2
 

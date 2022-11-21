@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.fragment
+package com.ssafy.silencelake.fragment.main.menu.detail
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

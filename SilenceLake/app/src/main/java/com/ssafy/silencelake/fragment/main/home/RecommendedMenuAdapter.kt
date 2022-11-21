@@ -1,10 +1,9 @@
-package com.ssafy.silencelake.util
+package com.ssafy.silencelake.fragment.main.home
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 import com.ssafy.silencelake.databinding.ItemListRecommendedmenuBinding
 import com.ssafy.silencelake.dto.ProductDto
 

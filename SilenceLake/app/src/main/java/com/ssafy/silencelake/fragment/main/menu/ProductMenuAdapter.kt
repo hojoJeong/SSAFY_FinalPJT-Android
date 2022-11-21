@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.util
+package com.ssafy.silencelake.fragment.main.menu
 
 import android.content.Context
 import android.view.LayoutInflater

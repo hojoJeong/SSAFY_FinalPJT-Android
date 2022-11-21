@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.fragment
+package com.ssafy.silencelake.fragment.login
 
 import android.content.Context
 import android.os.Bundle

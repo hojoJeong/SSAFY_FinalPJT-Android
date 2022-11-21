@@ -1,7 +1,6 @@
-package com.ssafy.silencelake.fragment
+package com.ssafy.silencelake.fragment.main.home
 
 import android.content.Context
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,15 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentHomeBinding
 import com.ssafy.silencelake.dto.ProductDto
-import com.ssafy.silencelake.util.OnClickRecommendedItem
-import com.ssafy.silencelake.util.RecommendedMenuAdapter
+import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
 
 private const val ARG_PARAM1 = "param1"

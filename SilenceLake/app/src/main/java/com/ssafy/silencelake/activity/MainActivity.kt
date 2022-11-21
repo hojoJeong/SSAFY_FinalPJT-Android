@@ -2,13 +2,13 @@ package com.ssafy.silencelake.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ssafy.silencelake.fragment.ProductDetailFragment
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
-import com.ssafy.silencelake.fragment.HomeFragment
-import com.ssafy.silencelake.fragment.MypageFragment
-import com.ssafy.silencelake.fragment.ProductMenuFragment
-import com.ssafy.silencelake.fragment.ShoppingListFragment
+import com.ssafy.silencelake.fragment.main.home.HomeFragment
+import com.ssafy.silencelake.fragment.main.menu.ProductMenuFragment
+import com.ssafy.silencelake.fragment.main.menu.ShoppingListFragment
+import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
+import com.ssafy.silencelake.fragment.main.mypage.MypageFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

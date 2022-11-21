@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.fragment
+package com.ssafy.silencelake.fragment.main.menu
 
 import android.content.Context
 import android.os.Bundle
@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ssafy.silencelake.activity.MainActivity
-import com.ssafy.silencelake.util.ShoppingListAdapter
 import com.ssafy.silencelake.databinding.FragmentShoppingListBinding
 
 class ShoppingListFragment : Fragment() {
