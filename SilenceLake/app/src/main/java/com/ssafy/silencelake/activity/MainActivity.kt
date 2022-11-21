@@ -69,8 +69,15 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun openProductDetail() {
-        supportFragmentManager.beginTransaction()
-            .add(R.id.fragment_container_main, ProductDetailFragment()).addToBackStack(null)
-            .commit()
+        val transaction = supportFragmentManager.beginTransaction()
+        transaction.setCustomAnimations(
+            R.anim.enter_from_right,
+            R.anim.exit_to_right,
+            R.anim.enter_from_right,
+            R.anim.exit_to_right
+        )
+        transaction.add(R.id.fragment_container_main, ProductDetailFragment())
+        transaction.addToBackStack(null)
+        transaction.commit()
     }
 }

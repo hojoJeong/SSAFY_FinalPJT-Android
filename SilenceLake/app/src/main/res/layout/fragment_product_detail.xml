@@ -8,6 +8,7 @@
     tools:context=".OrderFragment">
 
     <ImageView
+        android:paddingVertical="8dp"
         android:id="@+id/img_product_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
