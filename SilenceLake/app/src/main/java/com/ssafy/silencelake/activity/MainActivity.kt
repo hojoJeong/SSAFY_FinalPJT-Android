@@ -2,7 +2,7 @@ package com.ssafy.silencelake.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import com.ssafy.silencelake.ProductDetailFragment
+import com.ssafy.silencelake.fragment.ProductDetailFragment
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
 import com.ssafy.silencelake.fragment.HomeFragment

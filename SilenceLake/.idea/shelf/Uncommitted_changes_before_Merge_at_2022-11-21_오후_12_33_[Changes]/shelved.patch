@@ -1,0 +1,134 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment\r\n\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.FrameLayout\r\nimport android.widget.TextView\r\nimport android.widget.Toast\r\nimport com.ssafy.silencelake.R\r\nimport com.ssafy.silencelake.databinding.FragmentHomeBinding\r\nimport com.ssafy.silencelake.dto.ProductDto\r\nimport pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter\r\n\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\nclass HomeFragment : Fragment() {\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n    private lateinit var binding: FragmentHomeBinding\r\n    lateinit var mContext: Context\r\n    private var bannerItemList = arrayListOf<String>()\r\n    private var recommendedItemList = mutableListOf<ProductDto>()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        arguments?.let {\r\n            param1 = it.getString(ARG_PARAM1)\r\n            param2 = it.getString(ARG_PARAM2)\r\n        }\r\n        mContext = requireContext()\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false)\r\n        initData()\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        initBanner()\r\n    }\r\n\r\n    private fun initBanner() {\r\n        val banner = binding.viewpagerBannerHomefg\r\n        val bannerAdapter = BannerAdapter(requireContext(), bannerItemList)\r\n        banner.setAdapter(bannerAdapter)\r\n    }\r\n\r\n    private fun initData(){\r\n        initBannerItemData()\r\n        initRecommendedItemData()\r\n    }\r\n    private fun initBannerItemData(){\r\n        bannerItemList.add(\"수용이~\")\r\n        bannerItemList.add(\"호조~\")\r\n        bannerItemList.add(\"수용이~\")\r\n        bannerItemList.add(\"호조~\")\r\n        bannerItemList.add(\"수용이~\")\r\n    }\r\n\r\n    private fun initRecommendedItemData(){\r\n        recommendedItemList.add(ProductDto(1, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n        recommendedItemList.add(ProductDto(2, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n        recommendedItemList.add(ProductDto(3, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n        recommendedItemList.add(ProductDto(4, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n        recommendedItemList.add(ProductDto(5, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n        recommendedItemList.add(ProductDto(5, \"아메리카노\", \"coffee\", 2000, \"iceamericano\"))\r\n    }\r\n\r\n\r\n    inner class BannerAdapter : RollingViewPagerAdapter<String> {\r\n        constructor(context: Context, itemList: ArrayList<String>) : super(context, itemList)\r\n\r\n        override fun getView(position: Int, item: String): View {\r\n            val view = LayoutInflater.from(mContext).inflate(R.layout.container_banner, null, false)\r\n            val container = view.findViewById<FrameLayout>(R.id.container_banner)\r\n            val tvBannerItem = view.findViewById<TextView>(R.id.tv_benneritem_container)\r\n\r\n            val bannerItem = getItem(position)\r\n            val index = itemList.indexOf(bannerItem)\r\n            tvBannerItem.text = bannerItem\r\n            container.setBackgroundResource(R.drawable.background_banner)\r\n            view.setOnClickListener {\r\n                Toast.makeText(mContext, \"수용아 해냈다\", Toast.LENGTH_SHORT).show()\r\n            }\r\n            return view\r\n        }\r\n\r\n    }\r\n\r\n    companion object {\r\n        @JvmStatic\r\n        fun newInstance(param1: String, param2: String) =\r\n            HomeFragment().apply {\r\n                arguments = Bundle().apply {\r\n                    putString(ARG_PARAM1, param1)\r\n                    putString(ARG_PARAM2, param2)\r\n                }\r\n            }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/HomeFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/HomeFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/HomeFragment.kt	(revision e28d7e84b5815fd4520f68d213b60f82e302b77c)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/HomeFragment.kt	(date 1669001296190)
+@@ -1,6 +1,7 @@
+ package com.ssafy.silencelake.fragment
+ 
+ import android.content.Context
++import android.content.Intent
+ import android.os.Bundle
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+@@ -9,9 +10,13 @@
+ import android.widget.FrameLayout
+ import android.widget.TextView
+ import android.widget.Toast
++import androidx.recyclerview.widget.LinearLayoutManager
++import androidx.recyclerview.widget.RecyclerView.LayoutManager
+ import com.ssafy.silencelake.R
+ import com.ssafy.silencelake.databinding.FragmentHomeBinding
+ import com.ssafy.silencelake.dto.ProductDto
++import com.ssafy.silencelake.util.OnClickRecommendedItem
++import com.ssafy.silencelake.util.RecommendedMenuAdapter
+ import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
+ 
+ private const val ARG_PARAM1 = "param1"
+@@ -47,6 +52,7 @@
+         super.onViewCreated(view, savedInstanceState)
+ 
+         initBanner()
++        initAdapter()
+     }
+ 
+     private fun initBanner() {
+@@ -55,11 +61,12 @@
+         banner.setAdapter(bannerAdapter)
+     }
+ 
+-    private fun initData(){
++    private fun initData() {
+         initBannerItemData()
+         initRecommendedItemData()
+     }
+-    private fun initBannerItemData(){
++
++    private fun initBannerItemData() {
+         bannerItemList.add("수용이~")
+         bannerItemList.add("호조~")
+         bannerItemList.add("수용이~")
+@@ -67,15 +74,28 @@
+         bannerItemList.add("수용이~")
+     }
+ 
+-    private fun initRecommendedItemData(){
++    private fun initRecommendedItemData() {
+         recommendedItemList.add(ProductDto(1, "아메리카노", "coffee", 2000, "iceamericano"))
+-        recommendedItemList.add(ProductDto(2, "아메리카노", "coffee", 2000, "iceamericano"))
+-        recommendedItemList.add(ProductDto(3, "아메리카노", "coffee", 2000, "iceamericano"))
+-        recommendedItemList.add(ProductDto(4, "아메리카노", "coffee", 2000, "iceamericano"))
++        recommendedItemList.add(ProductDto(2, "카푸치노", "coffee", 2000, "iceamericano"))
++        recommendedItemList.add(ProductDto(3, "카라멜", "coffee", 2000, "iceamericano"))
++        recommendedItemList.add(ProductDto(4, "민트초코", "coffee", 2000, "iceamericano"))
+         recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+         recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+     }
+ 
++    private fun initAdapter() {
++        val adapter = RecommendedMenuAdapter(requireContext())
++        val recommendedMenu = binding.rcvRecommendedHome
++        recommendedMenu.layoutManager =
++            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
++        adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
++            override fun onClick(product: ProductDto) {
++            }
++        }
++
++        recommendedMenu.adapter = adapter
++    }
++
+ 
+     inner class BannerAdapter : RollingViewPagerAdapter<String> {
+         constructor(context: Context, itemList: ArrayList<String>) : super(context, itemList)
+@@ -86,7 +106,6 @@
+             val tvBannerItem = view.findViewById<TextView>(R.id.tv_benneritem_container)
+ 
+             val bannerItem = getItem(position)
+-            val index = itemList.indexOf(bannerItem)
+             tvBannerItem.text = bannerItem
+             container.setBackgroundResource(R.drawable.background_banner)
+             view.setOnClickListener {
+@@ -94,7 +113,6 @@
+             }
+             return view
+         }
+-
+     }
+ 
+     companion object {
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'org.jetbrains.kotlin.android'\r\n}\r\n\r\nandroid {\r\n    namespace 'com.ssafy.silencelake'\r\n    compileSdk 32\r\n\r\n    defaultConfig {\r\n        applicationId \"com.ssafy.silencelake\"\r\n        minSdk 21\r\n        targetSdk 32\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n\r\n    viewBinding {\r\n        enabled = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.core:core-ktx:1.7.0'\r\n    implementation 'androidx.appcompat:appcompat:1.5.1'\r\n    implementation 'com.google.android.material:material:1.7.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.4'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'\r\n\r\n\r\n    // androidx + API 28\r\n    implementation 'com.github.WindSekirun:RollingBanner:1.0.7-androidx'\r\n\r\n// support library\r\n    implementation 'com.github.WindSekirun:RollingBanner:1.0.7'\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	(revision e28d7e84b5815fd4520f68d213b60f82e302b77c)
++++ b/app/build.gradle	(date 1669000286473)
+@@ -46,10 +46,12 @@
+     androidTestImplementation 'androidx.test.ext:junit:1.1.4'
+     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
+ 
+-
+-    // androidx + API 28
++    // androidx + API 28 for banner
+     implementation 'com.github.WindSekirun:RollingBanner:1.0.7-androidx'
+ 
+-// support library
++    // support library for banner
+     implementation 'com.github.WindSekirun:RollingBanner:1.0.7'
++
++    //Glide
++    implementation 'com.github.bumptech.glide:glide:4.14.2'
+ }
+\ No newline at end of file
+diff --git a/app/src/main/res/layout/item_list_recommendedmenu_home.xml b/app/src/main/res/layout/item_list_recommendedmenu.xml
+rename from app/src/main/res/layout/item_list_recommendedmenu_home.xml
+rename to app/src/main/res/layout/item_list_recommendedmenu.xml

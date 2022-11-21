@@ -1,17 +1,23 @@
 package com.ssafy.silencelake.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentHomeBinding
 import com.ssafy.silencelake.dto.ProductDto
+import com.ssafy.silencelake.util.OnClickRecommendedItem
+import com.ssafy.silencelake.util.RecommendedMenuAdapter
 import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
 
 private const val ARG_PARAM1 = "param1"
@@ -47,6 +53,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         initBanner()
+        initAdapter()
     }
 
     private fun initBanner() {
@@ -55,25 +62,39 @@ class HomeFragment : Fragment() {
         banner.setAdapter(bannerAdapter)
     }
 
-    private fun initData(){
+    private fun initData() {
         initBannerItemData()
         initRecommendedItemData()
     }
-    private fun initBannerItemData(){
-        bannerItemList.add("수용이~")
-        bannerItemList.add("호조~")
-        bannerItemList.add("수용이~")
-        bannerItemList.add("호조~")
-        bannerItemList.add("수용이~")
+
+    private fun initBannerItemData() {
+        bannerItemList.add("banner_ssafy1")
+        bannerItemList.add("banner_ssafy_ad")
+        bannerItemList.add("banner_ssafy_logo")
     }
 
-    private fun initRecommendedItemData(){
+    private fun initRecommendedItemData() {
         recommendedItemList.add(ProductDto(1, "아메리카노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(2, "아메리카노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(3, "아메리카노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(4, "아메리카노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(2, "카푸치노", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(3, "카라멜", "coffee", 2000, "iceamericano"))
+        recommendedItemList.add(ProductDto(4, "민트초코", "coffee", 2000, "iceamericano"))
         recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
         recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+    }
+
+    private fun initAdapter() {
+        val adapter = RecommendedMenuAdapter(requireContext())
+        val recommendedMenu = binding.rcvRecommendedHome
+        recommendedMenu.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+        adapter.itemlist.addAll(recommendedItemList)
+        adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
+            override fun onClick(product: ProductDto) {
+                parentFragmentManager.beginTransaction().add(R.id.fragment_container_main, ProductDetailFragment()).commit()
+            }
+        }
+
+        recommendedMenu.adapter = adapter
     }
 
 
@@ -83,18 +104,13 @@ class HomeFragment : Fragment() {
         override fun getView(position: Int, item: String): View {
             val view = LayoutInflater.from(mContext).inflate(R.layout.container_banner, null, false)
             val container = view.findViewById<FrameLayout>(R.id.container_banner)
-            val tvBannerItem = view.findViewById<TextView>(R.id.tv_benneritem_container)
+            val bannerImg = view.findViewById<ImageView>(R.id.img_banner_container)
 
             val bannerItem = getItem(position)
-            val index = itemList.indexOf(bannerItem)
-            tvBannerItem.text = bannerItem
-            container.setBackgroundResource(R.drawable.background_banner)
-            view.setOnClickListener {
-                Toast.makeText(mContext, "수용아 해냈다", Toast.LENGTH_SHORT).show()
-            }
+            val resId = requireContext().resources.getIdentifier(bannerItem, "drawable", requireContext().packageName)
+            bannerImg.setImageResource(resId)
             return view
         }
-
     }
 
     companion object {
