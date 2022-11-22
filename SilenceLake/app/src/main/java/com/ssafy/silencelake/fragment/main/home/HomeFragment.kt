@@ -8,7 +8,6 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,14 +17,7 @@ import com.ssafy.silencelake.dto.ProductDto
 import com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
-
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -87,9 +79,11 @@ class HomeFragment : Fragment() {
         adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
             override fun onClick(product: ProductDto) {
                 shoppingListViewModel.getSelectedProduct(product.id)
-                parentFragmentManager.beginTransaction()
-                    .replace(R.id.fragment_container_main, ProductDetailFragment())
-                    .addToBackStack(null).commit()
+                shoppingListViewModel.selectedProduct.observe(viewLifecycleOwner){
+                    parentFragmentManager.beginTransaction()
+                        .replace(R.id.fragment_container_main, ProductDetailFragment())
+                        .addToBackStack(null).commit()
+                }
             }
         }
 

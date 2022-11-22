@@ -15,6 +15,7 @@ class CommentAdapter(var list: List<Int>) :
 //        fun onAcceptClick(comment: Comment)
 //        fun onDeleteClick(id: Int)
     }
+
     //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener
     fun setItemClickListener(itemClickListener: ItemClickListener) {

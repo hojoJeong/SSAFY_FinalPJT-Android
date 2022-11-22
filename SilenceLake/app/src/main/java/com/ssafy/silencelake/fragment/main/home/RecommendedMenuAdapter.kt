@@ -1,6 +1,8 @@
 package com.ssafy.silencelake.fragment.main.home
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -15,6 +17,7 @@ class RecommendedMenuAdapter(val context: Context): RecyclerView.Adapter<Recomme
         fun bind(data: ProductDto){
             Glide.with(context).load(data.img).into(binding.imgItemListRecommendedmenu)
             binding.tvItemListRecommendedmenu.text = data.name
+            Log.d(TAG, "bind: $data")
             binding.imgItemListRecommendedmenu.setOnClickListener {
                 onClickRecommendedItem.onClick(data)
             }

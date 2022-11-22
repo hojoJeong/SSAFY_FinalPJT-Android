@@ -1,5 +1,7 @@
 package com.ssafy.silencelake.fragment.main.menu.shoppinglist
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -14,7 +16,9 @@ class ShoppingListViewModel: ViewModel() {
     private val _selectedProduct = MutableLiveData<List<MenuDetailWithCommentResponse>>()
     val selectedProduct: LiveData<List<MenuDetailWithCommentResponse>>
         get() = _selectedProduct
+    
     fun getSelectedProduct(id: Int) = viewModelScope.launch{
         _selectedProduct.value = ProductService().getProductWithComments(id)
+        Log.d(TAG, "getSelectedProduct: ${_selectedProduct.value}")
     }
 }

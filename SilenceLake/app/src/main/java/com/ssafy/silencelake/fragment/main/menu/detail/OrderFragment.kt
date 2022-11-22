@@ -6,15 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
-import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentOrderBinding
-import com.ssafy.silencelake.dto.OrderDetail
-import com.ssafy.silencelake.dto.OrderDto
-import com.ssafy.silencelake.dto.Stamp
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
-import com.ssafy.silencelake.util.ApplicationClass
-import java.util.*
-
 
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
@@ -22,7 +15,7 @@ class OrderFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentOrderBinding.inflate(inflater, container, false)
         return binding.root
     }
