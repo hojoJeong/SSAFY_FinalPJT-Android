@@ -1,6 +1,8 @@
 package com.ssafy.silencelake.fragment.main.menu.detail
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -27,38 +29,42 @@ class CommentFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initAdapter()
+        shoppingListViewModel.selectedProduct.observe(viewLifecycleOwner){
+            initAdapter()
+        }
     }
 
     private fun initAdapter() {
-        shoppingListViewModel.selectedProduct.observe(viewLifecycleOwner) {
-            if (it[0].productCommentTotalCnt > 0) {
-                val list = mutableListOf<CommentDto>()
-                for (i in 0 until it.size) {
-                    val comment = it[i].commentContent
-                    val commentId = it[i].commentId
-                    val productId = shoppingListViewModel.productId
-                    val userId = it[i].userId
-                    val productRating = it[i].productRatingAvg
+        val selectProductList = shoppingListViewModel.selectedProduct.value
+        if (selectProductList!![0].productCommentTotalCnt > 0) {
+            val list = mutableListOf<CommentDto>()
+            for (i in selectProductList.indices) {
+                val comment = selectProductList[i].commentContent
+                val commentId = selectProductList[i].commentId
+                val productId = shoppingListViewModel.productId
+                val userId = selectProductList[i].userId
+                val productRating = selectProductList[i].productRatingAvg
 
-                    list.add(
-                        CommentDto(
-                            commentId,
-                            userId!!,
-                            productId,
-                            productRating.toFloat(),
-                            comment!!
-                        )
+                list.add(
+                    CommentDto(
+                        commentId,
+                        userId!!,
+                        productId,
+                        productRating.toFloat(),
+                        comment!!
                     )
-                }
-                commentList = list
-                binding.rcvCommentComment.apply {
-                    adapter = CommentAdapter(commentList)
-                    layoutManager = LinearLayoutManager(requireContext())
-                }
-                list.clear()
+                )
             }
-
+            commentList = list
+            Log.d(TAG, "initAdapter: comment : $commentList")
+            val rcvComment = binding.rcvCommentComment
+            val adapter = CommentAdapter(requireContext())
+            adapter.commentList = commentList as MutableList<CommentDto>
+            Log.d(TAG, "initAdapter adapter list : ${adapter.commentList}")
+            rcvComment.layoutManager = LinearLayoutManager(requireContext())
+            rcvComment.adapter = adapter
         }
+
+
     }
 }
