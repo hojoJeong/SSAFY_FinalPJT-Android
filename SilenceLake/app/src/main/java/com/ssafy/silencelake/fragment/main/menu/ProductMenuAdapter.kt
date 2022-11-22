@@ -1,25 +1,34 @@
 package com.ssafy.silencelake.fragment.main.menu
 
 import android.content.Context
+import android.graphics.Color
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.ProductMenuItemBinding
+import com.ssafy.silencelake.dto.ProductDto
+import com.ssafy.silencelake.util.ApplicationClass
 
-class ProductMenuAdapter(val context: Context, var list: List<Int>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
+private const val TAG = "ProductMenuAdapter_싸피"
+class ProductMenuAdapter(val context: Context, var list: List<ProductDto>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_menu)
         val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_menu)
         val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_menu)
-        fun bindInfo(item: Int){
-            imgProductMenu.setImageResource(R.drawable.choco)
-            productNameKor.text = context.getString(R.string.product_name_kor)
-            productNameEng.text = context.getString(R.string.product_name_eng)
+        fun bindInfo(item: ProductDto){
+            Glide.with(itemView)
+                .load(item.img)
+                .into(imgProductMenu)
+            productNameKor.text = item.name
+            productNameEng.text = item.nameEng
+            Log.d(TAG, "bindInfo: ${item.nameEng}")
             itemView.setOnClickListener {
                 val mainActivity = context as MainActivity
                 mainActivity.openProductDetail()

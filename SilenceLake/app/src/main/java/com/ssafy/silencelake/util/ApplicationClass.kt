@@ -13,8 +13,7 @@ import java.util.prefs.AbstractPreferences
 class ApplicationClass : Application() {
 
     companion object {
-        const val SERVER_URL = "http://mobile-pjt.sample.ssafy.io/"
-        const val MENU_IMGS_URL = "${SERVER_URL}imgs/menu/"
+        const val SERVER_URL = "http://192.168.33.134:9999/"
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
         lateinit var retrofit: Retrofit
     }

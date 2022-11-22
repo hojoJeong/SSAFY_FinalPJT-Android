@@ -69,12 +69,12 @@ class HomeFragment : Fragment() {
     }
 
     private fun initRecommendedItemData() {
-        recommendedItemList.add(ProductDto(1, "아메리카노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(2, "카푸치노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(3, "카라멜", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(4, "민트초코", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
-        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(1, "아메리카노", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(2, "카푸치노", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(3, "카라멜", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(4, "민트초코", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
+//        recommendedItemList.add(ProductDto(5, "아메리카노", "coffee", 2000, "iceamericano"))
     }
 
     private fun initAdapter() {
