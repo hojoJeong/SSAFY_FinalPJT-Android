@@ -6,10 +6,13 @@ data class OrderDto(
     val id: Int,
     var userId: String,
     var orderTable: String,
-    var orderTime: Date,
+    var orderTime: String,
     var completed: Char,
-    var orderDetail: MutableList<OrderDetail>,
-    var stamp: Stamp
+    var details: ArrayList<OrderDetail>,
 ) {
-
+    constructor(
+        userId: String,
+        orderTable: String,
+        orderDetail: MutableList<OrderDetail>
+    ): this(0, userId, orderTable, "",'N',orderDetail as ArrayList<OrderDetail>)
 }
