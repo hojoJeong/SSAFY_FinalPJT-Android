@@ -1,0 +1,63 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.home\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.FrameLayout\r\nimport android.widget.ImageView\r\nimport androidx.fragment.app.activityViewModels\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.ssafy.silencelake.R\r\nimport com.ssafy.silencelake.databinding.FragmentHomeBinding\r\nimport com.ssafy.silencelake.dto.ProductDto\r\nimport com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel\r\nimport com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment\r\nimport kotlinx.coroutines.CoroutineScope\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.launch\r\nimport kotlinx.coroutines.withContext\r\nimport pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter\r\n\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\nclass HomeFragment : Fragment() {\r\n    private lateinit var binding: FragmentHomeBinding\r\n    lateinit var mContext: Context\r\n    private var bannerItemList = arrayListOf<String>()\r\n    private val productMenuViewModel by activityViewModels<ProductMenuViewModel>()\r\n\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        mContext = requireContext()\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        initData()\r\n        initBanner()\r\n    }\r\n\r\n    private fun initData() {\r\n        productMenuViewModel.getRecommendedMenu()\r\n\r\n        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner){\r\n            initAdapter()\r\n        }\r\n        initBannerItemData()\r\n    }\r\n\r\n    private fun initBannerItemData() {\r\n        val list = mutableListOf<String>()\r\n        list.add(\"banner_ssafy1\")\r\n        list.add(\"banner_ssafy_ad\")\r\n        list.add(\"banner_ssafy_logo\")\r\n        bannerItemList = list as ArrayList<String>\r\n    }\r\n\r\n    private fun initBanner() {\r\n        val banner = binding.viewpagerBannerHomefg\r\n        val bannerAdapter = BannerAdapter(requireContext(), bannerItemList)\r\n        banner.setAdapter(bannerAdapter)\r\n    }\r\n\r\n    private fun initAdapter() {\r\n        val adapter = RecommendedMenuAdapter(requireContext())\r\n        val recommendedMenu = binding.rcvRecommendedHome\r\n        recommendedMenu.layoutManager =\r\n            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)\r\n        adapter.itemlist = productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>\r\n\r\n        adapter.onClickRecommendedItem = object : OnClickRecommendedItem {\r\n            override fun onClick(product: ProductDto) {\r\n                parentFragmentManager.beginTransaction()\r\n                    .replace(R.id.fragment_container_main, ProductDetailFragment())\r\n                    .addToBackStack(null).commit()\r\n            }\r\n        }\r\n\r\n        recommendedMenu.adapter = adapter\r\n    }\r\n\r\n\r\n    inner class BannerAdapter : RollingViewPagerAdapter<String> {\r\n        constructor(context: Context, itemList: ArrayList<String>) : super(context, itemList)\r\n\r\n        override fun getView(position: Int, item: String): View {\r\n            val view = LayoutInflater.from(mContext).inflate(R.layout.container_banner, null, false)\r\n            val bannerImg = view.findViewById<ImageView>(R.id.img_banner_container)\r\n\r\n            val bannerItem = getItem(position)\r\n            val resId = requireContext().resources.getIdentifier(\r\n                bannerItem,\r\n                \"drawable\",\r\n                requireContext().packageName\r\n            )\r\n            bannerImg.setImageResource(resId)\r\n            return view\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt	(revision e7b8b8a0022aa6f9b210f2f4c6358fb223981654)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt	(date 1669101242131)
+@@ -55,7 +55,7 @@
+     private fun initData() {
+         productMenuViewModel.getRecommendedMenu()
+ 
+-        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner){
++        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner) {
+             initAdapter()
+         }
+         initBannerItemData()
+@@ -80,7 +80,8 @@
+         val recommendedMenu = binding.rcvRecommendedHome
+         recommendedMenu.layoutManager =
+             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+-        adapter.itemlist = productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>
++        adapter.itemlist =
++            productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>
+ 
+         adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
+             override fun onClick(product: ProductDto) {
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.detail\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport com.google.android.material.tabs.TabLayoutMediator\r\nimport com.ssafy.silencelake.databinding.FragmentProductDetailBinding\r\n\r\n\r\nclass ProductDetailFragment : Fragment() {\r\n    private lateinit var binding: FragmentProductDetailBinding\r\n    private val tabTitleArray = arrayOf(\r\n        \"ORDER\",\r\n        \"COMMENT\"\r\n    )\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        binding = FragmentProductDetailBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        val viewPager = binding.viewPagerOrder\r\n        val tabLayout = binding.tabLayoutOrder\r\n\r\n        viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)\r\n\r\n        TabLayoutMediator(tabLayout, viewPager) { tab, position ->\r\n            tab.text = tabTitleArray[position]\r\n        }.attach()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt	(revision e7b8b8a0022aa6f9b210f2f4c6358fb223981654)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt	(date 1669101381716)
+@@ -23,8 +23,7 @@
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+-    ): View? {
+-        // Inflate the layout for this fragment
++    ): View {
+         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
+         return binding.root
+     }
+@@ -33,11 +32,11 @@
+         super.onViewCreated(view, savedInstanceState)
+         val viewPager = binding.viewPagerOrder
+         val tabLayout = binding.tabLayoutOrder
+-
+         viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
+ 
+         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+             tab.text = tabTitleArray[position]
+         }.attach()
+     }
++
+ }
+\ No newline at end of file

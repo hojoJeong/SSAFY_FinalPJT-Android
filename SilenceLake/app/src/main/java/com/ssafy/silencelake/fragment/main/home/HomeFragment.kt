@@ -17,6 +17,7 @@ import com.ssafy.silencelake.databinding.FragmentHomeBinding
 import com.ssafy.silencelake.dto.ProductDto
 import com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
+import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,7 +32,7 @@ class HomeFragment : Fragment() {
     lateinit var mContext: Context
     private var bannerItemList = arrayListOf<String>()
     private val productMenuViewModel by activityViewModels<ProductMenuViewModel>()
-
+    private val shoppingListViewModel by activityViewModels<ShoppingListViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -55,7 +56,7 @@ class HomeFragment : Fragment() {
     private fun initData() {
         productMenuViewModel.getRecommendedMenu()
 
-        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner){
+        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner) {
             initAdapter()
         }
         initBannerItemData()
@@ -80,10 +81,12 @@ class HomeFragment : Fragment() {
         val recommendedMenu = binding.rcvRecommendedHome
         recommendedMenu.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
-        adapter.itemlist = productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>
+        adapter.itemlist =
+            productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>
 
         adapter.onClickRecommendedItem = object : OnClickRecommendedItem {
             override fun onClick(product: ProductDto) {
+                shoppingListViewModel.getSelectedProduct(product.id)
                 parentFragmentManager.beginTransaction()
                     .replace(R.id.fragment_container_main, ProductDetailFragment())
                     .addToBackStack(null).commit()

@@ -23,8 +23,7 @@ class ProductDetailFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
+    ): View {
         binding = FragmentProductDetailBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -36,7 +35,6 @@ class ProductDetailFragment : Fragment() {
         }
         val viewPager = binding.viewPagerOrder
         val tabLayout = binding.tabLayoutOrder
-
         viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
@@ -50,4 +48,5 @@ class ProductDetailFragment : Fragment() {
             .into(binding.imgProductOrder)
         binding.textProductNameKorOrder.text = item.productName
     }
+
 }
