@@ -48,13 +48,6 @@
            android:layout_marginEnd="5dp"
            android:src="@android:drawable/ic_menu_save"/>
 
-       <ImageView
-           android:id="@+id/iv_modify_cancel_comment"
-           android:layout_width="20dp"
-           android:layout_height="20dp"
-           android:layout_marginEnd="5dp"
-           android:src="@android:drawable/ic_menu_revert"/>
-
    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_comment_comment"
