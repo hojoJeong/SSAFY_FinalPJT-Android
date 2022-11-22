@@ -4,6 +4,7 @@ import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import com.ssafy.silencelake.activity.MainActivity
@@ -26,9 +27,14 @@ class ShoppingListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.root.setOnTouchListener{ _, _ ->
+            true
+        }
         binding.rcvShoppinglistShoppingList.adapter = ShoppingListAdapter(requireContext(), listOf(1,2,3,4,5))
         binding.buttonCloseShoppingList.setOnClickListener {
             mainActivity.onBackPressed()
         }
     }
+
+
 }
