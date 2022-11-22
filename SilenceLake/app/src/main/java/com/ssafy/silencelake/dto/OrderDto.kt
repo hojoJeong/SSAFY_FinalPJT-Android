@@ -11,4 +11,5 @@ data class OrderDto(
     var orderDetail: MutableList<OrderDetail>,
     var stamp: Stamp
 ) {
+
 }
