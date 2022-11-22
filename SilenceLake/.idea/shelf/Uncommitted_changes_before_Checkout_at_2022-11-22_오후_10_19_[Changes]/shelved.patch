@@ -1,0 +1,66 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.home\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.content.Context\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.FrameLayout\r\nimport android.widget.ImageView\r\nimport androidx.fragment.app.activityViewModels\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.ssafy.silencelake.R\r\nimport com.ssafy.silencelake.databinding.FragmentHomeBinding\r\nimport com.ssafy.silencelake.dto.ProductDto\r\nimport com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel\r\nimport com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment\r\nimport com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel\r\nimport kotlinx.coroutines.CoroutineScope\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.launch\r\nimport kotlinx.coroutines.withContext\r\nimport pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter\r\n\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\nclass HomeFragment : Fragment() {\r\n    private lateinit var binding: FragmentHomeBinding\r\n    lateinit var mContext: Context\r\n    private var bannerItemList = arrayListOf<String>()\r\n    private val productMenuViewModel by activityViewModels<ProductMenuViewModel>()\r\n    private val shoppingListViewModel by activityViewModels<ShoppingListViewModel>()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n        mContext = requireContext()\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        binding = FragmentHomeBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        initData()\r\n        initBanner()\r\n    }\r\n\r\n    private fun initData() {\r\n        productMenuViewModel.getRecommendedMenu()\r\n\r\n        productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner) {\r\n            initAdapter()\r\n        }\r\n        initBannerItemData()\r\n    }\r\n\r\n    private fun initBannerItemData() {\r\n        val list = mutableListOf<String>()\r\n        list.add(\"banner_ssafy1\")\r\n        list.add(\"banner_ssafy_ad\")\r\n        list.add(\"banner_ssafy_logo\")\r\n        bannerItemList = list as ArrayList<String>\r\n    }\r\n\r\n    private fun initBanner() {\r\n        val banner = binding.viewpagerBannerHomefg\r\n        val bannerAdapter = BannerAdapter(requireContext(), bannerItemList)\r\n        banner.setAdapter(bannerAdapter)\r\n    }\r\n\r\n    private fun initAdapter() {\r\n        val adapter = RecommendedMenuAdapter(requireContext())\r\n        val recommendedMenu = binding.rcvRecommendedHome\r\n        recommendedMenu.layoutManager =\r\n            LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)\r\n        adapter.itemlist =\r\n            productMenuViewModel.recommendedMenuLiveData.value as MutableList<ProductDto>\r\n\r\n        adapter.onClickRecommendedItem = object : OnClickRecommendedItem {\r\n            override fun onClick(product: ProductDto) {\r\n                shoppingListViewModel.getSelectedProduct(product.id)\r\n                parentFragmentManager.beginTransaction()\r\n                    .replace(R.id.fragment_container_main, ProductDetailFragment())\r\n                    .addToBackStack(null).commit()\r\n            }\r\n        }\r\n\r\n        recommendedMenu.adapter = adapter\r\n    }\r\n\r\n\r\n    inner class BannerAdapter : RollingViewPagerAdapter<String> {\r\n        constructor(context: Context, itemList: ArrayList<String>) : super(context, itemList)\r\n\r\n        override fun getView(position: Int, item: String): View {\r\n            val view = LayoutInflater.from(mContext).inflate(R.layout.container_banner, null, false)\r\n            val bannerImg = view.findViewById<ImageView>(R.id.img_banner_container)\r\n\r\n            val bannerItem = getItem(position)\r\n            val resId = requireContext().resources.getIdentifier(\r\n                bannerItem,\r\n                \"drawable\",\r\n                requireContext().packageName\r\n            )\r\n            bannerImg.setImageResource(resId)\r\n            return view\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/home/HomeFragment.kt	(date 1669123102399)
+@@ -1,14 +1,11 @@
+ package com.ssafy.silencelake.fragment.main.home
+ 
+-import android.content.ContentValues.TAG
+ import android.content.Context
+ import android.os.Bundle
+-import android.util.Log
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
+-import android.widget.FrameLayout
+ import android.widget.ImageView
+ import androidx.fragment.app.activityViewModels
+ import androidx.recyclerview.widget.LinearLayoutManager
+@@ -18,15 +15,8 @@
+ import com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel
+ import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
+ import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
+-import kotlinx.coroutines.CoroutineScope
+-import kotlinx.coroutines.Dispatchers
+-import kotlinx.coroutines.launch
+-import kotlinx.coroutines.withContext
+ import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
+ 
+-private const val ARG_PARAM1 = "param1"
+-private const val ARG_PARAM2 = "param2"
+-
+ class HomeFragment : Fragment() {
+     private lateinit var binding: FragmentHomeBinding
+     lateinit var mContext: Context
+Index: .idea/deploymentTargetDropDown.xml
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+deleted file mode 100644
+--- a/.idea/deploymentTargetDropDown.xml	(revision 2cdec5ce9272c6a7192c80e4a0af770543f4bffa)
++++ /dev/null	(revision 2cdec5ce9272c6a7192c80e4a0af770543f4bffa)
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<project version="4">
+-  <component name="deploymentTargetDropDown">
+-    <runningDeviceTargetSelectedWithDropDown>
+-      <Target>
+-        <type value="RUNNING_DEVICE_TARGET" />
+-        <deviceKey>
+-          <Key>
+-            <type value="SERIAL_NUMBER" />
+-            <value value="R39M30P1JZZ" />
+-          </Key>
+-        </deviceKey>
+-      </Target>
+-    </runningDeviceTargetSelectedWithDropDown>
+-    <timeTargetWasSelectedWithDropDown value="2022-11-22T07:37:34.459360700Z" />
+-  </component>
+-</project>
+\ No newline at end of file

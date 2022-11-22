@@ -35,6 +35,4 @@ class ShoppingListFragment : Fragment() {
             mainActivity.onBackPressed()
         }
     }
-
-
 }
