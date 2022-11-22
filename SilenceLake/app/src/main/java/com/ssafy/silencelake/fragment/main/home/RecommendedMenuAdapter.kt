@@ -4,6 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.silencelake.databinding.ItemListRecommendedmenuBinding
 import com.ssafy.silencelake.dto.ProductDto
 
@@ -12,8 +13,7 @@ class RecommendedMenuAdapter(val context: Context): RecyclerView.Adapter<Recomme
     lateinit var onClickRecommendedItem: OnClickRecommendedItem
     inner class RecommendedMenuViewHolder(val binding: ItemListRecommendedmenuBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: ProductDto){
-            var resId = context.resources.getIdentifier(data.img, "drawable", context.packageName)
-            binding.imgItemListRecommendedmenu.setImageResource(resId)
+            Glide.with(context).load(data.img).into(binding.imgItemListRecommendedmenu)
             binding.tvItemListRecommendedmenu.text = data.name
             binding.imgItemListRecommendedmenu.setOnClickListener {
                 onClickRecommendedItem.onClick(data)
