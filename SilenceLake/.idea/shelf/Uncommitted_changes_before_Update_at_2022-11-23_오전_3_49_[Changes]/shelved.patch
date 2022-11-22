@@ -1,0 +1,327 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.detail\r\n\r\nimport android.os.Bundle\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.ssafy.silencelake.R\r\nimport com.ssafy.silencelake.databinding.FragmentCommentBinding\r\n\r\nclass CommentFragment : Fragment() {\r\n    // TODO: Rename and change types of parameters\r\n    private var param1: String? = null\r\n    private var param2: String? = null\r\n    private lateinit var binding: FragmentCommentBinding\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View? {\r\n        // Inflate the layout for this fragment\r\n        binding = FragmentCommentBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n        binding.rcvCommentComment.adapter = CommentAdapter(listOf(1,1,1,1,1,1,1,1,1,1))\r\n        binding.rcvCommentComment.layoutManager = LinearLayoutManager(requireContext())\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentFragment.kt	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentFragment.kt	(date 1669141713829)
+@@ -5,20 +5,20 @@
+ import android.view.LayoutInflater
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.fragment.app.activityViewModels
+ import androidx.recyclerview.widget.LinearLayoutManager
+-import com.ssafy.silencelake.R
+ import com.ssafy.silencelake.databinding.FragmentCommentBinding
++import com.ssafy.silencelake.dto.CommentDto
++import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
+ 
+ class CommentFragment : Fragment() {
+-    // TODO: Rename and change types of parameters
+-    private var param1: String? = null
+-    private var param2: String? = null
+     private lateinit var binding: FragmentCommentBinding
+-
++    private val shoppingListViewModel by activityViewModels<ShoppingListViewModel>()
++    private var commentList = listOf<CommentDto>()
+     override fun onCreateView(
+         inflater: LayoutInflater, container: ViewGroup?,
+         savedInstanceState: Bundle?
+-    ): View? {
++    ): View {
+         // Inflate the layout for this fragment
+         binding = FragmentCommentBinding.inflate(inflater, container, false)
+         return binding.root
+@@ -26,7 +26,39 @@
+ 
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+-        binding.rcvCommentComment.adapter = CommentAdapter(listOf(1,1,1,1,1,1,1,1,1,1))
+-        binding.rcvCommentComment.layoutManager = LinearLayoutManager(requireContext())
++
++        initAdapter()
++    }
++
++    private fun initAdapter() {
++        shoppingListViewModel.selectedProduct.observe(viewLifecycleOwner) {
++            if (it[0].productCommentTotalCnt > 0) {
++                val list = mutableListOf<CommentDto>()
++                for (i in 0 until it.size) {
++                    val comment = it[i].commentContent
++                    val commentId = it[i].commentId
++                    val productId = shoppingListViewModel.productId
++                    val userId = it[i].userId
++                    val productRating = it[i].productRatingAvg
++
++                    list.add(
++                        CommentDto(
++                            commentId,
++                            userId!!,
++                            productId,
++                            productRating.toFloat(),
++                            comment!!
++                        )
++                    )
++                }
++                commentList = list
++                binding.rcvCommentComment.apply {
++                    adapter = CommentAdapter(commentList)
++                    layoutManager = LinearLayoutManager(requireContext())
++                }
++                list.clear()
++            }
++
++        }
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.detail\r\n\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.EditText\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.ssafy.silencelake.R\r\n\r\nclass CommentAdapter(var list: List<Int>) :\r\n    RecyclerView.Adapter<CommentAdapter.CommentHolder>() {\r\n    interface ItemClickListener {\r\n//        fun onAcceptClick(comment: Comment)\r\n//        fun onDeleteClick(id: Int)\r\n    }\r\n\r\n    //클릭리스너 선언\r\n    private lateinit var itemClickListner: ItemClickListener\r\n    fun setItemClickListener(itemClickListener: ItemClickListener) {\r\n        this.itemClickListner = itemClickListener\r\n    }\r\n\r\n    inner class CommentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {\r\n        val cancelButton = itemView.findViewById<ImageView>(R.id.iv_modify_cancel_comment)\r\n        val deleteButton = itemView.findViewById<ImageView>(R.id.iv_delete_comment)\r\n        val modifyButton = itemView.findViewById<ImageView>(R.id.iv_modify_comment)\r\n        val acceptButton = itemView.findViewById<ImageView>(R.id.iv_modify_accept_comment)\r\n        val etCommentContent = itemView.findViewById<EditText>(R.id.editText_content_comment)\r\n        val noticeContent = itemView.findViewById<TextView>(R.id.text_noticeContent_comment)\r\n\r\n        fun bindInfo(data: Int) {\r\n            hideAllButton()\r\n            itemView.apply {\r\n                noticeContent.text = data.toString()\r\n                showButtonOnMyComment(1)\r\n            }\r\n            modifyButton.setOnClickListener {\r\n                hideAllButton()\r\n                etCommentContent.visibility = View.VISIBLE\r\n                acceptButton.visibility = View.VISIBLE\r\n                cancelButton.visibility = View.VISIBLE\r\n                noticeContent.visibility = View.GONE\r\n            }\r\n            acceptButton.setOnClickListener {\r\n                hideAllButton()\r\n                showButtonOnMyComment(1)\r\n//                val comment = Comment(data.commentId, data.userId!!, -1, data.productRating.toFloat(), etCommentContent.text.toString())\r\n//                itemClickListner.onAcceptClick(comment)\r\n            }\r\n            deleteButton.setOnClickListener {\r\n//                itemClickListner.onDeleteClick(data.commentId)\r\n            }\r\n        }\r\n        fun showButtonOnMyComment(userId: Int){\r\n            if(userId == 1){\r\n                modifyButton.visibility = View.VISIBLE\r\n                deleteButton.visibility = View.VISIBLE\r\n            }\r\n        }\r\n        fun hideAllButton() {\r\n            cancelButton.visibility = View.GONE\r\n            deleteButton.visibility = View.GONE\r\n            modifyButton.visibility = View.GONE\r\n            acceptButton.visibility = View.GONE\r\n            etCommentContent.visibility = View.GONE\r\n        }\r\n\r\n    }\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentHolder {\r\n        val view =\r\n            LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false)\r\n        return CommentHolder(view)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: CommentHolder, position: Int) {\r\n        holder.bindInfo(list[position])\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return list.size\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentAdapter.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentAdapter.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentAdapter.kt	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/CommentAdapter.kt	(date 1669142934821)
+@@ -8,78 +8,88 @@
+ import android.widget.TextView
+ import androidx.recyclerview.widget.RecyclerView
+ import com.ssafy.silencelake.R
++import com.ssafy.silencelake.databinding.CommentListItemBinding
++import com.ssafy.silencelake.dto.CommentDto
+ 
+-class CommentAdapter(var list: List<Int>) :
++class CommentAdapter(var commentList: List<CommentDto>) :
+     RecyclerView.Adapter<CommentAdapter.CommentHolder>() {
+-    interface ItemClickListener {
+-//        fun onAcceptClick(comment: Comment)
+-//        fun onDeleteClick(id: Int)
+-    }
+-
+-    //클릭리스너 선언
+     private lateinit var itemClickListner: ItemClickListener
+-    fun setItemClickListener(itemClickListener: ItemClickListener) {
+-        this.itemClickListner = itemClickListener
+-    }
+ 
+-    inner class CommentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+-        val cancelButton = itemView.findViewById<ImageView>(R.id.iv_modify_cancel_comment)
+-        val deleteButton = itemView.findViewById<ImageView>(R.id.iv_delete_comment)
+-        val modifyButton = itemView.findViewById<ImageView>(R.id.iv_modify_comment)
+-        val acceptButton = itemView.findViewById<ImageView>(R.id.iv_modify_accept_comment)
+-        val etCommentContent = itemView.findViewById<EditText>(R.id.editText_content_comment)
+-        val noticeContent = itemView.findViewById<TextView>(R.id.text_noticeContent_comment)
++    inner class CommentHolder(val binding: CommentListItemBinding) : RecyclerView.ViewHolder(binding.root) {
+ 
+-        fun bindInfo(data: Int) {
++        fun bindInfo(data: CommentDto) {
+             hideAllButton()
+-            itemView.apply {
+-                noticeContent.text = data.toString()
+-                showButtonOnMyComment(1)
+-            }
+-            modifyButton.setOnClickListener {
++            binding.textNoticeContentComment.text = data.comment
++
++            showButtonOnMyComment(1)
++
++            acceptBtnEventListener()
++            modifyBtnEventListener()
++            deleteBtnEventListener()
++        }
++
++        private fun acceptBtnEventListener(){
++            binding.ivModifyAcceptComment.setOnClickListener {
+                 hideAllButton()
+-                etCommentContent.visibility = View.VISIBLE
+-                acceptButton.visibility = View.VISIBLE
+-                cancelButton.visibility = View.VISIBLE
+-                noticeContent.visibility = View.GONE
++                binding.apply {
++                    editTextContentComment.visibility = View.VISIBLE
++                    ivModifyAcceptComment.visibility = View.VISIBLE
++                    ivModifyCancelComment.visibility = View.VISIBLE
++                    textNoticeContentComment.visibility = View.GONE
++                }
+             }
+-            acceptButton.setOnClickListener {
++        }
++
++        private fun modifyBtnEventListener(){
++            binding.ivModifyAcceptComment.setOnClickListener {
+                 hideAllButton()
+                 showButtonOnMyComment(1)
+ //                val comment = Comment(data.commentId, data.userId!!, -1, data.productRating.toFloat(), etCommentContent.text.toString())
+ //                itemClickListner.onAcceptClick(comment)
+             }
+-            deleteButton.setOnClickListener {
++        }
++
++        private fun deleteBtnEventListener(){
++            binding.ivDeleteComment.setOnClickListener {
+ //                itemClickListner.onDeleteClick(data.commentId)
+             }
+         }
+-        fun showButtonOnMyComment(userId: Int){
+-            if(userId == 1){
+-                modifyButton.visibility = View.VISIBLE
+-                deleteButton.visibility = View.VISIBLE
++
++        fun showButtonOnMyComment(userId: Int) {
++            if (userId == 1) {
++                binding.ivModifyComment.visibility = View.VISIBLE
++                binding.ivDeleteComment.visibility = View.VISIBLE
+             }
+         }
++
+         fun hideAllButton() {
+-            cancelButton.visibility = View.GONE
+-            deleteButton.visibility = View.GONE
+-            modifyButton.visibility = View.GONE
+-            acceptButton.visibility = View.GONE
+-            etCommentContent.visibility = View.GONE
++            binding.apply {
++                ivModifyCancelComment.visibility = View.GONE
++                ivDeleteComment.visibility = View.GONE
++                ivModifyComment.visibility = View.GONE
++                ivModifyAcceptComment.visibility = View.GONE
++                editTextContentComment.visibility = View.GONE
++            }
+         }
+ 
+     }
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentHolder {
+         val view =
+-            LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false)
++            CommentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+         return CommentHolder(view)
+     }
+ 
+     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
+-        holder.bindInfo(list[position])
++        holder.bindInfo(commentList[position])
+     }
+ 
+-    override fun getItemCount(): Int {
+-        return list.size
++    override fun getItemCount(): Int = commentList.size
++
++    interface ItemClickListener {
++        fun onAcceptClick(comment: CommentDto)
++        fun onDeleteClick(id: Int)
++        fun onModifyClick(comment: CommentDto)
+     }
++
+ }
+Index: app/src/main/res/layout/comment_list_item.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<LinearLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"wrap_content\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_margin=\"10dp\">\r\n\r\n    <TextView\r\n        android:id=\"@+id/text_noticeContent_comment\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:text=\"너무 맛있어요.\"\r\n        android:textSize=\"15dp\"\r\n        android:layout_weight=\"1\"\r\n        />\r\n\r\n    <EditText\r\n        android:id=\"@+id/editText_content_comment\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:layout_gravity=\"center\"\r\n        android:textSize=\"15sp\"\r\n        tools:text=\"댓글 입니다.\"\r\n        tools:visibility=\"gone\"\r\n        android:layout_weight=\"1\"\r\n       />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/iv_modify_accept_comment\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_marginEnd=\"5dp\"\r\n        app:srcCompat=\"@android:drawable/ic_menu_save\"\r\n        tools:visibility=\"gone\"/>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/iv_modify_cancel_comment\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_marginEnd=\"5dp\"\r\n        app:srcCompat=\"@android:drawable/ic_menu_revert\"\r\n        tools:visibility=\"gone\"/>\r\n\r\n    <ImageView\r\n        android:id=\"@+id/iv_modify_comment\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"20dp\"\r\n        android:layout_marginRight=\"5dp\"\r\n        app:srcCompat=\"@android:drawable/ic_menu_edit\" />\r\n\r\n    <ImageView\r\n        android:id=\"@+id/iv_delete_comment\"\r\n        android:layout_width=\"20dp\"\r\n        android:layout_height=\"20dp\"\r\n\r\n        app:srcCompat=\"@android:drawable/ic_menu_close_clear_cancel\" />\r\n\r\n\r\n</LinearLayout>\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/comment_list_item.xml b/app/src/main/res/layout/comment_list_item.xml
+--- a/app/src/main/res/layout/comment_list_item.xml	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/res/layout/comment_list_item.xml	(date 1669141713840)
+@@ -54,7 +54,6 @@
+         android:id="@+id/iv_delete_comment"
+         android:layout_width="20dp"
+         android:layout_height="20dp"
+-
+         app:srcCompat="@android:drawable/ic_menu_close_clear_cancel" />
+ 
+ 
+Index: app/src/main/res/layout/fragment_comment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.appcompat.widget.LinearLayoutCompat xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:background=\"@color/white\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    android:orientation=\"vertical\"\r\n    tools:context=\".fragment.main.menu.detail.CommentFragment\">\r\n    <LinearLayout\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"wrap_content\"\r\n        >\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"match_parent\"\r\n        android:gravity=\"center\"\r\n        android:textSize=\"22dp\"\r\n        android:textColor=\"@color/primary\"\r\n        android:textStyle=\"bold\"\r\n        android:text=\"평점 \"\r\n        />\r\n    <RatingBar\r\n        android:id=\"@+id/ratingbar_small_comment\"\r\n        style=\"@style/Widget.AppCompat.RatingBar.Indicator\"\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:numStars=\"5\"\r\n        android:rating=\"3\"\r\n        android:progressTint=\"@color/primary\"\r\n        />\r\n    </LinearLayout>\r\n    <androidx.recyclerview.widget.RecyclerView\r\n        android:id=\"@+id/rcv_comment_comment\"\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        />\r\n</androidx.appcompat.widget.LinearLayoutCompat>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_comment.xml b/app/src/main/res/layout/fragment_comment.xml
+--- a/app/src/main/res/layout/fragment_comment.xml	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/res/layout/fragment_comment.xml	(date 1669142034372)
+@@ -29,6 +29,33 @@
+         android:progressTint="@color/primary"
+         />
+     </LinearLayout>
++   <LinearLayout
++       android:layout_width="match_parent"
++       android:layout_height="wrap_content"
++       android:orientation="horizontal">
++
++       <EditText
++           android:id="@+id/etv_comment_commentfg"
++           android:layout_width="0dp"
++           android:layout_height="wrap_content"
++           android:hint="@string/hint_comment"
++           android:layout_weight="1"/>
++
++       <ImageView
++           android:id="@+id/iv_modify_accept_comment"
++           android:layout_width="20dp"
++           android:layout_height="20dp"
++           android:layout_marginEnd="5dp"
++           android:src="@android:drawable/ic_menu_save"/>
++
++       <ImageView
++           android:id="@+id/iv_modify_cancel_comment"
++           android:layout_width="20dp"
++           android:layout_height="20dp"
++           android:layout_marginEnd="5dp"
++           android:src="@android:drawable/ic_menu_revert"/>
++
++   </LinearLayout>
+     <androidx.recyclerview.widget.RecyclerView
+         android:id="@+id/rcv_comment_comment"
+         android:layout_width="match_parent"
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">SilenceLake</string>\r\n    <string name=\"bnv_home\">홈</string>\r\n    <string name=\"bnv_menu\">메뉴</string>\r\n    <string name=\"bnv_mypage\">내정보</string>\r\n    <string name=\"id_hint\">ID</string>\r\n    <string name=\"pw_hint\">PW</string>\r\n    <string name=\"button_login\">Login</string>\r\n    <string name=\"button_join\">Join</string>\r\n    <string name=\"nickname_hint\">Nickname</string>\r\n    <string name=\"product_name_kor\">아이스 초코라떼</string>\r\n    <string name=\"product_name_eng\">Iced Chocolate Latte</string>\r\n    <string name=\"recommended_title\">추천 메뉴</string>\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"content_welcome_mypage\">환영합니다</string>\r\n    <string name=\"order\">ORDER</string>\r\n    <string name=\"comment\">COMMENT</string>\r\n    <string name=\"coffee_size_tall\">Tall</string>\r\n    <string name=\"coffee_size_grande\">Grande</string>\r\n    <string name=\"coffee_size_venti\">Venti</string>\r\n    <string name=\"size\">사이즈</string>\r\n    <string name=\"quantity_title\">주문 수량</string>\r\n    <string name=\"store\">담기</string>\r\n    <string name=\"nfc_title\">편의시설</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/res/values/strings.xml	(date 1669141713846)
+@@ -22,4 +22,5 @@
+     <string name="quantity_title">주문 수량</string>
+     <string name="store">담기</string>
+     <string name="nfc_title">편의시설</string>
++    <string name="hint_comment">댓글을 입력하세요</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.shoppinglist\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.util.Log\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport androidx.lifecycle.ViewModel\r\nimport androidx.lifecycle.viewModelScope\r\n\r\nimport com.ssafy.smartstore.response.MenuDetailWithCommentResponse\r\nimport com.ssafy.smartstore.service.ProductService\r\nimport kotlinx.coroutines.launch\r\n\r\nclass ShoppingListViewModel: ViewModel() {\r\n    //선택된 하나의 메뉴\r\n    private val _selectedProduct = MutableLiveData<List<MenuDetailWithCommentResponse>>()\r\n    val selectedProduct: LiveData<List<MenuDetailWithCommentResponse>>\r\n        get() = _selectedProduct\r\n    \r\n    fun getSelectedProduct(id: Int) = viewModelScope.launch{\r\n        _selectedProduct.value = ProductService().getProductWithComments(id)\r\n        Log.d(TAG, \"getSelectedProduct: ${_selectedProduct.value}\")\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt	(revision 5c1cc9a8290570cff5aaa6e7cd42d7e4646e101d)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt	(date 1669140926216)
+@@ -16,9 +16,13 @@
+     private val _selectedProduct = MutableLiveData<List<MenuDetailWithCommentResponse>>()
+     val selectedProduct: LiveData<List<MenuDetailWithCommentResponse>>
+         get() = _selectedProduct
+-    
++
++    private var _productId = 0
++    val productId: Int
++        get() = _productId
++
+     fun getSelectedProduct(id: Int) = viewModelScope.launch{
++        _productId = id
+         _selectedProduct.value = ProductService().getProductWithComments(id)
+-        Log.d(TAG, "getSelectedProduct: ${_selectedProduct.value}")
+     }
+ }
+\ No newline at end of file

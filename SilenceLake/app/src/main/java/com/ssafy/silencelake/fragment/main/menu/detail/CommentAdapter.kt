@@ -8,77 +8,89 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.databinding.CommentListItemBinding
+import com.ssafy.silencelake.dto.CommentDto
 
-class CommentAdapter(var list: List<Int>) :
+class CommentAdapter(var commentList: List<CommentDto>) :
     RecyclerView.Adapter<CommentAdapter.CommentHolder>() {
-    interface ItemClickListener {
-//        fun onAcceptClick(comment: Comment)
-//        fun onDeleteClick(id: Int)
-    }
-    //클릭리스너 선언
     private lateinit var itemClickListner: ItemClickListener
     fun setItemClickListener(itemClickListener: ItemClickListener) {
         this.itemClickListner = itemClickListener
     }
 
-    inner class CommentHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val cancelButton = itemView.findViewById<ImageView>(R.id.iv_modify_cancel_comment)
-        val deleteButton = itemView.findViewById<ImageView>(R.id.iv_delete_comment)
-        val modifyButton = itemView.findViewById<ImageView>(R.id.iv_modify_comment)
-        val acceptButton = itemView.findViewById<ImageView>(R.id.iv_modify_accept_comment)
-        val etCommentContent = itemView.findViewById<EditText>(R.id.editText_content_comment)
-        val noticeContent = itemView.findViewById<TextView>(R.id.text_noticeContent_comment)
+    inner class CommentHolder(val binding: CommentListItemBinding) : RecyclerView.ViewHolder(binding.root) {
 
-        fun bindInfo(data: Int) {
+        fun bindInfo(data: CommentDto) {
             hideAllButton()
-            itemView.apply {
-                noticeContent.text = data.toString()
-                showButtonOnMyComment(1)
-            }
-            modifyButton.setOnClickListener {
+            binding.textNoticeContentComment.text = data.comment
+
+            showButtonOnMyComment(1)
+
+            acceptBtnEventListener()
+            modifyBtnEventListener()
+            deleteBtnEventListener()
+        }
+
+        private fun acceptBtnEventListener(){
+            binding.ivModifyAcceptComment.setOnClickListener {
                 hideAllButton()
-                etCommentContent.visibility = View.VISIBLE
-                acceptButton.visibility = View.VISIBLE
-                cancelButton.visibility = View.VISIBLE
-                noticeContent.visibility = View.GONE
+                binding.apply {
+                    editTextContentComment.visibility = View.VISIBLE
+                    ivModifyAcceptComment.visibility = View.VISIBLE
+                    ivModifyCancelComment.visibility = View.VISIBLE
+                    textNoticeContentComment.visibility = View.GONE
+                }
             }
-            acceptButton.setOnClickListener {
+        }
+
+        private fun modifyBtnEventListener(){
+            binding.ivModifyAcceptComment.setOnClickListener {
                 hideAllButton()
                 showButtonOnMyComment(1)
 //                val comment = Comment(data.commentId, data.userId!!, -1, data.productRating.toFloat(), etCommentContent.text.toString())
 //                itemClickListner.onAcceptClick(comment)
             }
-            deleteButton.setOnClickListener {
+        }
+
+        private fun deleteBtnEventListener(){
+            binding.ivDeleteComment.setOnClickListener {
 //                itemClickListner.onDeleteClick(data.commentId)
             }
         }
-        fun showButtonOnMyComment(userId: Int){
-            if(userId == 1){
-                modifyButton.visibility = View.VISIBLE
-                deleteButton.visibility = View.VISIBLE
+
+        fun showButtonOnMyComment(userId: Int) {
+            if (userId == 1) {
+                binding.ivModifyComment.visibility = View.VISIBLE
+                binding.ivDeleteComment.visibility = View.VISIBLE
             }
         }
         fun hideAllButton() {
-            cancelButton.visibility = View.GONE
-            deleteButton.visibility = View.GONE
-            modifyButton.visibility = View.GONE
-            acceptButton.visibility = View.GONE
-            etCommentContent.visibility = View.GONE
+            binding.apply {
+                ivModifyCancelComment.visibility = View.GONE
+                ivDeleteComment.visibility = View.GONE
+                ivModifyComment.visibility = View.GONE
+                ivModifyAcceptComment.visibility = View.GONE
+                editTextContentComment.visibility = View.GONE
+            }
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentHolder {
         val view =
-            LayoutInflater.from(parent.context).inflate(R.layout.comment_list_item, parent, false)
+            CommentListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CommentHolder(view)
     }
 
     override fun onBindViewHolder(holder: CommentHolder, position: Int) {
-        holder.bindInfo(list[position])
+        holder.bindInfo(commentList[position])
     }
 
-    override fun getItemCount(): Int {
-        return list.size
+    override fun getItemCount(): Int = commentList.size
+
+    interface ItemClickListener {
+        fun onAcceptClick(comment: CommentDto)
+        fun onDeleteClick(id: Int)
+        fun onModifyClick(comment: CommentDto)
     }
 }

@@ -51,7 +51,6 @@ class ProductMenuFragment : Fragment() {
         menuAdapter.productMenuItemClickListener = object: ProductMenuAdapter.ProductMenuItemClickListener{
             override fun onClick(id: Int) {
                 activityViewModel.getSelectedProduct(id)
-                activityViewModel.productId = id
                 mainActivity.openProductDetail()
             }
         }

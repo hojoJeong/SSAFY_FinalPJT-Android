@@ -22,4 +22,5 @@
     <string name="quantity_title">주문 수량</string>
     <string name="store">담기</string>
     <string name="nfc_title">편의시설</string>
+    <string name="hint_comment">댓글을 입력하세요</string>
 </resources>
