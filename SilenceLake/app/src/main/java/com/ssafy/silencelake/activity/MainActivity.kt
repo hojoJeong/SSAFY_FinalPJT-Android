@@ -9,7 +9,7 @@ import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
 import com.ssafy.silencelake.fragment.main.home.HomeFragment
 import com.ssafy.silencelake.fragment.main.menu.ProductMenuFragment
-import com.ssafy.silencelake.fragment.main.menu.ShoppingListFragment
+import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListFragment
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import com.ssafy.silencelake.fragment.main.mypage.MypageFragment
 import com.ssafy.silencelake.fragment.main.mypage.UserResponseViewModel

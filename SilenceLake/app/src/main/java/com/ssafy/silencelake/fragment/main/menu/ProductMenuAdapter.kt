@@ -17,21 +17,27 @@ import com.ssafy.silencelake.dto.ProductDto
 import com.ssafy.silencelake.util.ApplicationClass
 
 private const val TAG = "ProductMenuAdapter_싸피"
-class ProductMenuAdapter(val context: Context, var list: List<ProductDto>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
-    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
+class ProductMenuAdapter(val context: Context, var list: List<ProductDto>) :
+    RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
+    lateinit var productMenuItemClickListener: ProductMenuItemClickListener
+
+    interface ProductMenuItemClickListener {
+        fun onClick(id: Int)
+    }
+
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_menu)
         val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_menu)
         val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_menu)
-        fun bindInfo(item: ProductDto){
+        fun bindInfo(item: ProductDto) {
             Glide.with(itemView)
                 .load(item.img)
                 .into(imgProductMenu)
             productNameKor.text = item.name
             productNameEng.text = item.nameEng
-            Log.d(TAG, "bindInfo: ${item.nameEng}")
             itemView.setOnClickListener {
-                val mainActivity = context as MainActivity
-                mainActivity.openProductDetail()
+                productMenuItemClickListener.onClick(item.id)
             }
         }
     }
@@ -42,7 +48,7 @@ class ProductMenuAdapter(val context: Context, var list: List<ProductDto>):Recyc
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.apply{
+        holder.apply {
             bindInfo(list[position])
         }
     }

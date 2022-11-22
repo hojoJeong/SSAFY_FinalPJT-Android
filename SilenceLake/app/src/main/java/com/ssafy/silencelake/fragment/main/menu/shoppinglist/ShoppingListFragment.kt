@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.fragment.main.menu
+package com.ssafy.silencelake.fragment.main.menu.shoppinglist
 
 import android.content.Context
 import android.os.Bundle

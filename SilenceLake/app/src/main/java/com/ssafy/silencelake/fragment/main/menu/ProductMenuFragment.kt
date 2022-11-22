@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentProductMenuBinding
 import com.ssafy.silencelake.fragment.main.menu.ProductMenuAdapter
+import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
 import com.ssafy.smartstore.service.ProductService
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,7 +28,8 @@ class ProductMenuFragment : Fragment() {
     private lateinit var binding: FragmentProductMenuBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var menuAdapter: ProductMenuAdapter
-    private val productViewModel by activityViewModels<ProductMenuViewModel>()
+    private val activityViewModel by activityViewModels<ShoppingListViewModel>()
+    private val productViewModel by viewModels<ProductMenuViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -46,6 +48,12 @@ class ProductMenuFragment : Fragment() {
 
         productViewModel.getProductList()
         menuAdapter = ProductMenuAdapter(requireContext(), listOf())
+        menuAdapter.productMenuItemClickListener = object: ProductMenuAdapter.ProductMenuItemClickListener{
+            override fun onClick(id: Int) {
+                activityViewModel.getSelectedProduct(id)
+                mainActivity.openProductDetail()
+            }
+        }
         binding.apply {
             rcvProductmenuMenu.adapter = menuAdapter
             rcvProductmenuMenu.layoutManager = LinearLayoutManager(context)

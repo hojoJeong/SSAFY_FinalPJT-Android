@@ -10,8 +10,10 @@
     <ImageView
         android:id="@+id/img_product_order"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="200dp"
         android:background="@color/lightbrown"
+        app:layout_constraintBottom_toTopOf="@id/text_productNameKor_order"
+        android:scaleType="fitCenter"
         android:paddingVertical="8dp"
         android:src="@drawable/choco"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,6 +26,7 @@
         android:textColor="@color/primary"
         android:textSize="24dp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/text_productNameEng_order"
         app:layout_constraintTop_toBottomOf="@+id/img_product_order" />
 
     <TextView
@@ -32,6 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/product_name_eng"
         android:textColor="@color/product_name_eng"
+        app:layout_constraintBottom_toTopOf="@id/tabLayout_order"
         app:layout_constraintTop_toBottomOf="@+id/text_productNameKor_order" />
 
     <com.google.android.material.tabs.TabLayout
@@ -40,10 +44,8 @@
         android:layout_height="wrap_content"
         app:layout_constraintTop_toBottomOf="@+id/text_productNameEng_order"
         app:tabIndicatorColor="@color/primary"
+        app:layout_constraintBottom_toTopOf="@id/viewPager_order"
         app:tabSelectedTextColor="@color/primary" />
-
-
-
         <androidx.viewpager2.widget.ViewPager2
             android:id="@+id/viewPager_order"
             android:layout_width="match_parent"
