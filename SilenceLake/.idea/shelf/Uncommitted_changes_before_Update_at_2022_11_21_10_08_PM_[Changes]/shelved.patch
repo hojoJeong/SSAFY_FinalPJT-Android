@@ -1,0 +1,133 @@
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\n    xmlns:tools=\"http://schemas.android.com/tools\"\n    android:layout_width=\"match_parent\"\n    android:layout_height=\"match_parent\"\n    tools:context=\".LoginActivity\">\n    <ImageView\n        android:id=\"@+id/img_logo_join\"\n        app:layout_constraintStart_toStartOf=\"parent\"\n        app:layout_constraintTop_toTopOf=\"parent\"\n        android:layout_marginTop=\"64dp\"\n        android:layout_width=\"wrap_content\"\n        android:layout_height=\"wrap_content\"\n        android:adjustViewBounds=\"true\"\n        android:src=\"@drawable/logo\"/>\n    <com.google.android.material.textfield.TextInputLayout\n        android:layout_marginHorizontal=\"32dp\"\n        app:layout_constraintTop_toBottomOf=\"@id/img_logo_join\"\n        android:id=\"@+id/textfield_id_join\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:hint=\"@string/id_hint\">\n\n        <com.google.android.material.textfield.TextInputEditText\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            />\n\n    </com.google.android.material.textfield.TextInputLayout>\n    <com.google.android.material.textfield.TextInputLayout\n        android:layout_marginHorizontal=\"32dp\"\n        android:id=\"@+id/textfield_pw_join\"\n        app:layout_constraintTop_toBottomOf=\"@id/textfield_id_join\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        android:hint=\"@string/pw_hint\">\n\n        <com.google.android.material.textfield.TextInputEditText\n            android:layout_width=\"match_parent\"\n            android:layout_height=\"wrap_content\"\n            />\n    </com.google.android.material.textfield.TextInputLayout>\n    <LinearLayout\n        android:id=\"@+id/linearlayout_btn_login\"\n        android:layout_marginHorizontal=\"32dp\"\n        app:layout_constraintTop_toBottomOf=\"@id/textfield_pw_join\"\n        android:layout_width=\"match_parent\"\n        android:layout_height=\"wrap_content\"\n        >\n        <Button\n            android:id=\"@+id/button_login_login\"\n            android:layout_weight=\"1\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:text=\"@string/button_login\"\n            android:textColor=\"@color/primary\"\n            app:layout_constraintTop_toBottomOf=\"@id/textfield_pw_join\"\n            app:layout_constraintStart_toStartOf=\"parent\"\n            app:layout_constraintEnd_toStartOf=\"@id/button_join_login\"\n            style=\"?attr/materialButtonOutlinedStyle\"\n            />\n        <Button\n            android:id=\"@+id/button_join_login\"\n            android:layout_weight=\"1\"\n            android:layout_width=\"wrap_content\"\n            android:layout_height=\"wrap_content\"\n            android:textColor=\"@color/primary\"\n            android:text=\"@string/button_join\"\n            app:layout_constraintTop_toBottomOf=\"@id/textfield_pw_join\"\n            app:layout_constraintStart_toEndOf=\"@id/button_login_login\"\n            app:layout_constraintEnd_toEndOf=\"parent\"\n            style=\"?attr/materialButtonOutlinedStyle\"\n            />\n    </LinearLayout>\n\n</androidx.constraintlayout.widget.ConstraintLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_login.xml b/app/src/main/res/layout/fragment_login.xml
+--- a/app/src/main/res/layout/fragment_login.xml	
++++ b/app/src/main/res/layout/fragment_login.xml	
+@@ -5,73 +5,77 @@
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+     tools:context=".LoginActivity">
++
+     <ImageView
+         android:id="@+id/img_logo_join"
+-        app:layout_constraintStart_toStartOf="parent"
+-        app:layout_constraintTop_toTopOf="parent"
+-        android:layout_marginTop="64dp"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
++        android:layout_marginTop="64dp"
+         android:adjustViewBounds="true"
+-        android:src="@drawable/logo"/>
++        android:src="@drawable/logo"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        />
++
+     <com.google.android.material.textfield.TextInputLayout
+-        android:layout_marginHorizontal="32dp"
+-        app:layout_constraintTop_toBottomOf="@id/img_logo_join"
+         android:id="@+id/textfield_id_join"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:hint="@string/id_hint">
++        android:layout_marginHorizontal="52dp"
++        android:hint="@string/id_hint"
++        app:boxBackgroundColor="@color/white"
++        app:layout_constraintTop_toBottomOf="@id/img_logo_join">
+ 
+         <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             />
+-
+     </com.google.android.material.textfield.TextInputLayout>
++
+     <com.google.android.material.textfield.TextInputLayout
+-        android:layout_marginHorizontal="32dp"
+         android:id="@+id/textfield_pw_join"
+-        app:layout_constraintTop_toBottomOf="@id/textfield_id_join"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:hint="@string/pw_hint">
++        android:layout_marginHorizontal="52dp"
++        android:hint="@string/pw_hint"
++        app:boxBackgroundColor="@color/white"
++        app:layout_constraintTop_toBottomOf="@id/textfield_id_join">
+ 
+         <com.google.android.material.textfield.TextInputEditText
+             android:layout_width="match_parent"
+-            android:layout_height="wrap_content"
+-            />
++            android:layout_height="wrap_content" />
+     </com.google.android.material.textfield.TextInputLayout>
++
+     <LinearLayout
+         android:id="@+id/linearlayout_btn_login"
+-        android:layout_marginHorizontal="32dp"
+-        app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        >
++        android:layout_marginHorizontal="52dp"
++        app:layout_constraintTop_toBottomOf="@id/textfield_pw_join">
++
+         <Button
+             android:id="@+id/button_login_login"
+-            android:layout_weight="1"
++            style="?attr/materialButtonOutlinedStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
++            android:layout_weight="1"
+             android:text="@string/button_login"
+             android:textColor="@color/primary"
+-            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
++            app:layout_constraintEnd_toStartOf="@id/button_join_login"
+             app:layout_constraintStart_toStartOf="parent"
+-            app:layout_constraintEnd_toStartOf="@id/button_join_login"
+-            style="?attr/materialButtonOutlinedStyle"
+-            />
++            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join" />
++
+         <Button
+             android:id="@+id/button_join_login"
+-            android:layout_weight="1"
++            style="?attr/materialButtonOutlinedStyle"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+-            android:textColor="@color/primary"
++            android:layout_weight="1"
+             android:text="@string/button_join"
+-            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
++            android:textColor="@color/primary"
++            app:layout_constraintEnd_toEndOf="parent"
+             app:layout_constraintStart_toEndOf="@id/button_login_login"
+-            app:layout_constraintEnd_toEndOf="parent"
+-            style="?attr/materialButtonOutlinedStyle"
+-            />
++            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join" />
+     </LinearLayout>
+ 
+ </androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"GradleSettings\">\n    <option name=\"linkedExternalProjectsSettings\">\n      <GradleProjectSettings>\n        <option name=\"testRunner\" value=\"GRADLE\" />\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\n        <option name=\"modules\">\n          <set>\n            <option value=\"$PROJECT_DIR$\" />\n            <option value=\"$PROJECT_DIR$/app\" />\n          </set>\n        </option>\n      </GradleProjectSettings>\n    </option>\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	
++++ b/.idea/gradle.xml	
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>

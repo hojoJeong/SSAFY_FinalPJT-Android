@@ -1,0 +1,124 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <application\n        android:allowBackup=\"true\"\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\n        android:fullBackupContent=\"@xml/backup_rules\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/Theme.SilenceLake\"\n        tools:targetApi=\"31\">\n        <activity\n            android:name=\".MainActivity\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n\n            <meta-data\n                android:name=\"android.app.lib_name\"\n                android:value=\"\" />\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 34927790a06143016060675aefd5d7c3602e4760)
++++ b/app/src/main/AndroidManifest.xml	(date 1668732306220)
+@@ -13,6 +13,19 @@
+         android:theme="@style/Theme.SilenceLake"
+         tools:targetApi="31">
+         <activity
++            android:name=".LoginActivity"
++            android:exported="true">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++
++            <meta-data
++                android:name="android.app.lib_name"
++                android:value="" />
++        </activity>
++        <activity
+             android:name=".MainActivity"
+             android:exported="true">
+             <intent-filter>
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_login.xml b/app/src/main/res/layout/activity_login.xml
+new file mode 100644
+--- /dev/null	(date 1668733899554)
++++ b/app/src/main/res/layout/activity_login.xml	(date 1668733899554)
+@@ -0,0 +1,61 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".LoginActivity">
++    <ImageView
++        android:id="@+id/img_logo_login"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        app:layout_constraintBottom_toTopOf="@id/idTextField"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:adjustViewBounds="true"
++        android:src="@drawable/logo"/>
++    <com.google.android.material.textfield.TextInputLayout
++        android:layout_marginHorizontal="32dp"
++        app:layout_constraintTop_toBottomOf="@id/img_logo_login"
++        app:layout_constraintBottom_toTopOf="@id/pwTextField"
++        android:id="@+id/idTextField"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="ID">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            />
++
++    </com.google.android.material.textfield.TextInputLayout>
++    <com.google.android.material.textfield.TextInputLayout
++        android:layout_marginHorizontal="32dp"
++        android:id="@+id/pwTextField"
++        app:layout_constraintTop_toBottomOf="@id/idTextField"
++        app:layout_constraintBottom_toBottomOf="parent"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="PW">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            />
++    </com.google.android.material.textfield.TextInputLayout>
++    <Button
++        android:id="@+id/btnSignin"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:text="Login"
++        app:layout_constraintTop_toBottomOf="@id/pwTextField"
++        app:layout_constraintStart_toStartOf="parent"
++        />
++    <Button
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:id="@+id/SIGNUP"
++        app:layout_constraintTop_toBottomOf="@id/pwTextField"
++        app:layout_constraintStart_toStartOf="@id/btnSignin"
++        />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/LoginActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt b/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt
+new file mode 100644
+--- /dev/null	(date 1668732306046)
++++ b/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt	(date 1668732306046)
+@@ -0,0 +1,11 @@
++package com.ssafy.silencelake
++
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++
++class LoginActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_login)
++    }
++}
+\ No newline at end of file

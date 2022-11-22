@@ -1,0 +1,384 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/ProductMenuFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu\n\nimport android.content.Context\nimport android.os.Bundle\nimport android.util.Log\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.fragment.app.activityViewModels\nimport androidx.fragment.app.viewModels\nimport androidx.recyclerview.widget.DividerItemDecoration\nimport androidx.recyclerview.widget.LinearLayoutManager\nimport androidx.recyclerview.widget.RecyclerView.LayoutManager\nimport androidx.recyclerview.widget.RecyclerView.VERTICAL\nimport com.ssafy.silencelake.activity.MainActivity\nimport com.ssafy.silencelake.databinding.FragmentProductMenuBinding\nimport com.ssafy.silencelake.fragment.main.menu.ProductMenuAdapter\nimport com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel\nimport com.ssafy.smartstore.service.ProductService\nimport kotlinx.coroutines.CoroutineScope\nimport kotlinx.coroutines.Dispatchers\nimport kotlinx.coroutines.launch\n\n\nprivate const val TAG = \"ProductMenuFragment_싸피\"\nclass ProductMenuFragment : Fragment() {\n    private lateinit var binding: FragmentProductMenuBinding\n    private lateinit var mainActivity: MainActivity\n    private lateinit var menuAdapter: ProductMenuAdapter\n    private val activityViewModel by activityViewModels<ShoppingListViewModel>()\n    private val productViewModel by viewModels<ProductMenuViewModel>()\n\n    override fun onAttach(context: Context) {\n        super.onAttach(context)\n        mainActivity = context as MainActivity\n    }\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        binding = FragmentProductMenuBinding.inflate(inflater, container, false)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n\n        productViewModel.getProductList()\n        menuAdapter = ProductMenuAdapter(requireContext(), listOf())\n        menuAdapter.productMenuItemClickListener = object: ProductMenuAdapter.ProductMenuItemClickListener{\n            override fun onClick(id: Int) {\n                activityViewModel.getSelectedProduct(id)\n                mainActivity.openProductDetail()\n            }\n        }\n        binding.apply {\n            rcvProductmenuMenu.adapter = menuAdapter\n            rcvProductmenuMenu.layoutManager = LinearLayoutManager(context)\n            rcvProductmenuMenu.addItemDecoration(DividerItemDecoration(context, VERTICAL))\n        }\n        productViewModel.menuProductList.observe(viewLifecycleOwner){\n            Log.d(TAG, \"onViewCreated: it\")\n            menuAdapter.list = it\n            menuAdapter.notifyDataSetChanged()\n        }\n\n        binding.fab.setOnClickListener {\n            mainActivity.openShoppingList()\n        }\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/ProductMenuFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/ProductMenuFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/ProductMenuFragment.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/ProductMenuFragment.kt	(date 1669136998902)
+@@ -51,6 +51,7 @@
+         menuAdapter.productMenuItemClickListener = object: ProductMenuAdapter.ProductMenuItemClickListener{
+             override fun onClick(id: Int) {
+                 activityViewModel.getSelectedProduct(id)
++                activityViewModel.productId = id
+                 mainActivity.openProductDetail()
+             }
+         }
+Index: app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.util\n\nimport android.app.Application\nimport com.ssafy.smartstore.intercepter.AddCookiesInterceptor\nimport com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor\nimport okhttp3.OkHttpClient\nimport okhttp3.logging.HttpLoggingInterceptor\nimport retrofit2.Retrofit\nimport retrofit2.converter.gson.GsonConverterFactory\nimport java.util.concurrent.TimeUnit\nimport java.util.prefs.AbstractPreferences\n\nclass ApplicationClass : Application() {\n\n    companion object {\n        const val SERVER_URL = \"http://192.168.33.134:9999/\"\n        lateinit var sharedPreferencesUtil: SharedPreferencesUtil\n        lateinit var retrofit: Retrofit\n    }\n\n    override fun onCreate() {\n        super.onCreate()\n        sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)\n\n        val okHttpClient = OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)\n            .connectTimeout(5000, TimeUnit.MILLISECONDS)\n            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))\n            .addInterceptor(AddCookiesInterceptor())\n            .addInterceptor(ReceivedCookiesInterceptor())\n            .connectTimeout(30, TimeUnit.SECONDS).build()\n        retrofit = Retrofit.Builder()\n            .baseUrl(SERVER_URL)\n            .addConverterFactory(GsonConverterFactory.create())\n            .client(okHttpClient)\n            .build()\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+--- a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(date 1669136147766)
+@@ -13,7 +13,7 @@
+ class ApplicationClass : Application() {
+ 
+     companion object {
+-        const val SERVER_URL = "http://192.168.33.134:9999/"
++        const val SERVER_URL = "http://192.168.0.5:9999/"
+         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+         lateinit var retrofit: Retrofit
+     }
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/OrderFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.detail\n\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.fragment.app.activityViewModels\nimport com.ssafy.silencelake.R\nimport com.ssafy.silencelake.databinding.FragmentOrderBinding\nimport com.ssafy.silencelake.dto.OrderDetail\nimport com.ssafy.silencelake.dto.OrderDto\nimport com.ssafy.silencelake.dto.Stamp\nimport com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel\nimport com.ssafy.silencelake.util.ApplicationClass\nimport java.util.*\n\n\nclass OrderFragment : Fragment() {\n    private lateinit var binding: FragmentOrderBinding\n    private val activityViewModel by activityViewModels<ShoppingListViewModel>()\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        binding = FragmentOrderBinding.inflate(inflater, container, false)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n        updateTotalPrice()\n        binding.apply {\n            buttonMinusOrder.setOnClickListener {\n                if (textQuantityOrder.text.toString().toInt() > 1) {\n                    textQuantityOrder.text = \"${textQuantityOrder.text.toString().toInt() - 1}\"\n                    updateTotalPrice()\n                }\n            }\n            buttonPlusOrder.setOnClickListener {\n                textQuantityOrder.text = \"${textQuantityOrder.text.toString().toInt() + 1}\"\n                updateTotalPrice()\n\n            }\n            buttonOrderOrder.setOnClickListener {\n//                val id: Int,\n//                var userId: String,\n//                var orderTable: String,\n//                var orderTime: Date,\n//                var completed: Char,\n//                var orderDetail: MutableList<OrderDetail>,\n//                var stamp: Stamp\n//                val order = OrderDto()\n            }\n        }\n    }\n\n    fun updateTotalPrice() {\n        binding.textTotalPriceOrder.text = \"${\n            activityViewModel.selectedProduct.value!!.get(0)!!.productPrice * binding.textQuantityOrder.text.toString()\n                .toInt()\n        }원\"\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/OrderFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/OrderFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/OrderFragment.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/OrderFragment.kt	(date 1669138121565)
+@@ -1,6 +1,7 @@
+ package com.ssafy.silencelake.fragment.main.menu.detail
+ 
+ import android.os.Bundle
++import android.util.Log
+ import androidx.fragment.app.Fragment
+ import android.view.LayoutInflater
+ import android.view.View
+@@ -10,12 +11,13 @@
+ import com.ssafy.silencelake.databinding.FragmentOrderBinding
+ import com.ssafy.silencelake.dto.OrderDetail
+ import com.ssafy.silencelake.dto.OrderDto
++import com.ssafy.silencelake.dto.ShoppingCart
+ import com.ssafy.silencelake.dto.Stamp
+ import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
+ import com.ssafy.silencelake.util.ApplicationClass
+ import java.util.*
+ 
+-
++private const val TAG = "OrderFragment_싸피"
+ class OrderFragment : Fragment() {
+     private lateinit var binding: FragmentOrderBinding
+     private val activityViewModel by activityViewModels<ShoppingListViewModel>()
+@@ -30,6 +32,7 @@
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
+         updateTotalPrice()
++        Log.d(TAG, "onViewCreated: ${activityViewModel.productId}")
+         binding.apply {
+             buttonMinusOrder.setOnClickListener {
+                 if (textQuantityOrder.text.toString().toInt() > 1) {
+@@ -43,14 +46,23 @@
+ 
+             }
+             buttonOrderOrder.setOnClickListener {
+-//                val id: Int,
+-//                var userId: String,
+-//                var orderTable: String,
+-//                var orderTime: Date,
+-//                var completed: Char,
+-//                var orderDetail: MutableList<OrderDetail>,
+-//                var stamp: Stamp
+-//                val order = OrderDto()
++//                val menuId: Int,
++//                val menuImg: String,
++//                val menuName: String,
++//                var menuCnt: Int,
++//                val menuPrice: Int,
++//                var totalPrice: Int = menuCnt * menuPrice,
++//                val type: String,
++                var checkedChip = "tall" 
++                when(chipGroupCoffeeSizeOrder.checkedChipId){
++                   R.id.chip_tall -> checkedChip = "tall"
++                   R.id.chip_grande -> checkedChip = "grande"
++                   R.id.chip_venti -> checkedChip = "venti" 
++                }
++                val item = activityViewModel.selectedProduct.value?.get(0)!!
++                activityViewModel.list.add(ShoppingCart(activityViewModel.productId, item.productImg, item.productName, textQuantityOrder.text.toString().toInt(),
++                item.productPrice, item.type, checkedChip))
++                activityViewModel.updateShoppingList()
+             }
+         }
+     }
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.detail\n\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport androidx.fragment.app.activityViewModels\nimport com.bumptech.glide.Glide\nimport com.google.android.material.tabs.TabLayoutMediator\nimport com.ssafy.silencelake.databinding.FragmentProductDetailBinding\nimport com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel\nimport com.ssafy.smartstore.response.MenuDetailWithCommentResponse\n\n\nclass ProductDetailFragment : Fragment() {\n    private lateinit var binding: FragmentProductDetailBinding\n    private val activityViewModel by activityViewModels<ShoppingListViewModel>()\n    private val tabTitleArray = arrayOf(\n        \"ORDER\",\n        \"COMMENT\"\n    )\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View {\n        binding = FragmentProductDetailBinding.inflate(inflater, container, false)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n        binding.root.setOnTouchListener{_,_ ->\n            true\n        }\n        activityViewModel.selectedProduct.observe(viewLifecycleOwner){\n            initView(it[0])\n        }\n        val viewPager = binding.viewPagerOrder\n        val tabLayout = binding.tabLayoutOrder\n        viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)\n\n        TabLayoutMediator(tabLayout, viewPager) { tab, position ->\n            tab.text = tabTitleArray[position]\n        }.attach()\n    }\n\n    fun initView(item: MenuDetailWithCommentResponse){\n        Glide.with(binding.root)\n            .load(item.productImg)\n            .into(binding.imgProductOrder)\n        binding.textProductNameKorOrder.text = item.productName\n    }\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/detail/ProductDetailFragment.kt	(date 1669137419555)
+@@ -30,19 +30,19 @@
+ 
+     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+         super.onViewCreated(view, savedInstanceState)
++        val viewPager = binding.viewPagerOrder
++        val tabLayout = binding.tabLayoutOrder
++
+         binding.root.setOnTouchListener{_,_ ->
+             true
+         }
+         activityViewModel.selectedProduct.observe(viewLifecycleOwner){
+             initView(it[0])
+-        }
+-        val viewPager = binding.viewPagerOrder
+-        val tabLayout = binding.tabLayoutOrder
+-        viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
+-
+-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+-            tab.text = tabTitleArray[position]
+-        }.attach()
++            viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
++            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
++                tab.text = tabTitleArray[position]
++            }.attach()
++        }
+     }
+ 
+     fun initView(item: MenuDetailWithCommentResponse){
+Index: app/src/main/java/com/ssafy/silencelake/dto/ShoppingCart.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/dto/ShoppingCart.kt b/app/src/main/java/com/ssafy/silencelake/dto/ShoppingCart.kt
+new file mode 100644
+--- /dev/null	(date 1669137705413)
++++ b/app/src/main/java/com/ssafy/silencelake/dto/ShoppingCart.kt	(date 1669137705413)
+@@ -0,0 +1,18 @@
++package com.ssafy.silencelake.dto
++
++
++data class ShoppingCart(
++    val menuId: Int,
++    val menuImg: String,
++    val menuName: String,
++    var menuCnt: Int,
++    val menuPrice: Int,
++    val type: String,
++    val volume: String
++) {
++    var totalPrice: Int = menuCnt * menuPrice
++    fun addDupMenu(shoppingCart: ShoppingCart) {
++        this.menuCnt += shoppingCart.menuCnt
++        this.totalPrice = this.menuCnt * this.menuPrice
++    }
++}
+\ No newline at end of file
+Index: ../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/OrderServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.service;\n\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\nimport org.junit.jupiter.api.Test;\nimport com.ssafy.cafe.model.dto.Order;\nimport com.ssafy.cafe.model.dto.OrderDetail;\n\n\nclass OrderServiceTest extends AbstractServiceTest {\n\n    \n\n    @Test\n    @org.junit.jupiter.api.Order(1)\n    void makeOrderTest() {\n        Order order = new Order(user.getId(), \"table_test\", new Date(), 'N');\n        List<OrderDetail> details = new ArrayList<>();\n        details.add(new OrderDetail(1, 1));\n        details.add(new OrderDetail(2, 2));\n        details.add(new OrderDetail(2, 2));\n        order.setDetails(details);\n        \n        orderService.makeOrder(order);\n    }\n    \n    static Order last;\n    @Test\n    @org.junit.jupiter.api.Order(2)\n    void getOrderByUserTest() {\n        List<Order> orders = orderService.getOrdreByUser(user.getId());\n        System.out.println(last);\n        last = orders.get(0);\n        assertEquals(last.getOrderTable(), \"table_test\");\n        \n        orders = orderService.getOrdreByUser(\"id 02\");\n        assertEquals(orders.size(), 0);\n    }\n    \n    \n    @Test\n    @org.junit.jupiter.api.Order(3)\n    void getOrderWithDetailsTest() {\n        Order order = orderService.getOrderWithDetails(last.getId());\n        assertEquals(order.getUserId(), last.getUserId());\n        assertEquals(order.getOrderTable(), last.getOrderTable());\n        List<OrderDetail> details = order.getDetails();\n        assertEquals(details.size(), 3);\n        assertEquals(details.get(0).getQuantity(), 2);\n        last = order;\n    }\n\n\n    \n    @Test\n    @org.junit.jupiter.api.Order(4)\n    void updateOrderTest() {\n        assertEquals(last.getCompleted(), 'N');\n        last.setCompleted('Y');\n        orderService.updateOrder(last);\n        Order order = orderService.getOrderWithDetails(last.getId());\n        assertEquals(order.getCompleted(), 'Y');\n    }\n    \n    @Test\n    @org.junit.jupiter.api.Order(5)\n    void deleteOrderTest() {\n        System.out.println(\"last: \"+last);\n        List<OrderDetail> details = last.getDetails();\n        System.out.println(\"삭제 대상 목록: \"+details);\n        for(OrderDetail detail: details) {\n            dDao.delete(detail.getId());\n        }\n        dDao.delete(last.getId());\n    }\n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/OrderServiceTest.java b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/OrderServiceTest.java
+--- a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/OrderServiceTest.java	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/OrderServiceTest.java	(date 1669134090715)
+@@ -18,9 +18,9 @@
+     void makeOrderTest() {
+         Order order = new Order(user.getId(), "table_test", new Date(), 'N');
+         List<OrderDetail> details = new ArrayList<>();
+-        details.add(new OrderDetail(1, 1));
+-        details.add(new OrderDetail(2, 2));
+-        details.add(new OrderDetail(2, 2));
++        details.add(new OrderDetail(1, 1,""));
++        details.add(new OrderDetail(2, 2,""));
++        details.add(new OrderDetail(2, 2,""));
+         order.setDetails(details);
+         
+         orderService.makeOrder(order);
+Index: ../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/StampServiceTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.service;\n\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport java.util.ArrayList;\nimport java.util.Date;\nimport java.util.List;\nimport org.junit.jupiter.api.Test;\nimport com.ssafy.cafe.model.dto.Order;\nimport com.ssafy.cafe.model.dto.OrderDetail;\nimport com.ssafy.cafe.model.dto.Stamp;\nimport com.ssafy.cafe.model.dto.User;\n\n\nclass StampServiceTest extends AbstractServiceTest{\n    \n    @Test\n    @org.junit.jupiter.api.Order(1)\n    public void stampTest() {\n        User testUser = new User(\"test\", \"test\", \"test\", 0);\n        userService.join(testUser);\n        \n        Order order = new Order(testUser.getId(), \"table_test\", new Date(), 'N');\n        List<OrderDetail> details = new ArrayList<>();\n        details.add(new OrderDetail(1, 1));\n        details.add(new OrderDetail(2, 2));\n        details.add(new OrderDetail(2, 2));\n        order.setDetails(details);\n        \n        orderService.makeOrder(order);\n        \n        order = new Order(testUser.getId(), \"table_test\", new Date(), 'N');\n        details = new ArrayList<>();\n        details.add(new OrderDetail(1, 1));\n        order.setDetails(details);\n        \n        orderService.makeOrder(order);\n        \n        \n        User selected = userService.login(testUser.getId(), testUser.getPass());\n        assertEquals(selected.getStamps(), 6);\n        \n        List<Stamp> stamps = sService.selectByUser(\"test\");\n        assertEquals(stamps.size(), 2);\n        assertEquals(stamps.get(0).getQuantity(), 1);\n    }\n    \n    @Test\n    @org.junit.jupiter.api.Order(2)\n    public void cleanup() {\n       userService.leave(\"test\");\n    }\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/StampServiceTest.java b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/StampServiceTest.java
+--- a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/StampServiceTest.java	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/service/StampServiceTest.java	(date 1669134110611)
+@@ -21,16 +21,16 @@
+         
+         Order order = new Order(testUser.getId(), "table_test", new Date(), 'N');
+         List<OrderDetail> details = new ArrayList<>();
+-        details.add(new OrderDetail(1, 1));
+-        details.add(new OrderDetail(2, 2));
+-        details.add(new OrderDetail(2, 2));
++        details.add(new OrderDetail(1, 1,""));
++        details.add(new OrderDetail(2, 2,""));
++        details.add(new OrderDetail(2, 2,""));
+         order.setDetails(details);
+         
+         orderService.makeOrder(order);
+         
+         order = new Order(testUser.getId(), "table_test", new Date(), 'N');
+         details = new ArrayList<>();
+-        details.add(new OrderDetail(1, 1));
++        details.add(new OrderDetail(1, 1,""));
+         order.setDetails(details);
+         
+         orderService.makeOrder(order);
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.shoppinglist\n\nimport androidx.lifecycle.LiveData\nimport androidx.lifecycle.MutableLiveData\nimport androidx.lifecycle.ViewModel\nimport androidx.lifecycle.viewModelScope\n\nimport com.ssafy.smartstore.response.MenuDetailWithCommentResponse\nimport com.ssafy.smartstore.service.ProductService\nimport kotlinx.coroutines.launch\n\nclass ShoppingListViewModel: ViewModel() {\n    //선택된 하나의 메뉴\n    private val _selectedProduct = MutableLiveData<List<MenuDetailWithCommentResponse>>()\n    val selectedProduct: LiveData<List<MenuDetailWithCommentResponse>>\n        get() = _selectedProduct\n    fun getSelectedProduct(id: Int) = viewModelScope.launch{\n        _selectedProduct.value = ProductService().getProductWithComments(id)\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListViewModel.kt	(date 1669136998905)
+@@ -4,17 +4,29 @@
+ import androidx.lifecycle.MutableLiveData
+ import androidx.lifecycle.ViewModel
+ import androidx.lifecycle.viewModelScope
++import com.ssafy.silencelake.dto.ShoppingCart
+ 
+ import com.ssafy.smartstore.response.MenuDetailWithCommentResponse
+ import com.ssafy.smartstore.service.ProductService
+ import kotlinx.coroutines.launch
+ 
+ class ShoppingListViewModel: ViewModel() {
++    var productId = -1
+     //선택된 하나의 메뉴
+     private val _selectedProduct = MutableLiveData<List<MenuDetailWithCommentResponse>>()
++
+     val selectedProduct: LiveData<List<MenuDetailWithCommentResponse>>
+         get() = _selectedProduct
++
+     fun getSelectedProduct(id: Int) = viewModelScope.launch{
+         _selectedProduct.value = ProductService().getProductWithComments(id)
+     }
++
++    var list = mutableListOf<ShoppingCart>()
++    private val _shoppingList = MutableLiveData<List<ShoppingCart>>()
++    val shoppingList : LiveData<List<ShoppingCart>>
++        get() = _shoppingList
++    fun updateShoppingList(){
++        _shoppingList.value = list
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.shoppinglist\n\nimport android.content.Context\nimport android.os.Bundle\nimport androidx.fragment.app.Fragment\nimport android.view.LayoutInflater\nimport android.view.MotionEvent\nimport android.view.View\nimport android.view.ViewGroup\nimport com.ssafy.silencelake.activity.MainActivity\nimport com.ssafy.silencelake.databinding.FragmentShoppingListBinding\n\nclass ShoppingListFragment : Fragment() {\n    private lateinit var binding: FragmentShoppingListBinding\n    private lateinit var mainActivity: MainActivity\n    override fun onAttach(context: Context) {\n        super.onAttach(context)\n        mainActivity = context as MainActivity\n    }\n    override fun onCreateView(\n        inflater: LayoutInflater, container: ViewGroup?,\n        savedInstanceState: Bundle?\n    ): View? {\n        binding = FragmentShoppingListBinding.inflate(inflater, container, false)\n        return binding.root\n    }\n\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\n        super.onViewCreated(view, savedInstanceState)\n        binding.root.setOnTouchListener{ _, _ ->\n            true\n        }\n        binding.rcvShoppinglistShoppingList.adapter = ShoppingListAdapter(requireContext(), listOf(1,2,3,4,5))\n        binding.buttonCloseShoppingList.setOnClickListener {\n            mainActivity.onBackPressed()\n        }\n    }\n\n\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListFragment.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListFragment.kt	(date 1669138800461)
+@@ -7,12 +7,15 @@
+ import android.view.MotionEvent
+ import android.view.View
+ import android.view.ViewGroup
++import androidx.fragment.app.activityViewModels
+ import com.ssafy.silencelake.activity.MainActivity
+ import com.ssafy.silencelake.databinding.FragmentShoppingListBinding
+ 
+ class ShoppingListFragment : Fragment() {
+     private lateinit var binding: FragmentShoppingListBinding
+     private lateinit var mainActivity: MainActivity
++    private lateinit var shoppingListAdapter: ShoppingListAdapter
++    private val activityViewModel by activityViewModels<ShoppingListViewModel>()
+     override fun onAttach(context: Context) {
+         super.onAttach(context)
+         mainActivity = context as MainActivity
+@@ -30,7 +33,12 @@
+         binding.root.setOnTouchListener{ _, _ ->
+             true
+         }
+-        binding.rcvShoppinglistShoppingList.adapter = ShoppingListAdapter(requireContext(), listOf(1,2,3,4,5))
++        shoppingListAdapter = ShoppingListAdapter()
++        binding.rcvShoppinglistShoppingList.adapter = shoppingListAdapter
++        if(activityViewModel.shoppingList.value != null){
++            shoppingListAdapter.list = activityViewModel.shoppingList.value!!
++            shoppingListAdapter.notifyDataSetChanged()
++        }
+         binding.buttonCloseShoppingList.setOnClickListener {
+             mainActivity.onBackPressed()
+         }
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.menu.shoppinglist\n\nimport android.content.Context\nimport android.view.LayoutInflater\nimport android.view.View\nimport android.view.ViewGroup\nimport android.widget.ImageButton\nimport android.widget.ImageView\nimport android.widget.TextView\nimport androidx.recyclerview.widget.RecyclerView\nimport com.ssafy.silencelake.R\nimport com.ssafy.silencelake.databinding.ShoppingListItemBinding\n\nclass ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){\n    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){\n        val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_shoppingList)\n        val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_shoppingList)\n        val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_shoppingList)\n        val totalPrice = itemView.findViewById<TextView>(R.id.text_totalPrice_shoppingList)\n        val btnPlus = itemView.findViewById<ImageButton>(R.id.button_plus_shoppingList)\n        val btnMinus = itemView.findViewById<ImageButton>(R.id.button_minus_shoppingList)\n        val quantity = itemView.findViewById<TextView>(R.id.text_quantity_shoppingList)\n        fun bindInfo(item: Int){\n            imgProductMenu.setImageResource(R.drawable.choco)\n            productNameKor.text = context.getString(R.string.product_name_kor)\n            productNameEng.text = context.getString(R.string.product_name_eng)\n            btnPlus.setOnClickListener {\n                quantity.text = \"${quantity.text.toString().toInt() + 1}\"\n                totalPrice.text = \"${quantity.text.toString().toInt() * 1200}원\"\n            }\n            btnMinus.setOnClickListener {\n                quantity.text = \"${quantity.text.toString().toInt() - 1}\"\n                totalPrice.text = \"${quantity.text.toString().toInt() * 1200}원\"\n            }\n        }\n    }\n\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\n        val binding = ShoppingListItemBinding.inflate(LayoutInflater.from(context), parent, false)\n        return ViewHolder(binding.root)\n    }\n\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\n        holder.bindInfo(list[position])\n    }\n\n    override fun getItemCount(): Int {\n        return list.size\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListAdapter.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListAdapter.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListAdapter.kt	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/menu/shoppinglist/ShoppingListAdapter.kt	(date 1669138987837)
+@@ -8,11 +8,15 @@
+ import android.widget.ImageView
+ import android.widget.TextView
+ import androidx.recyclerview.widget.RecyclerView
++import com.bumptech.glide.Glide
+ import com.ssafy.silencelake.R
+ import com.ssafy.silencelake.databinding.ShoppingListItemBinding
++import com.ssafy.silencelake.dto.ShoppingCart
+ 
+-class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
++class ShoppingListAdapter: RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
++    var list = emptyList<ShoppingCart>()
+     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
++
+         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_shoppingList)
+         val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_shoppingList)
+         val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_shoppingList)
+@@ -20,10 +24,12 @@
+         val btnPlus = itemView.findViewById<ImageButton>(R.id.button_plus_shoppingList)
+         val btnMinus = itemView.findViewById<ImageButton>(R.id.button_minus_shoppingList)
+         val quantity = itemView.findViewById<TextView>(R.id.text_quantity_shoppingList)
+-        fun bindInfo(item: Int){
+-            imgProductMenu.setImageResource(R.drawable.choco)
+-            productNameKor.text = context.getString(R.string.product_name_kor)
+-            productNameEng.text = context.getString(R.string.product_name_eng)
++        fun bindInfo(item: ShoppingCart){
++            Glide.with(itemView)
++                .load(item.menuImg)
++                .into(imgProductMenu)
++            productNameKor.text = item.menuName
++            productNameEng.text = ""
+             btnPlus.setOnClickListener {
+                 quantity.text = "${quantity.text.toString().toInt() + 1}"
+                 totalPrice.text = "${quantity.text.toString().toInt() * 1200}원"
+@@ -36,7 +42,7 @@
+     }
+ 
+     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+-        val binding = ShoppingListItemBinding.inflate(LayoutInflater.from(context), parent, false)
++        val binding = ShoppingListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+         return ViewHolder(binding.root)
+     }
+ 
+Index: ../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/dao/OrderDetailTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.dao;\n\nimport static org.junit.jupiter.api.Assertions.assertEquals;\nimport static org.junit.jupiter.api.Assertions.assertNotNull;\nimport static org.junit.jupiter.api.Assertions.assertNull;\nimport java.util.List;\nimport org.junit.jupiter.api.Test;\nimport org.springframework.beans.factory.annotation.Autowired;\nimport org.springframework.boot.test.context.SpringBootTest;\nimport org.springframework.transaction.annotation.Transactional;\nimport com.ssafy.cafe.model.dao.OrderDao;\nimport com.ssafy.cafe.model.dao.OrderDetailDao;\nimport com.ssafy.cafe.model.dao.ProductDao;\nimport com.ssafy.cafe.model.dto.Comment;\nimport com.ssafy.cafe.model.dto.Order;\nimport com.ssafy.cafe.model.dto.OrderDetail;\nimport com.ssafy.cafe.model.dto.Product;\n\nclass OrderDetailTest extends AbstractDaoTest{\n\n    private static OrderDetail last ;\n    \n    @Test\n    @org.junit.jupiter.api.Order(1)\n    public void selectTest() {\n        OrderDetail selected = dDao.select(1);\n        assertEquals(selected.getProductId(), 1);\n    }\n    \n    @Test\n    @org.junit.jupiter.api.Order(2)\n    public void insertTest() {\n        OrderDetail detail = new OrderDetail(1,1,10);\n        int result = dDao.insert(detail);\n        assertEquals(result, 1);\n    }\n    \n    @Test\n    @org.junit.jupiter.api.Order(3)\n    public void selectAll() {\n        List<OrderDetail> result = dDao.selectAll();\n        last = result.get(0);\n        \n        assertEquals(last.getQuantity(), 10);\n    }\n\n    @Test\n    @org.junit.jupiter.api.Order(4)\n    public void deleteTest() {\n        System.out.println(last);\n        int result = dDao.delete(last.getId());\n        assertEquals(result, 1);\n        \n        OrderDetail selected = dDao.select(last.getId());\n        assertNull(selected);\n    }\n    \n\n}\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/dao/OrderDetailTest.java b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/dao/OrderDetailTest.java
+--- a/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/dao/OrderDetailTest.java	(revision 3025daaecfe87c6d1189656d339042e867fd0b04)
++++ b/../mobile_through_project_final_no_lombok/src/test/java/com/ssafy/cafe/dao/OrderDetailTest.java	(date 1669134073844)
+@@ -30,7 +30,7 @@
+     @Test
+     @org.junit.jupiter.api.Order(2)
+     public void insertTest() {
+-        OrderDetail detail = new OrderDetail(1,1,10);
++        OrderDetail detail = new OrderDetail(1,1,10,"");
+         int result = dDao.insert(detail);
+         assertEquals(result, 1);
+     }

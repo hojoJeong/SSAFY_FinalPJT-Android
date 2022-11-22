@@ -1,0 +1,411 @@
+Index: app/src/main/AndroidManifest.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\n<manifest xmlns:android=\"http://schemas.android.com/apk/res/android\"\n    xmlns:tools=\"http://schemas.android.com/tools\">\n\n    <application\n        android:allowBackup=\"true\"\n        android:dataExtractionRules=\"@xml/data_extraction_rules\"\n        android:fullBackupContent=\"@xml/backup_rules\"\n        android:icon=\"@mipmap/ic_launcher\"\n        android:label=\"@string/app_name\"\n        android:roundIcon=\"@mipmap/ic_launcher_round\"\n        android:supportsRtl=\"true\"\n        android:theme=\"@style/Theme.SilenceLake\"\n        tools:targetApi=\"31\">\n        <activity\n            android:name=\".MainActivity\"\n            android:exported=\"true\">\n            <intent-filter>\n                <action android:name=\"android.intent.action.MAIN\" />\n\n                <category android:name=\"android.intent.category.LAUNCHER\" />\n            </intent-filter>\n\n            <meta-data\n                android:name=\"android.app.lib_name\"\n                android:value=\"\" />\n        </activity>\n    </application>\n\n</manifest>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+--- a/app/src/main/AndroidManifest.xml	(revision 4b582e23f60607b4d79fc48807afdd8ba519b73d)
++++ b/app/src/main/AndroidManifest.xml	(date 1668733902214)
+@@ -13,6 +13,19 @@
+         android:theme="@style/Theme.SilenceLake"
+         tools:targetApi="31">
+         <activity
++            android:name=".LoginActivity"
++            android:exported="true">
++            <intent-filter>
++                <action android:name="android.intent.action.MAIN" />
++
++                <category android:name="android.intent.category.LAUNCHER" />
++            </intent-filter>
++
++            <meta-data
++                android:name="android.app.lib_name"
++                android:value="" />
++        </activity>
++        <activity
+             android:name=".MainActivity"
+             android:exported="true">
+             <intent-filter>
+Index: app/src/main/res/values/themes.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources xmlns:tools=\"http://schemas.android.com/tools\">\n    <!-- Base application theme. -->\n    <style name=\"Theme.SilenceLake\" parent=\"Theme.MaterialComponents.DayNight.DarkActionBar\">\n        <!-- Primary brand color. -->\n        <item name=\"colorPrimary\">@color/purple_500</item>\n        <item name=\"colorPrimaryVariant\">@color/purple_700</item>\n        <item name=\"colorOnPrimary\">@color/white</item>\n        <!-- Secondary brand color. -->\n        <item name=\"colorSecondary\">@color/teal_200</item>\n        <item name=\"colorSecondaryVariant\">@color/teal_700</item>\n        <item name=\"colorOnSecondary\">@color/black</item>\n        <!-- Status bar color. -->\n        <item name=\"android:statusBarColor\">?attr/colorPrimaryVariant</item>\n        <!-- Customize your theme here. -->\n    </style>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/themes.xml b/app/src/main/res/values/themes.xml
+--- a/app/src/main/res/values/themes.xml	(revision 4b582e23f60607b4d79fc48807afdd8ba519b73d)
++++ b/app/src/main/res/values/themes.xml	(date 1668737201388)
+@@ -1,6 +1,6 @@
+ <resources xmlns:tools="http://schemas.android.com/tools">
+     <!-- Base application theme. -->
+-    <style name="Theme.SilenceLake" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
++    <style name="Theme.SilenceLake" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+         <!-- Primary brand color. -->
+         <item name="colorPrimary">@color/purple_500</item>
+         <item name="colorPrimaryVariant">@color/purple_700</item>
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\n    <string name=\"app_name\">SilenceLake</string>\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	(revision 4b582e23f60607b4d79fc48807afdd8ba519b73d)
++++ b/app/src/main/res/values/strings.xml	(date 1668736246104)
+@@ -1,3 +1,10 @@
+ <resources>
+     <string name="app_name">SilenceLake</string>
++    <string name="id_hint">ID</string>
++    <string name="pw_hint">PW</string>
++    <string name="button_login">Login</string>
++    <string name="button_join">Join</string>
++    <string name="nickname_hint">Nickname</string>
++    <!-- TODO: Remove or change this placeholder text -->
++    <string name="hello_blank_fragment">Hello blank fragment</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/activity_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/activity_login.xml b/app/src/main/res/layout/activity_login.xml
+new file mode 100644
+--- /dev/null	(date 1668736372993)
++++ b/app/src/main/res/layout/activity_login.xml	(date 1668736372993)
+@@ -0,0 +1,15 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".LoginActivity">
++
++    <FrameLayout
++        android:id="@+id/fragment_container_login"
++        android:layout_width="match_parent"
++        android:layout_height="match_parent"
++        />
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/JoinFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/JoinFragment.kt b/app/src/main/java/com/ssafy/silencelake/JoinFragment.kt
+new file mode 100644
+--- /dev/null	(date 1668737518376)
++++ b/app/src/main/java/com/ssafy/silencelake/JoinFragment.kt	(date 1668737518376)
+@@ -0,0 +1,39 @@
++package com.ssafy.silencelake
++
++import android.content.Context
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import com.ssafy.silencelake.databinding.FragmentJoinBinding
++
++class JoinFragment : Fragment() {
++    private lateinit var binding: FragmentJoinBinding
++    private lateinit var loginActivity: LoginActivity
++    private var isCheckedDuplicate = false
++    override fun onAttach(context: Context) {
++        super.onAttach(context)
++        loginActivity = context as LoginActivity
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        binding = FragmentJoinBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++        binding.buttonJoinLogin.setOnClickListener {
++            if (isCheckedDuplicate){
++                loginActivity.openFragment(1)
++            }
++        }
++    }
++
++
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_join.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_join.xml b/app/src/main/res/layout/fragment_join.xml
+new file mode 100644
+--- /dev/null	(date 1668736061195)
++++ b/app/src/main/res/layout/fragment_join.xml	(date 1668736061195)
+@@ -0,0 +1,83 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".LoginActivity">
++
++    <ImageView
++        android:id="@+id/img_logo_join"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="64dp"
++        android:adjustViewBounds="true"
++        android:src="@drawable/logo"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent" />
++    <LinearLayout
++        android:orientation="horizontal"
++        android:id="@+id/linearlayout_textfied_checkbox_join"
++        android:layout_marginHorizontal="32dp"
++        app:layout_constraintTop_toBottomOf="@id/img_logo_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content">
++    <com.google.android.material.textfield.TextInputLayout
++        android:id="@+id/textfield_id_join"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:hint="@string/id_hint"
++        android:layout_weight="12"
++        >
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content" />
++
++    </com.google.android.material.textfield.TextInputLayout>
++    <CheckBox
++        android:id="@+id/checkbox_duplicate_join"
++        android:buttonTint="@color/primary"
++        android:layout_width="wrap_content"
++        android:layout_height="match_parent"
++        android:layout_weight="1"
++        android:checked="true"
++        />
++    </LinearLayout>
++    <com.google.android.material.textfield.TextInputLayout
++        android:id="@+id/textfield_pw_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginHorizontal="32dp"
++        android:hint="@string/pw_hint"
++        app:layout_constraintTop_toBottomOf="@id/linearlayout_textfied_checkbox_join">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content" />
++    </com.google.android.material.textfield.TextInputLayout>
++
++    <com.google.android.material.textfield.TextInputLayout
++        android:id="@+id/textfield_nickname_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginHorizontal="32dp"
++        android:hint="@string/nickname_hint"
++        app:layout_constraintTop_toBottomOf="@id/textfield_pw_join">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content" />
++    </com.google.android.material.textfield.TextInputLayout>
++
++    <Button
++        android:id="@+id/button_join_login"
++        style="?attr/materialButtonOutlinedStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginHorizontal="32dp"
++        android:layout_weight="1"
++        android:text="@string/button_join"
++        android:textColor="@color/primary"
++        app:layout_constraintEnd_toEndOf="parent"
++        app:layout_constraintTop_toBottomOf="@id/textfield_nickname_join" />
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/LoginFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/LoginFragment.kt b/app/src/main/java/com/ssafy/silencelake/LoginFragment.kt
+new file mode 100644
+--- /dev/null	(date 1668737555460)
++++ b/app/src/main/java/com/ssafy/silencelake/LoginFragment.kt	(date 1668737555460)
+@@ -0,0 +1,43 @@
++package com.ssafy.silencelake
++
++import android.content.Context
++import android.content.Intent
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import com.ssafy.silencelake.databinding.FragmentLoginBinding
++
++class LoginFragment : Fragment() {
++    private lateinit var binding: FragmentLoginBinding
++    private lateinit var loginActivity: LoginActivity
++
++    override fun onAttach(context: Context) {
++        super.onAttach(context)
++        loginActivity = context as LoginActivity
++    }
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        binding = FragmentLoginBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++        binding.apply {
++            buttonJoinLogin.setOnClickListener {
++                loginActivity.openFragment(2)
++            }
++            buttonLoginLogin.setOnClickListener {
++                startActivity(Intent())
++            }
++        }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/LoginActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt b/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt
+new file mode 100644
+--- /dev/null	(date 1668737169485)
++++ b/app/src/main/java/com/ssafy/silencelake/LoginActivity.kt	(date 1668737169485)
+@@ -0,0 +1,18 @@
++package com.ssafy.silencelake
++
++import androidx.appcompat.app.AppCompatActivity
++import android.os.Bundle
++
++class LoginActivity : AppCompatActivity() {
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        setContentView(R.layout.activity_login)
++        supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
++    }
++    fun openFragment(number: Int){
++        when(number) {
++            1 -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, LoginFragment()).commit()
++            2 -> supportFragmentManager.beginTransaction().replace(R.id.fragment_container_login, JoinFragment()).commit()
++        }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_login.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_login.xml b/app/src/main/res/layout/fragment_login.xml
+new file mode 100644
+--- /dev/null	(date 1668736302371)
++++ b/app/src/main/res/layout/fragment_login.xml	(date 1668736302371)
+@@ -0,0 +1,77 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    tools:context=".LoginActivity">
++    <ImageView
++        android:id="@+id/img_logo_join"
++        app:layout_constraintStart_toStartOf="parent"
++        app:layout_constraintTop_toTopOf="parent"
++        android:layout_marginTop="64dp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:adjustViewBounds="true"
++        android:src="@drawable/logo"/>
++    <com.google.android.material.textfield.TextInputLayout
++        android:layout_marginHorizontal="32dp"
++        app:layout_constraintTop_toBottomOf="@id/img_logo_join"
++        android:id="@+id/textfield_id_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="@string/id_hint">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            />
++
++    </com.google.android.material.textfield.TextInputLayout>
++    <com.google.android.material.textfield.TextInputLayout
++        android:layout_marginHorizontal="32dp"
++        android:id="@+id/textfield_pw_join"
++        app:layout_constraintTop_toBottomOf="@id/textfield_id_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:hint="@string/pw_hint">
++
++        <com.google.android.material.textfield.TextInputEditText
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content"
++            />
++    </com.google.android.material.textfield.TextInputLayout>
++    <LinearLayout
++        android:id="@+id/linearlayout_btn_login"
++        android:layout_marginHorizontal="32dp"
++        app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        >
++        <Button
++            android:id="@+id/button_login_login"
++            android:layout_weight="1"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="@string/button_login"
++            android:textColor="@color/primary"
++            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
++            app:layout_constraintStart_toStartOf="parent"
++            app:layout_constraintEnd_toStartOf="@id/button_join_login"
++            style="?attr/materialButtonOutlinedStyle"
++            />
++        <Button
++            android:id="@+id/button_join_login"
++            android:layout_weight="1"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:textColor="@color/primary"
++            android:text="@string/button_join"
++            app:layout_constraintTop_toBottomOf="@id/textfield_pw_join"
++            app:layout_constraintStart_toEndOf="@id/button_login_login"
++            app:layout_constraintEnd_toEndOf="parent"
++            style="?attr/materialButtonOutlinedStyle"
++            />
++    </LinearLayout>
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
