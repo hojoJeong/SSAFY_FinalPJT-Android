@@ -10,9 +10,6 @@ data class ShoppingCart(
     val type: String,
     val volume: String
 ) {
-    var totalPrice: Int = menuCnt * menuPrice
-    fun addDupMenu(shoppingCart: ShoppingCart) {
-        this.menuCnt += shoppingCart.menuCnt
-        this.totalPrice = this.menuCnt * this.menuPrice
-    }
+    val totalPrice: Int
+        get() = menuCnt * menuPrice
 }

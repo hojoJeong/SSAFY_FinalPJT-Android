@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentOrderBinding
 import com.ssafy.silencelake.dto.OrderDetail
 import com.ssafy.silencelake.dto.OrderDto
@@ -33,6 +34,16 @@ class OrderFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         updateTotalPrice()
         Log.d(TAG, "onViewCreated: ${activityViewModel.productId}")
+        initCLickListener()
+    }
+
+    fun updateTotalPrice() {
+        binding.textTotalPriceOrder.text = "${
+            activityViewModel.selectedProduct.value!!.get(0)!!.productPrice * binding.textQuantityOrder.text.toString()
+                .toInt()
+        }원"
+    }
+    fun initCLickListener(){
         binding.apply {
             buttonMinusOrder.setOnClickListener {
                 if (textQuantityOrder.text.toString().toInt() > 1) {
@@ -46,31 +57,18 @@ class OrderFragment : Fragment() {
 
             }
             buttonOrderOrder.setOnClickListener {
-//                val menuId: Int,
-//                val menuImg: String,
-//                val menuName: String,
-//                var menuCnt: Int,
-//                val menuPrice: Int,
-//                var totalPrice: Int = menuCnt * menuPrice,
-//                val type: String,
-                var checkedChip = "tall" 
+                var checkedChip = "tall"
                 when(chipGroupCoffeeSizeOrder.checkedChipId){
-                   R.id.chip_tall -> checkedChip = "tall"
-                   R.id.chip_grande -> checkedChip = "grande"
-                   R.id.chip_venti -> checkedChip = "venti" 
+                    R.id.chip_tall -> checkedChip = "tall"
+                    R.id.chip_grande -> checkedChip = "grande"
+                    R.id.chip_venti -> checkedChip = "venti"
                 }
                 val item = activityViewModel.selectedProduct.value?.get(0)!!
                 activityViewModel.list.add(ShoppingCart(activityViewModel.productId, item.productImg, item.productName, textQuantityOrder.text.toString().toInt(),
-                item.productPrice, item.type, checkedChip))
+                    item.productPrice, item.type, checkedChip))
                 activityViewModel.updateShoppingList()
+                activity!!.onBackPressed()
             }
         }
-    }
-
-    fun updateTotalPrice() {
-        binding.textTotalPriceOrder.text = "${
-            activityViewModel.selectedProduct.value!!.get(0)!!.productPrice * binding.textQuantityOrder.text.toString()
-                .toInt()
-        }원"
     }
 }

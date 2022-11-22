@@ -36,7 +36,7 @@ class ProductMenuViewModel : ViewModel() {
                 val list = mutableListOf<ProductDto>()
                 list.add(
                     ProductDto(
-                        1,
+                        11,
                         "콜드 브루",
                         "Cold Brew",
                         "coffee",
@@ -46,7 +46,7 @@ class ProductMenuViewModel : ViewModel() {
                 )
                 list.add(
                     ProductDto(
-                        1,
+                        11,
                         "콜드 브루",
                         "Cold Brew",
                         "coffee",
@@ -56,7 +56,7 @@ class ProductMenuViewModel : ViewModel() {
                 )
                 list.add(
                     ProductDto(
-                        1,
+                        11,
                         "콜드 브루",
                         "Cold Brew",
                         "coffee",

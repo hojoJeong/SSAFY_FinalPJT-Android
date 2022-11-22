@@ -15,6 +15,11 @@ import com.ssafy.silencelake.dto.ShoppingCart
 
 class ShoppingListAdapter: RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
     var list = emptyList<ShoppingCart>()
+    interface ShoppingListItemClickListener{
+        fun plusBtnClicked(pos: Int)
+        fun minusBtnClicked(pos: Int)
+    }
+    lateinit var itemClickListener: ShoppingListItemClickListener
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
 
         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_shoppingList)
@@ -30,13 +35,13 @@ class ShoppingListAdapter: RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(
                 .into(imgProductMenu)
             productNameKor.text = item.menuName
             productNameEng.text = ""
+            quantity.text = item.menuCnt.toString()
+            totalPrice.text = "${item.totalPrice}원"
             btnPlus.setOnClickListener {
-                quantity.text = "${quantity.text.toString().toInt() + 1}"
-                totalPrice.text = "${quantity.text.toString().toInt() * 1200}원"
+                itemClickListener.plusBtnClicked(layoutPosition)
             }
             btnMinus.setOnClickListener {
-                quantity.text = "${quantity.text.toString().toInt() - 1}"
-                totalPrice.text = "${quantity.text.toString().toInt() * 1200}원"
+                itemClickListener.minusBtnClicked(layoutPosition)
             }
         }
     }

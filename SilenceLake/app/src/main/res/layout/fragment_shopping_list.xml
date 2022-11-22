@@ -46,7 +46,15 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constraintBottom_toTopOf="@id/button_order_shoppinglist"
         app:layout_constraintTop_toBottomOf="@id/cardView_title_shoppingList" />
 
+    <Button
+        android:id="@+id/button_order_shoppinglist"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="주문하기"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

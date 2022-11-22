@@ -24,6 +24,7 @@ class ShoppingListViewModel: ViewModel() {
 
     var list = mutableListOf<ShoppingCart>()
     private val _shoppingList = MutableLiveData<List<ShoppingCart>>()
+
     val shoppingList : LiveData<List<ShoppingCart>>
         get() = _shoppingList
     fun updateShoppingList(){
