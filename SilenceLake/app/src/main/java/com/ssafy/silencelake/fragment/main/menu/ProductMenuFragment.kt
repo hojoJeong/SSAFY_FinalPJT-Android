@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -26,7 +27,7 @@ class ProductMenuFragment : Fragment() {
     private lateinit var binding: FragmentProductMenuBinding
     private lateinit var mainActivity: MainActivity
     private lateinit var menuAdapter: ProductMenuAdapter
-    private val productViewModel by viewModels<ProductMenuViewModel>()
+    private val productViewModel by activityViewModels<ProductMenuViewModel>()
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

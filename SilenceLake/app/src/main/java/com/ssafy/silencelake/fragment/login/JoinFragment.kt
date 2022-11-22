@@ -32,7 +32,7 @@ class JoinFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         // Inflate the layout for this fragment
         binding = FragmentJoinBinding.inflate(inflater, container, false)
         return binding.root
@@ -65,7 +65,9 @@ class JoinFragment : Fragment() {
                             textfieldIdJoinValue.text.toString(),
                             textfieldNicknameJoinValue.text.toString(),
                             textfieldPwJoinValue.text.toString(),
-                            0
+
+                            0,
+                            null,
                         )
                         UserService().signUpUser(user, SignUpCallback())
                     }

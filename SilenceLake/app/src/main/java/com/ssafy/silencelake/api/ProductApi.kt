@@ -19,4 +19,8 @@ interface ProductApi {
     // comment 조회시 사용
     @GET("rest/product/{productId}")
     suspend fun getProductWithComments(@Path("productId") productId: Int): Response<List<MenuDetailWithCommentResponse>>
+
+    //HomeFragment에서 사용할 추천메뉴
+    @GET("rest/product/recommend")
+    suspend fun getRecommendedMenu(): Response<List<ProductDto>>
 }

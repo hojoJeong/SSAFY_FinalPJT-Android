@@ -104,7 +104,7 @@
         app:layout_constraintBottom_toTopOf="@+id/rcv_orderhistory_mypagefg"
         app:layout_constraintVertical_chainStyle="packed"
         android:layout_marginTop="20dp"
-        android:text="최근 주문 내역"
+        android:text="주문 내역"
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="20sp"/>

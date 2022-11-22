@@ -1,7 +1,10 @@
 package com.ssafy.silencelake.activity
 
+import android.content.ContentValues.TAG
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
+import androidx.activity.viewModels
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ActivityMainBinding
 import com.ssafy.silencelake.fragment.main.home.HomeFragment
@@ -9,9 +12,12 @@ import com.ssafy.silencelake.fragment.main.menu.ProductMenuFragment
 import com.ssafy.silencelake.fragment.main.menu.ShoppingListFragment
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import com.ssafy.silencelake.fragment.main.mypage.MypageFragment
+import com.ssafy.silencelake.fragment.main.mypage.UserResponseViewModel
+import com.ssafy.silencelake.util.ApplicationClass
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+    private val userResponseViewModel by viewModels<UserResponseViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -21,8 +27,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun init() {
+        initUserResponseData()
         initView()
         initBottomNavigation()
+    }
+
+    private fun initUserResponseData(){
+        var user = ApplicationClass.sharedPreferencesUtil.getUser()
+        userResponseViewModel.getUserResponseInfo(user.id)
     }
 
     private fun initView() {

@@ -58,6 +58,7 @@ class LoginFragment : Fragment() {
             if (user.id != null) {
                 Log.d(TAG, "onSuccess: $user")
                 Toast.makeText(context,"로그인 되었습니다.", Toast.LENGTH_SHORT).show()
+                Log.d(TAG, "onSuccess: user : ${user}")
                 // 로그인 시 user정보 sp에 저장
                 ApplicationClass.sharedPreferencesUtil.addUser(user)
                 loginActivity.openFragment(3)

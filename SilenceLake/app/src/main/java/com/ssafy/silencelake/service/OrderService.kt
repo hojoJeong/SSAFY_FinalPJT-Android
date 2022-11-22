@@ -27,30 +27,30 @@ class OrderService{
         })
     }
     // 주문 상세 내역 가져오는 API
-    fun getOrderDetails(orderId: Int): LiveData<List<OrderDetailResponse>> {
-        val responseLiveData: MutableLiveData<List<OrderDetailResponse>> = MutableLiveData()
-        val orderDetailRequest: Call<List<OrderDetailResponse>> = RetrofitUtil.orderService.getOrderDetail(orderId)
-
-        orderDetailRequest.enqueue(object : Callback<List<OrderDetailResponse>> {
-            override fun onResponse(call: Call<List<OrderDetailResponse>>, response: Response<List<OrderDetailResponse>>) {
-                val res = response.body()
-                if(response.code() == 200){
-                    if (res != null) {
-                        responseLiveData.value = res
-                    }
-                    Log.d(TAG, "onResponse: $res")
-                } else {
-                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
-                }
-            }
-
-            override fun onFailure(call: Call<List<OrderDetailResponse>>, t: Throwable) {
-                Log.d(TAG, t.message ?: "주문 상세 내역 받아오는 중 통신오류")
-            }
-        })
-
-        return responseLiveData
-    }
+//    fun getOrderDetails(orderId: Int): LiveData<List<OrderDetailResponse>> {
+//        val responseLiveData: MutableLiveData<List<OrderDetailResponse>> = MutableLiveData()
+//        val orderDetailRequest: Call<List<OrderDetailResponse>> = RetrofitUtil.orderService.getOrderDetail(orderId)
+//
+//        orderDetailRequest.enqueue(object : Callback<List<OrderDetailResponse>> {
+//            override fun onResponse(call: Call<List<OrderDetailResponse>>, response: Response<List<OrderDetailResponse>>) {
+//                val res = response.body()
+//                if(response.code() == 200){
+//                    if (res != null) {
+//                        responseLiveData.value = res
+//                    }
+//                    Log.d(TAG, "onResponse: $res")
+//                } else {
+//                    Log.d(TAG, "onResponse: Error Code ${response.code()}")
+//                }
+//            }
+//
+//            override fun onFailure(call: Call<List<OrderDetailResponse>>, t: Throwable) {
+//                Log.d(TAG, t.message ?: "주문 상세 내역 받아오는 중 통신오류")
+//            }
+//        })
+//
+//        return responseLiveData
+//    }
 
     // 최근 한달간 주문내역 가져오는 API
     fun getLastMonthOrder(userId: String): LiveData<List<LatestOrderResponse>> {

@@ -4,23 +4,24 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.silencelake.databinding.ItemListRecentOrderDetailBinding
-import com.ssafy.silencelake.dto.OrderDetail
+import com.ssafy.smartstore.response.OrderDetailResponse
 
 class RecentOrderDetailAdapter(context: Context) :
     RecyclerView.Adapter<RecentOrderDetailAdapter.RecentOrderDetailViewHolder>() {
-    var itemList = mutableListOf<OrderDetail>()
+    var itemList = mutableListOf<OrderDetailResponse>()
     val mContext = context
     inner class RecentOrderDetailViewHolder(val binding: ItemListRecentOrderDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: OrderDetail) {
-            val resId = mContext.resources.getIdentifier("iceamericano", "drawable", mContext.packageName)
+        fun bind(data: OrderDetailResponse) {
+
+            Glide.with(mContext).load(data.img).into(binding.imgItemRecentorderDetail)
             binding.apply {
-                imgItemRecentorderDetail.setImageResource(resId)
-                tvProductnameRecentordeDetail.text = "아메리카노"
+                tvProductnameRecentordeDetail.text = data.productName
                 tvQuantityRecentorderDetail.text = data.quantity.toString()
-                tvUnitpriceRecentorderDetail.text = "1000 원"
-                tvPriceRecentorderDetail.text = "${(1000 * data.quantity).toString()} 원"
+                tvUnitpriceRecentorderDetail.text = data.unitPrice.toString()
+                tvPriceRecentorderDetail.text = "${data.totalPrice} 원"
             }
         }
     }
