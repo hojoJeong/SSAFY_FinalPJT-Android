@@ -1,0 +1,437 @@
+Index: app/src/main/res/values/strings.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources>\r\n    <string name=\"app_name\">SilenceLake</string>\r\n    <string name=\"bnv_home\">홈</string>\r\n    <string name=\"bnv_menu\">메뉴</string>\r\n    <string name=\"bnv_mypage\">내정보</string>\r\n    <string name=\"id_hint\">ID</string>\r\n    <string name=\"pw_hint\">PW</string>\r\n    <string name=\"button_login\">Login</string>\r\n    <string name=\"button_join\">Join</string>\r\n    <string name=\"nickname_hint\">Nickname</string>\r\n    <string name=\"product_name_kor\">아이스 초코라떼</string>\r\n    <string name=\"product_name_eng\">Iced Chocolate Latte</string>\r\n    <string name=\"recommended_title\">추천 메뉴</string>\r\n    <string name=\"hello_blank_fragment\">Hello blank fragment</string>\r\n    <string name=\"content_welcome_mypage\">환영합니다</string>\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/strings.xml b/app/src/main/res/values/strings.xml
+--- a/app/src/main/res/values/strings.xml	
++++ b/app/src/main/res/values/strings.xml	
+@@ -13,4 +13,11 @@
+     <string name="recommended_title">추천 메뉴</string>
+     <string name="hello_blank_fragment">Hello blank fragment</string>
+     <string name="content_welcome_mypage">환영합니다</string>
++    <string name="order">ORDER</string>
++    <string name="comment">COMMENT</string>
++    <string name="coffee_size_tall">Tall</string>
++    <string name="coffee_size_grande">Grande</string>
++    <string name="coffee_size_venti">Venti</string>
++    <string name="size">사이즈</string>
++    <string name="quantity_title">주문 수량</string>
+ </resources>
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_comment.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<FrameLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".CommentFragment\">\r\n\r\n    <!-- TODO: Update blank fragment layout -->\r\n    <TextView\r\n        android:layout_width=\"match_parent\"\r\n        android:layout_height=\"match_parent\"\r\n        android:text=\"@string/hello_blank_fragment\" />\r\n\r\n</FrameLayout>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_comment.xml b/app/src/main/res/layout/fragment_comment.xml
+--- a/app/src/main/res/layout/fragment_comment.xml	
++++ b/app/src/main/res/layout/fragment_comment.xml	
+@@ -1,14 +1,15 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
++    android:background="@color/white"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent"
++    android:layout_height="0dp"
+     tools:context=".CommentFragment">
+ 
+     <!-- TODO: Update blank fragment layout -->
+     <TextView
+         android:layout_width="match_parent"
+-        android:layout_height="match_parent"
++        android:layout_height="wrap_content"
+         android:text="@string/hello_blank_fragment" />
+ 
+ </FrameLayout>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/OrderFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/OrderFragment.kt b/app/src/main/java/com/ssafy/silencelake/OrderFragment.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/ssafy/silencelake/OrderFragment.kt	
+@@ -0,0 +1,59 @@
++package com.ssafy.silencelake
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++
++// TODO: Rename parameter arguments, choose names that match
++// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
++private const val ARG_PARAM1 = "param1"
++private const val ARG_PARAM2 = "param2"
++
++/**
++ * A simple [Fragment] subclass.
++ * Use the [OrderFragment.newInstance] factory method to
++ * create an instance of this fragment.
++ */
++class OrderFragment : Fragment() {
++    // TODO: Rename and change types of parameters
++    private var param1: String? = null
++    private var param2: String? = null
++
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++        arguments?.let {
++            param1 = it.getString(ARG_PARAM1)
++            param2 = it.getString(ARG_PARAM2)
++        }
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        return inflater.inflate(R.layout.fragment_order, container, false)
++    }
++
++    companion object {
++        /**
++         * Use this factory method to create a new instance of
++         * this fragment using the provided parameters.
++         *
++         * @param param1 Parameter 1.
++         * @param param2 Parameter 2.
++         * @return A new instance of fragment OrderFragment.
++         */
++        // TODO: Rename and change types and number of parameters
++        @JvmStatic
++        fun newInstance(param1: String, param2: String) =
++            OrderFragment().apply {
++                arguments = Bundle().apply {
++                    putString(ARG_PARAM1, param1)
++                    putString(ARG_PARAM2, param2)
++                }
++            }
++    }
++}
+\ No newline at end of file
+Index: app/src/main/res/layout/fragment_order.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_order.xml b/app/src/main/res/layout/fragment_order.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/layout/fragment_order.xml	
+@@ -0,0 +1,93 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    tools:context=".OrderFragment">
++
++    <TextView
++        android:id="@+id/text_size_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="@string/size"
++        android:textColor="@color/black"
++        android:textSize="24dp"
++        android:textStyle="bold"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <com.google.android.material.chip.ChipGroup
++        android:id="@+id/chipGroup_coffeeSize_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:layout_constraintTop_toBottomOf="@id/text_size_order"
++        app:singleSelection="true">
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/chip_tall"
++            style="@style/Widget.MaterialComponents.Chip.Choice"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:checked="true"
++            android:text="@string/coffee_size_tall" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/chip_grande"
++            style="@style/Widget.MaterialComponents.Chip.Choice"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="@string/coffee_size_grande" />
++
++        <com.google.android.material.chip.Chip
++            android:id="@+id/chip_venti"
++            style="@style/Widget.MaterialComponents.Chip.Choice"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:text="@string/coffee_size_venti" />
++    </com.google.android.material.chip.ChipGroup>
++    <TextView
++        android:id="@+id/text_quantityTitle_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="@string/quantity_title"
++        android:textColor="@color/black"
++        android:textSize="24dp"
++        android:textStyle="bold"
++        app:layout_constraintTop_toBottomOf="@id/chipGroup_coffeeSize_order" />
++
++    <LinearLayout
++        android:id="@+id/linearlayout_quantity_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        android:gravity="center_vertical"
++        app:layout_constraintTop_toBottomOf="@id/text_quantityTitle_order">
++        <ImageButton
++            android:id="@+id/button_plus_order"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++
++            android:background="@drawable/ic_baseline_add_24"
++            android:backgroundTint="@color/primary" />
++        <TextView
++            android:id="@+id/text_quantity_order"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            android:textColor="@color/primary"
++            android:text="1"
++            android:textSize="18dp"
++            android:textStyle="bold"
++            android:gravity="center"
++            />
++        <ImageButton
++            android:id="@+id/button_minus_order"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++
++            android:background="@drawable/ic_baseline_remove_24"
++            android:backgroundTint="@color/primary" />
++    </LinearLayout>
++
++
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file
+Index: .idea/gradle.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"GradleSettings\">\r\n    <option name=\"linkedExternalProjectsSettings\">\r\n      <GradleProjectSettings>\r\n        <option name=\"testRunner\" value=\"GRADLE\" />\r\n        <option name=\"distributionType\" value=\"DEFAULT_WRAPPED\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"modules\">\r\n          <set>\r\n            <option value=\"$PROJECT_DIR$\" />\r\n            <option value=\"$PROJECT_DIR$/app\" />\r\n          </set>\r\n        </option>\r\n      </GradleProjectSettings>\r\n    </option>\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/gradle.xml b/.idea/gradle.xml
+--- a/.idea/gradle.xml	
++++ b/.idea/gradle.xml	
+@@ -1,5 +1,6 @@
+ <?xml version="1.0" encoding="UTF-8"?>
+ <project version="4">
++  <component name="GradleMigrationSettings" migrationVersion="1" />
+   <component name="GradleSettings">
+     <option name="linkedExternalProjectsSettings">
+       <GradleProjectSettings>
+Index: app/src/main/res/drawable-v24/color_item_viewpager.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/drawable-v24/color_item_viewpager.xml b/app/src/main/res/drawable-v24/color_item_viewpager.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/drawable-v24/color_item_viewpager.xml	
+@@ -0,0 +1,9 @@
++<?xml version="1.0" encoding="utf-8"?>
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++    <item
++        android:state_checked="true"
++        android:color ="@color/background_bnv"/>
++    <item
++        android:state_checked="false"
++        android:color ="@color/bnv_unselected"/>
++</selector>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/ProductDetailFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/ProductDetailFragment.kt b/app/src/main/java/com/ssafy/silencelake/ProductDetailFragment.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/ssafy/silencelake/ProductDetailFragment.kt	
+@@ -0,0 +1,43 @@
++package com.ssafy.silencelake
++
++import android.os.Bundle
++import androidx.fragment.app.Fragment
++import android.view.LayoutInflater
++import android.view.View
++import android.view.ViewGroup
++import com.google.android.material.tabs.TabLayoutMediator
++import com.ssafy.silencelake.databinding.FragmentProductDetailBinding
++
++
++class ProductDetailFragment : Fragment() {
++    private lateinit var binding: FragmentProductDetailBinding
++    private val tabTitleArray = arrayOf(
++        "ORDER",
++        "COMMENT"
++    )
++    override fun onCreate(savedInstanceState: Bundle?) {
++        super.onCreate(savedInstanceState)
++
++    }
++
++    override fun onCreateView(
++        inflater: LayoutInflater, container: ViewGroup?,
++        savedInstanceState: Bundle?
++    ): View? {
++        // Inflate the layout for this fragment
++        binding = FragmentProductDetailBinding.inflate(inflater, container, false)
++        return binding.root
++    }
++
++    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
++        super.onViewCreated(view, savedInstanceState)
++        val viewPager = binding.viewPagerOrder
++        val tabLayout = binding.tabLayoutOrder
++
++        viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
++
++        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
++            tab.text = tabTitleArray[position]
++        }.attach()
++    }
++}
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/ProductDetailViewPagerAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/ProductDetailViewPagerAdapter.kt b/app/src/main/java/com/ssafy/silencelake/ProductDetailViewPagerAdapter.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/ssafy/silencelake/ProductDetailViewPagerAdapter.kt	
+@@ -0,0 +1,24 @@
++package com.ssafy.silencelake
++
++import androidx.fragment.app.Fragment
++import androidx.fragment.app.FragmentManager
++import androidx.lifecycle.Lifecycle
++import androidx.viewpager2.adapter.FragmentStateAdapter
++
++private const val NUM_TABS = 2
++
++class ProductDetailViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
++    FragmentStateAdapter(fragmentManager, lifecycle) {
++
++    override fun getItemCount(): Int {
++        return NUM_TABS
++    }
++
++    override fun createFragment(position: Int): Fragment {
++        when (position) {
++            0 -> return OrderFragment()
++            1 -> return CommentFragment()
++        }
++        return OrderFragment()
++    }
++}
+\ No newline at end of file
+Index: app/build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>plugins {\r\n    id 'com.android.application'\r\n    id 'org.jetbrains.kotlin.android'\r\n}\r\n\r\nandroid {\r\n    namespace 'com.ssafy.silencelake'\r\n    compileSdk 32\r\n\r\n    defaultConfig {\r\n        applicationId \"com.ssafy.silencelake\"\r\n        minSdk 21\r\n        targetSdk 32\r\n        versionCode 1\r\n        versionName \"1.0\"\r\n\r\n        testInstrumentationRunner \"androidx.test.runner.AndroidJUnitRunner\"\r\n    }\r\n\r\n    buildTypes {\r\n        release {\r\n            minifyEnabled false\r\n            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'\r\n        }\r\n    }\r\n    compileOptions {\r\n        sourceCompatibility JavaVersion.VERSION_1_8\r\n        targetCompatibility JavaVersion.VERSION_1_8\r\n    }\r\n    kotlinOptions {\r\n        jvmTarget = '1.8'\r\n    }\r\n\r\n    viewBinding{\r\n        enabled = true\r\n    }\r\n}\r\n\r\ndependencies {\r\n\r\n    implementation 'androidx.core:core-ktx:1.7.0'\r\n    implementation 'androidx.appcompat:appcompat:1.5.1'\r\n    implementation 'com.google.android.material:material:1.7.0'\r\n    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'\r\n    testImplementation 'junit:junit:4.13.2'\r\n    androidTestImplementation 'androidx.test.ext:junit:1.1.4'\r\n    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'\r\n\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/build.gradle b/app/build.gradle
+--- a/app/build.gradle	
++++ b/app/build.gradle	
+@@ -37,7 +37,7 @@
+ }
+ 
+ dependencies {
+-
++    implementation 'com.google.android.material:material:1.4.0'
+     implementation 'androidx.core:core-ktx:1.7.0'
+     implementation 'androidx.appcompat:appcompat:1.5.1'
+     implementation 'com.google.android.material:material:1.7.0'
+Index: app/src/main/res/layout/fragment_product_detail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/layout/fragment_product_detail.xml b/app/src/main/res/layout/fragment_product_detail.xml
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/res/layout/fragment_product_detail.xml	
+@@ -0,0 +1,55 @@
++<?xml version="1.0" encoding="utf-8"?>
++<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    xmlns:tools="http://schemas.android.com/tools"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:background="@color/white"
++    tools:context=".OrderFragment">
++
++    <ImageView
++        android:id="@+id/img_product_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:background="@color/background_banner"
++        android:src="@drawable/choco"
++        app:layout_constraintTop_toTopOf="parent" />
++
++    <TextView
++        android:id="@+id/text_productNameKor_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="@string/product_name_kor"
++        android:textColor="@color/primary"
++        android:textSize="24dp"
++        android:textStyle="bold"
++        app:layout_constraintTop_toBottomOf="@+id/img_product_order" />
++
++    <TextView
++        android:id="@+id/text_productNameEng_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:text="@string/product_name_eng"
++        android:textColor="@color/product_name_eng"
++        app:layout_constraintTop_toBottomOf="@+id/text_productNameKor_order" />
++
++    <com.google.android.material.tabs.TabLayout
++        android:id="@+id/tabLayout_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        app:layout_constraintTop_toBottomOf="@+id/text_productNameEng_order"
++        app:tabIndicatorColor="@color/primary"
++
++        app:tabSelectedTextColor="@color/primary" />
++    <ScrollView
++        android:layout_width="match_parent"
++        android:layout_height="0dp"
++        app:layout_constraintTop_toBottomOf="@id/tabLayout_order"
++        app:layout_constraintBottom_toBottomOf="parent">
++    <androidx.viewpager2.widget.ViewPager2
++        android:id="@+id/viewPager_order"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        />
++    </ScrollView>
++</androidx.constraintlayout.widget.ConstraintLayout>
+\ No newline at end of file

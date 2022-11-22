@@ -1,0 +1,43 @@
+Index: app/src/main/java/com/ssafy/silencelake/MainActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake\r\n\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport com.ssafy.silencelake.databinding.ActivityMainBinding\r\n\r\nclass MainActivity : AppCompatActivity() {\r\n    private lateinit var binding: ActivityMainBinding\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        binding = ActivityMainBinding.inflate(layoutInflater)\r\n        setContentView(binding.root)\r\n\r\n        init()\r\n    }\r\n\r\n    private fun init(){\r\n        initView()\r\n        initBottomNavigation()\r\n    }\r\n\r\n    private fun initView(){\r\n        val initFragment = supportFragmentManager.findFragmentById(R.id.fragment_container_main)\r\n        if(initFragment == null){\r\n            supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, HomeFragment()).commit()\r\n        }\r\n    }\r\n\r\n    private fun initBottomNavigation(){\r\n        binding.bottomnvMain.setOnItemSelectedListener {\r\n            when(it.itemId){\r\n                R.id.item_bnv_main -> {\r\n                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, HomeFragment()).commit()\r\n                }\r\n\r\n                R.id.item_bnv_menu -> {\r\n                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, ProductMenuFragment()).commit()\r\n                }\r\n\r\n                R.id.item_bnv_mypage -> {\r\n                    supportFragmentManager.beginTransaction().replace(R.id.fragment_container_main, MypageFragment()).commit()\r\n                }\r\n            }\r\n            true\r\n        }\r\n    }\r\n    fun openShoppingList(){\r\n        val transaction = supportFragmentManager.beginTransaction()\r\n        transaction.setCustomAnimations(R.anim.enter_from_bottom, R.anim.exit_to_bottom, R.anim.enter_from_bottom, R.anim.exit_to_bottom)\r\n        transaction.add(R.id.fragment_container_main, ShoppingListFragment())\r\n        transaction.addToBackStack(null)\r\n        transaction.commit()\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/MainActivity.kt b/app/src/main/java/com/ssafy/silencelake/MainActivity.kt
+--- a/app/src/main/java/com/ssafy/silencelake/MainActivity.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/MainActivity.kt	
+@@ -51,4 +51,7 @@
+         transaction.addToBackStack(null)
+         transaction.commit()
+     }
++    fun openProductDetail(){
++        supportFragmentManager.beginTransaction().add(R.id.fragment_container_main, ProductDetailFragment()).addToBackStack(null).commit()
++    }
+ }
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/ProductMenuAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake\r\n\r\nimport android.content.Context\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport android.widget.ImageView\r\nimport android.widget.TextView\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.ssafy.silencelake.databinding.ProductMenuItemBinding\r\n\r\nclass ProductMenuAdapter(val context: Context, var list: List<Int>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {\r\n    inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){\r\n        val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_menu)\r\n        val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_menu)\r\n        val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_menu)\r\n        fun bindInfo(item: Int){\r\n            imgProductMenu.setImageResource(R.drawable.choco)\r\n            productNameKor.text = context.getString(R.string.product_name_kor)\r\n            productNameEng.text = context.getString(R.string.product_name_eng)\r\n        }\r\n    }\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {\r\n        val binding = ProductMenuItemBinding.inflate(LayoutInflater.from(context), parent, false)\r\n        return ViewHolder(binding.root)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: ViewHolder, position: Int) {\r\n        holder.apply{\r\n            bindInfo(list[position])\r\n        }\r\n    }\r\n\r\n    override fun getItemCount(): Int {\r\n        return list.size\r\n    }\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/ProductMenuAdapter.kt b/app/src/main/java/com/ssafy/silencelake/ProductMenuAdapter.kt
+--- a/app/src/main/java/com/ssafy/silencelake/ProductMenuAdapter.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/ProductMenuAdapter.kt	
+@@ -10,6 +10,7 @@
+ import com.ssafy.silencelake.databinding.ProductMenuItemBinding
+ 
+ class ProductMenuAdapter(val context: Context, var list: List<Int>):RecyclerView.Adapter<ProductMenuAdapter.ViewHolder>() {
++    private val mainActivity = context as MainActivity
+     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_menu)
+         val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_menu)
+@@ -18,6 +19,9 @@
+             imgProductMenu.setImageResource(R.drawable.choco)
+             productNameKor.text = context.getString(R.string.product_name_kor)
+             productNameEng.text = context.getString(R.string.product_name_eng)
++            itemView.setOnClickListener {
++                mainActivity.openProductDetail()
++            }
+         }
+     }
+ 
