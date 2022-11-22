@@ -7,12 +7,15 @@ import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentShoppingListBinding
 
 class ShoppingListFragment : Fragment() {
     private lateinit var binding: FragmentShoppingListBinding
     private lateinit var mainActivity: MainActivity
+    private lateinit var shoppingListAdapter: ShoppingListAdapter
+    private val activityViewModel by activityViewModels<ShoppingListViewModel>()
     override fun onAttach(context: Context) {
         super.onAttach(context)
         mainActivity = context as MainActivity
@@ -30,9 +33,16 @@ class ShoppingListFragment : Fragment() {
         binding.root.setOnTouchListener{ _, _ ->
             true
         }
-        binding.rcvShoppinglistShoppingList.adapter = ShoppingListAdapter(requireContext(), listOf(1,2,3,4,5))
+        shoppingListAdapter = ShoppingListAdapter()
+        binding.rcvShoppinglistShoppingList.adapter = shoppingListAdapter
+        if(activityViewModel.shoppingList.value != null){
+            shoppingListAdapter.list = activityViewModel.shoppingList.value!!
+            shoppingListAdapter.notifyDataSetChanged()
+        }
         binding.buttonCloseShoppingList.setOnClickListener {
             mainActivity.onBackPressed()
         }
     }
+
+
 }

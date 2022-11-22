@@ -1,21 +1,30 @@
 package com.ssafy.silencelake.fragment.main.menu.detail
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentOrderBinding
+import com.ssafy.silencelake.dto.OrderDetail
+import com.ssafy.silencelake.dto.OrderDto
+import com.ssafy.silencelake.dto.ShoppingCart
+import com.ssafy.silencelake.dto.Stamp
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
+import com.ssafy.silencelake.util.ApplicationClass
+import java.util.*
 
+private const val TAG = "OrderFragment_싸피"
 class OrderFragment : Fragment() {
     private lateinit var binding: FragmentOrderBinding
     private val activityViewModel by activityViewModels<ShoppingListViewModel>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View {
+    ): View? {
         binding = FragmentOrderBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -23,6 +32,7 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateTotalPrice()
+        Log.d(TAG, "onViewCreated: ${activityViewModel.productId}")
         binding.apply {
             buttonMinusOrder.setOnClickListener {
                 if (textQuantityOrder.text.toString().toInt() > 1) {
@@ -36,14 +46,23 @@ class OrderFragment : Fragment() {
 
             }
             buttonOrderOrder.setOnClickListener {
-//                val id: Int,
-//                var userId: String,
-//                var orderTable: String,
-//                var orderTime: Date,
-//                var completed: Char,
-//                var orderDetail: MutableList<OrderDetail>,
-//                var stamp: Stamp
-//                val order = OrderDto()
+//                val menuId: Int,
+//                val menuImg: String,
+//                val menuName: String,
+//                var menuCnt: Int,
+//                val menuPrice: Int,
+//                var totalPrice: Int = menuCnt * menuPrice,
+//                val type: String,
+                var checkedChip = "tall" 
+                when(chipGroupCoffeeSizeOrder.checkedChipId){
+                   R.id.chip_tall -> checkedChip = "tall"
+                   R.id.chip_grande -> checkedChip = "grande"
+                   R.id.chip_venti -> checkedChip = "venti" 
+                }
+                val item = activityViewModel.selectedProduct.value?.get(0)!!
+                activityViewModel.list.add(ShoppingCart(activityViewModel.productId, item.productImg, item.productName, textQuantityOrder.text.toString().toInt(),
+                item.productPrice, item.type, checkedChip))
+                activityViewModel.updateShoppingList()
             }
         }
     }

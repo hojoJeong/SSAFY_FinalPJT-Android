@@ -8,11 +8,15 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.ShoppingListItemBinding
+import com.ssafy.silencelake.dto.ShoppingCart
 
-class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
+class ShoppingListAdapter: RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(){
+    var list = emptyList<ShoppingCart>()
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
+
         val imgProductMenu = itemView.findViewById<ImageView>(R.id.img_product_shoppingList)
         val productNameKor = itemView.findViewById<TextView>(R.id.text_name_kor_shoppingList)
         val productNameEng = itemView.findViewById<TextView>(R.id.text_name_eng_shoppingList)
@@ -20,10 +24,12 @@ class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerVi
         val btnPlus = itemView.findViewById<ImageButton>(R.id.button_plus_shoppingList)
         val btnMinus = itemView.findViewById<ImageButton>(R.id.button_minus_shoppingList)
         val quantity = itemView.findViewById<TextView>(R.id.text_quantity_shoppingList)
-        fun bindInfo(item: Int){
-            imgProductMenu.setImageResource(R.drawable.choco)
-            productNameKor.text = context.getString(R.string.product_name_kor)
-            productNameEng.text = context.getString(R.string.product_name_eng)
+        fun bindInfo(item: ShoppingCart){
+            Glide.with(itemView)
+                .load(item.menuImg)
+                .into(imgProductMenu)
+            productNameKor.text = item.menuName
+            productNameEng.text = ""
             btnPlus.setOnClickListener {
                 quantity.text = "${quantity.text.toString().toInt() + 1}"
                 totalPrice.text = "${quantity.text.toString().toInt() * 1200}원"
@@ -36,7 +42,7 @@ class ShoppingListAdapter(val context: Context, var list: List<Int>): RecyclerVi
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding = ShoppingListItemBinding.inflate(LayoutInflater.from(context), parent, false)
+        val binding = ShoppingListItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return ViewHolder(binding.root)
     }
 

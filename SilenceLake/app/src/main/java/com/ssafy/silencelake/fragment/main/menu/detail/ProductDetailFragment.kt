@@ -30,19 +30,19 @@ class ProductDetailFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val viewPager = binding.viewPagerOrder
+        val tabLayout = binding.tabLayoutOrder
+
         binding.root.setOnTouchListener{_,_ ->
             true
         }
         activityViewModel.selectedProduct.observe(viewLifecycleOwner){
             initView(it[0])
+            viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = tabTitleArray[position]
+            }.attach()
         }
-        val viewPager = binding.viewPagerOrder
-        val tabLayout = binding.tabLayoutOrder
-        viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
-
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabTitleArray[position]
-        }.attach()
     }
 
     fun initView(item: MenuDetailWithCommentResponse){
