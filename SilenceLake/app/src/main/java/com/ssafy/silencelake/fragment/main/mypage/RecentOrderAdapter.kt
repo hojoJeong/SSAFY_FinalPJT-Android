@@ -13,20 +13,22 @@ import java.text.ParsePosition
 import java.text.SimpleDateFormat
 import java.util.*
 
-class RecentOrderAdapter: RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {
+class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {
     var orderList = mutableListOf<OrderDto>()
     var orderDetailList = mutableListOf<MutableList<OrderDetailResponse>>()
     lateinit var onFoldButtonLIstener: OnFoldButtonLIstener
-    inner class RecentOrderViewHolder(val binding: ItemListRecentOrderBinding): RecyclerView.ViewHolder(binding.root){
-        fun bind(order: OrderDto,orderDetailList: MutableList<OrderDetailResponse>){
+
+    inner class RecentOrderViewHolder(val binding: ItemListRecentOrderBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(order: OrderDto, orderDetailList: MutableList<OrderDetailResponse>) {
             binding.apply {
                 var totalPrice = 0;
-                for(i in 0 until orderDetailList.size){
+                for (i in 0 until orderDetailList.size) {
                     totalPrice += orderDetailList[i].totalPrice
                 }
-                var orderName = if(orderDetailList.size == 1){
+                var orderName = if (orderDetailList.size == 1) {
                     orderDetailList[0].productName
-                } else{
+                } else {
                     "${orderDetailList[0].productName} 외 ${orderDetailList.size - 1}건"
                 }
                 Log.d(TAG, "bind: ${order.orderTime}")
@@ -37,14 +39,16 @@ class RecentOrderAdapter: RecyclerView.Adapter<RecentOrderAdapter.RecentOrderVie
                 tvTotalpriceRecentorder.text = totalPrice.toString()
                 tvOrderdateRecentorder.text = orderTime
                 btnFoldRecentorder.setOnClickListener {
-                    onFoldButtonLIstener.onClick(orderDetailList, binding)
+                    onFoldButtonLIstener.onClick(orderDetailList, binding, order.isExpanded)
+                    order.isExpanded = !order.isExpanded
                 }
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentOrderViewHolder {
-        val view = ItemListRecentOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val view =
+            ItemListRecentOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return RecentOrderViewHolder(view)
     }
 

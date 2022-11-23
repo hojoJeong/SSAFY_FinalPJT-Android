@@ -26,7 +26,6 @@ class MypageFragment : Fragment() {
     private lateinit var userInfo: UserDto
     private var orderList = mutableListOf<OrderDto>()
     private var orderDetailResponseList = mutableListOf<MutableList<OrderDetailResponse>>()
-    private var isExpanded = false
     private val userResponseViewModel by activityViewModels<UserResponseViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,8 +70,10 @@ class MypageFragment : Fragment() {
         adapter.onFoldButtonLIstener = object : OnFoldButtonLIstener{
             override fun onClick(
                 orderDetailList: MutableList<OrderDetailResponse>,
-                binding: ItemListRecentOrderBinding
+                binding: ItemListRecentOrderBinding,
+                isExpended: Boolean
             ) {
+                val isExpanded = isExpended
                 val recentDetailAdapter = RecentOrderDetailAdapter(requireContext())
                 val recentDetailContainer = binding.rcvRecentdetailRecentorder
                 recentDetailAdapter.itemList.addAll(orderDetailList)
@@ -82,12 +83,10 @@ class MypageFragment : Fragment() {
                 when(isExpanded){
                     true -> {
                         ToggleAnimation.collapse(recentDetailContainer)
-                        isExpanded = false
                     }
                     false -> {
                         recentDetailContainer.adapter = recentDetailAdapter
                         ToggleAnimation.expand(recentDetailContainer)
-                        isExpanded = true
                     }
                 }
             }

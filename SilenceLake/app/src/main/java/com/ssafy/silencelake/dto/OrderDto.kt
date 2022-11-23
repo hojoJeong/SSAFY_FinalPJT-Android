@@ -10,6 +10,7 @@ data class OrderDto(
     var completed: Char,
     var details: ArrayList<OrderDetail>,
 ) {
+    var isExpanded = false
     constructor(
         userId: String,
         orderTable: String,
