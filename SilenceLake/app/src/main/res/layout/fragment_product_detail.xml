@@ -11,16 +11,19 @@
         android:layout_width="match_parent"
         android:layout_height="200dp"
         android:background="@color/lightbrown"
-        app:layout_constraintBottom_toTopOf="@id/text_productNameKor_order"
-        android:scaleType="fitCenter"
         android:paddingVertical="8dp"
+
+        android:scaleType="fitCenter"
         android:src="@drawable/choco"
+        app:layout_constraintBottom_toTopOf="@id/text_productNameKor_order"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/text_productNameKor_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginTop="8dp"
         android:text="@string/product_name_kor"
         android:textColor="@color/primary"
         android:textSize="24dp"
@@ -32,6 +35,8 @@
         android:id="@+id/text_productNameEng_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:layout_marginBottom="8dp"
         android:text="@string/product_name_eng"
         android:textColor="@color/product_name_eng"
         app:layout_constraintBottom_toTopOf="@id/tabLayout_order"
@@ -41,16 +46,17 @@
         android:id="@+id/tabLayout_order"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toTopOf="@id/viewPager_order"
         app:layout_constraintTop_toBottomOf="@+id/text_productNameEng_order"
         app:tabIndicatorColor="@color/primary"
-        app:layout_constraintBottom_toTopOf="@id/viewPager_order"
         app:tabSelectedTextColor="@color/primary" />
-        <androidx.viewpager2.widget.ViewPager2
-            android:id="@+id/viewPager_order"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tabLayout_order"
-            />
+
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/viewPager_order"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tabLayout_order" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
