@@ -30,7 +30,7 @@ class RecentOrderAdapter: RecyclerView.Adapter<RecentOrderAdapter.RecentOrderVie
                     "${orderDetailList[0].productName} 외 ${orderDetailList.size - 1}건"
                 }
                 Log.d(TAG, "bind: ${order.orderTime}")
-                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 HH:mm")
+                val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
                 val orderTime = dateFormat.format(order.orderTime)
 
                 tvOrdernameRecentorder.text = orderName
