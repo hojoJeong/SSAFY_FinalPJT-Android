@@ -4,7 +4,7 @@ package com.ssafy.silencelake.fragment.main.menu.detail
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.silencelake.dto.CommentDto
-import com.ssafy.smartstore.service.CommentService
+import com.ssafy.smartstore.service.CommentRepository
 import kotlinx.coroutines.launch
 
 class CommentViewModel : ViewModel(){
@@ -17,15 +17,15 @@ class CommentViewModel : ViewModel(){
 
     }
     fun insertComment(commentDto: CommentDto) = viewModelScope.launch {
-        CommentService().insertComment(commentDto)
+        CommentRepository.insertComment(commentDto)
     }
 
     fun updateComment(commentDto: CommentDto) = viewModelScope.launch {
-        CommentService().updateComment(commentDto)
+        CommentRepository.updateComment(commentDto)
     }
 
     fun deleteComment(id: Int) = viewModelScope.launch {
-        CommentService().deleteComment(id)
+        CommentRepository.deleteComment(id)
     }
 
 }
