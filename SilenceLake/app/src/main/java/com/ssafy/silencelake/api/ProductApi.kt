@@ -21,6 +21,6 @@ interface ProductApi {
     suspend fun getProductWithComments(@Path("productId") productId: Int): Response<List<MenuDetailWithCommentResponse>>
 
     //HomeFragment에서 사용할 추천메뉴
-    @GET("rest/product/recommend")
-    suspend fun getRecommendedMenu(): Response<List<ProductDto>>
+    @GET("rest/product/recommended/{userId}")
+    suspend fun getRecommendedProduct(@Path("userId") userId: String): Response<List<ProductDto>>
 }

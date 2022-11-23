@@ -30,4 +30,9 @@ public class ProductServiceImpl implements ProductService{
         return pDao.selectWithComment(productId);
     }
     
+    @Override
+    public List<Product> selectRecommendedProduct(String userId){
+        return pDao.selectRecommendedProduct(userId);
+    }
+    
 }

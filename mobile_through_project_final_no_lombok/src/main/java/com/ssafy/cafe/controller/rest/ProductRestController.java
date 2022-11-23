@@ -36,4 +36,11 @@ public class ProductRestController {
     public List<Map<String, Object>> getProductWithComments(@PathVariable Integer productId){
         return pService.selectWithComment(productId);
     }
+    
+    @GetMapping("/recommended/{userId}")
+    @ApiOperation(value="{userId}에 해당하는 유저가 가장 많이 주문한 5개 메뉴를 반환한다.")
+    public ResponseEntity<List<Product>> getRecommenedProduct(@PathVariable String userId){
+      
+        return new ResponseEntity<List<Product>>(pService.selectRecommendedProduct(userId), HttpStatus.OK);
+    }
 }

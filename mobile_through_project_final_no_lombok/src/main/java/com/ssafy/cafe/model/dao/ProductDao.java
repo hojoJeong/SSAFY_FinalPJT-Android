@@ -17,7 +17,7 @@ public interface ProductDao {
     Product select(Integer productId);
 
     List<Product> selectAll();
-    
+    List<Product> selectRecommendedProduct(String userId);
     // backend 관통 과정에서 추가됨.
     List<Map<String, Object>> selectWithComment(Integer productId);
 }

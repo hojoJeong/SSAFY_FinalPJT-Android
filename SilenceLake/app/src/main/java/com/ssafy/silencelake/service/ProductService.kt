@@ -30,4 +30,11 @@ class ProductService {
             return response.body() ?: emptyList()
         } else return emptyList()
     }
+
+    suspend fun getRecommendedProduct(userId: String): List<ProductDto>{
+        val response = RetrofitUtil.productService.getRecommendedProduct(userId)
+        if(response.isSuccessful){
+            return response.body() ?: emptyList()
+        }else return emptyList()
+    }
 }
