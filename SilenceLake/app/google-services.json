@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "340874053239",
+    "project_id": "silence-lake",
+    "storage_bucket": "silence-lake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:340874053239:android:925475d003a8732c256872",
+        "android_client_info": {
+          "package_name": "com.ssafy.silencelake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "340874053239-e5ejlo22j4lleujch5k0r38j0mvuj1jf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssafy.silencelake",
+            "certificate_hash": "b899bd557b1f8a1206f5f68f795f8e116690635a"
+          }
+        },
+        {
+          "client_id": "340874053239-jnfu1g00pakh8seuab6iqb7tn9o4nlu6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBne_9eNb_2EFjTnI_rEmAO3EcqvkSXb34"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "340874053239-jnfu1g00pakh8seuab6iqb7tn9o4nlu6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

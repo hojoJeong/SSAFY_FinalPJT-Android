@@ -13,7 +13,7 @@ import java.util.prefs.AbstractPreferences
 class ApplicationClass : Application() {
 
     companion object {
-        const val SERVER_URL = "http://192.168.33.134:9999/"
+        const val SERVER_URL = "http://172.20.10.9:9999/"
         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
         lateinit var retrofit: Retrofit
     }
