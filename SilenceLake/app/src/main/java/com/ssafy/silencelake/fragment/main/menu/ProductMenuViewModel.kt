@@ -6,7 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.silencelake.dto.ProductDto
-import com.ssafy.smartstore.service.ProductService
+import com.ssafy.smartstore.service.ProductRepository
 import kotlinx.coroutines.launch
 
 class ProductMenuViewModel : ViewModel() {
@@ -20,12 +20,12 @@ class ProductMenuViewModel : ViewModel() {
         get() = _recommendedMenuList
 
     fun getProductList() = viewModelScope.launch {
-        val response = ProductService().getProductList()
+        val response = ProductRepository.getProductList()
         _menuProudctList.value = response
     }
 
     fun getRecommendedProduct(userId: String) = viewModelScope.launch {
-             val response = ProductService().getRecommendedProduct(userId)
+             val response = ProductRepository.getRecommendedProduct(userId)
         _recommendedMenuList.value = response
         }
 

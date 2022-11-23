@@ -11,16 +11,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
 import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentProductMenuBinding
-import com.ssafy.silencelake.fragment.main.menu.ProductMenuAdapter
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
-import com.ssafy.smartstore.service.ProductService
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 
 private const val TAG = "ProductMenuFragment_싸피"

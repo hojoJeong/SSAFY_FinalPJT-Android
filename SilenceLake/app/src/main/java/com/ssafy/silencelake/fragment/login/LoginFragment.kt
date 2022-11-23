@@ -11,7 +11,7 @@ import android.widget.Toast
 import com.ssafy.silencelake.activity.LoginActivity
 import com.ssafy.silencelake.databinding.FragmentLoginBinding
 import com.ssafy.silencelake.dto.UserDto
-import com.ssafy.silencelake.service.UserService
+import com.ssafy.silencelake.repository.UserRepository
 import com.ssafy.silencelake.util.ApplicationClass
 import com.ssafy.silencelake.util.RetrofitCallback
 
@@ -46,7 +46,7 @@ class LoginFragment : Fragment() {
     }
     private fun login(loginId:String, loginPW: String){
         val user = UserDto(loginId, loginPW)
-        UserService().login(user, LoginCallback())
+        UserRepository.login(user, LoginCallback())
     }
 
     inner class LoginCallback: RetrofitCallback<UserDto> {

@@ -16,7 +16,7 @@ import com.ssafy.silencelake.activity.LoginActivity
 import com.ssafy.silencelake.databinding.FragmentJoinBinding
 
 import com.ssafy.silencelake.dto.UserDto
-import com.ssafy.silencelake.service.UserService
+import com.ssafy.silencelake.repository.UserRepository
 import com.ssafy.silencelake.util.RetrofitCallback
 
 private const val TAG = "JoinFragment_싸피"
@@ -69,7 +69,7 @@ class JoinFragment : Fragment() {
                             0,
                             null,
                         )
-                        UserService().signUpUser(user, SignUpCallback())
+                        UserRepository.signUpUser(user, SignUpCallback())
                     }
                 } else {
                     Toast.makeText(context, "중복 확인이 필요한 아이디", Toast.LENGTH_SHORT).show()
@@ -79,7 +79,7 @@ class JoinFragment : Fragment() {
     }
 
     fun checkDuplicatedId(id: String) {
-        UserService().checkDuplicatedId(id, CheckDupclicatedIdCallback())
+        UserRepository.checkDuplicatedId(id, CheckDupclicatedIdCallback())
     }
 
     inner class CheckDupclicatedIdCallback : RetrofitCallback<Boolean> {

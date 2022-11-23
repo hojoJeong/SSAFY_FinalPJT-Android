@@ -1,7 +1,5 @@
 package com.ssafy.silencelake.fragment.main.menu.shoppinglist
 
-import android.content.ContentValues.TAG
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.silencelake.dto.ShoppingCart
 
 import com.ssafy.smartstore.response.MenuDetailWithCommentResponse
-import com.ssafy.smartstore.service.ProductService
+import com.ssafy.smartstore.service.ProductRepository
 import kotlinx.coroutines.launch
 
 class ShoppingListViewModel: ViewModel() {
@@ -25,7 +23,7 @@ class ShoppingListViewModel: ViewModel() {
 
     fun getSelectedProduct(id: Int) = viewModelScope.launch{
         _productId = id
-        _selectedProduct.value = ProductService().getProductWithComments(id)
+        _selectedProduct.value = ProductRepository.getProductWithComments(id)
     }
 
     var list = mutableListOf<ShoppingCart>()
