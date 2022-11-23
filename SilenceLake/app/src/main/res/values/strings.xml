@@ -23,4 +23,6 @@
     <string name="store">담기</string>
     <string name="nfc_title">편의시설</string>
     <string name="hint_comment">댓글을 입력하세요</string>
+    <string name="title_admin">관리자 페이지</string>
+    <string name="daily_revanue">금일 매출</string>
 </resources>

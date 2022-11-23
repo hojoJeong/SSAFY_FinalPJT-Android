@@ -6,12 +6,9 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.silencelake.databinding.ItemListRecentOrderBinding
-import com.ssafy.silencelake.databinding.ItemListRecentOrderDetailBinding
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.smartstore.response.OrderDetailResponse
-import java.text.ParsePosition
 import java.text.SimpleDateFormat
-import java.util.*
 
 class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {
     var orderList = mutableListOf<OrderDto>()
@@ -39,8 +36,8 @@ class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderVi
                 tvTotalpriceRecentorder.text = totalPrice.toString()
                 tvOrderdateRecentorder.text = orderTime
                 btnFoldRecentorder.setOnClickListener {
-                    onFoldButtonLIstener.onClick(orderDetailList, binding, order.isExpanded)
-                    order.isExpanded = !order.isExpanded
+                    onFoldButtonLIstener.onClick(orderDetailList, binding, order.isExpended)
+                    order.isExpended = !order.isExpended
                 }
             }
         }

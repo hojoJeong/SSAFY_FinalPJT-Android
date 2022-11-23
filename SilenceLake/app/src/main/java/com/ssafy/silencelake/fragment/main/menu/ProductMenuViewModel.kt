@@ -28,5 +28,4 @@ class ProductMenuViewModel : ViewModel() {
              val response = ProductRepository.getRecommendedProduct(userId)
         _recommendedMenuList.value = response
         }
-
 }
