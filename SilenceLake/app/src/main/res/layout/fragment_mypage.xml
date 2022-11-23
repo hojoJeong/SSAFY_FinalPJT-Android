@@ -83,39 +83,34 @@
         android:max="100"
         android:progressTint="@color/primary"/>
 
-    <View
-        android:id="@+id/divider_mypagefg"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardView_orderhistory_title_mypage"
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@drawable/divider"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_level_title_mypagefg"
-        app:layout_constraintBottom_toTopOf="@+id/tv_orderhistory_title_mypagefg"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@+id/tv_level_title_mypagefg"
+        app:layout_constraintTop_toBottomOf="@+id/progress_level_mypagefg"
         app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginTop="20dp"/>
-
+        app:cardElevation="2dp"
+        android:layout_marginVertical="20dp"
+        >
     <TextView
         android:id="@+id/tv_orderhistory_title_mypagefg"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_level_title_mypagefg"
-        app:layout_constraintTop_toBottomOf="@+id/divider_mypagefg"
-        app:layout_constraintBottom_toTopOf="@+id/rcv_orderhistory_mypagefg"
-        app:layout_constraintVertical_chainStyle="packed"
-        android:layout_marginTop="20dp"
         android:text="주문 내역"
         android:textColor="@color/black"
         android:textStyle="bold"
+        android:layout_margin="10dp"
         android:textSize="20sp"/>
-
+    </androidx.cardview.widget.CardView>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcv_orderhistory_mypagefg"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintStart_toStartOf="@+id/tv_orderhistory_title_mypagefg"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_orderhistory_title_mypagefg"
+        app:layout_constraintTop_toBottomOf="@+id/cardView_orderhistory_title_mypage"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
 

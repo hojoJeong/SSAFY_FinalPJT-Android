@@ -17,15 +17,18 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="8dp"
             android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/tv_ordername_recentorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="20sp"
+                android:textColor="@color/primary"
+                android:textSize="16sp"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginStart="10dp"
+                app:layout_constraintBottom_toTopOf="@id/tv_orderdate_recentorder"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="아메리카노 외 3건" />
@@ -37,9 +40,9 @@
                 android:layout_gravity="center"
                 android:layout_marginStart="10dp"
                 android:textSize="16sp"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_ordername_recentorder"
-                app:layout_constraintBottom_toBottomOf="@+id/tv_ordername_recentorder"
-                app:layout_constraintStart_toEndOf="@+id/tv_ordername_recentorder"
+                app:layout_constraintTop_toTopOf="@id/tv_totalprice_recentorder"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
                 tools:text="2022.03.18" />
 
             <TextView
@@ -49,16 +52,16 @@
                 android:layout_marginBottom="10dp"
                 android:text="총 가격 : "
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/tv_ordername_recentorder"
+                app:layout_constraintEnd_toStartOf="@id/tv_totalprice_recentorder"
                 app:layout_constraintTop_toBottomOf="@+id/tv_ordername_recentorder" />
 
             <TextView
                 android:id="@+id/tv_totalprice_recentorder"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintBaseline_toBaselineOf="@+id/tv_totalprice_title_recentorder"
+                app:layout_constraintEnd_toStartOf="@id/btn_fold_recentorder"
                 app:layout_constraintBottom_toBottomOf="@+id/tv_totalprice_title_recentorder"
-                app:layout_constraintStart_toEndOf="@+id/tv_totalprice_title_recentorder"
+
                 tools:text="9000 원" />
 
             <androidx.appcompat.widget.AppCompatButton
