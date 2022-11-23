@@ -16,6 +16,7 @@ import com.ssafy.smartstore.response.MenuDetailWithCommentResponse
 class ProductDetailFragment : Fragment() {
     private lateinit var binding: FragmentProductDetailBinding
     private val activityViewModel by activityViewModels<ShoppingListViewModel>()
+    private val commentViewModel by activityViewModels<CommentViewModel>()
     private val tabTitleArray = arrayOf(
         "ORDER",
         "COMMENT"
@@ -36,6 +37,7 @@ class ProductDetailFragment : Fragment() {
         binding.root.setOnTouchListener{_,_ ->
             true
         }
+        commentViewModel.getComment(activityViewModel.productId)
         activityViewModel.selectedProduct.observe(viewLifecycleOwner){
             initView(it[0])
             viewPager.adapter = ProductDetailViewPagerAdapter(childFragmentManager, lifecycle)
@@ -45,7 +47,7 @@ class ProductDetailFragment : Fragment() {
         }
     }
 
-    fun initView(item: MenuDetailWithCommentResponse){
+    private fun initView(item: MenuDetailWithCommentResponse){
         Glide.with(binding.root)
             .load(item.productImg)
             .into(binding.imgProductOrder)

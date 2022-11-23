@@ -6,6 +6,16 @@ import com.ssafy.silencelake.util.RetrofitUtil
 
 class CommentRepository {
     companion object{
+        suspend fun getComment(productId: Int): List<CommentDto> {
+            val response = RetrofitUtil.commentService.getComment(productId)
+            if(response.isSuccessful){
+                Log.d("CommentService", "getComment: complete getComment")
+                return response.body()?: emptyList()
+            } else {
+                Log.d("CommentService", "getComment: fail to getComment")
+                return emptyList()
+            }
+        }
         suspend fun insertComment(comment: CommentDto): Boolean{
             val response = RetrofitUtil.commentService.insert(comment)
             if(response.isSuccessful){

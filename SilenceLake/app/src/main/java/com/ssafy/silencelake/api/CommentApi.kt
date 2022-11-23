@@ -6,6 +6,9 @@ import retrofit2.Response
 import retrofit2.http.*
 
 interface CommentApi {
+    //comment를 가져온다!!!
+    @GET("rest/comment/{productId}")
+    suspend fun getComment(@Path("productId") productId: Int) : Response<List<CommentDto>>
 
     // comment를 추가한다.
     @POST("rest/comment")

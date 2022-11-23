@@ -112,7 +112,6 @@ class CommentAdapter( val context: Context) :
     }
 
     override fun getItemCount(): Int {
-        Log.d(TAG, "getItemCount: ${commentList.size}")
         return commentList.size
     }
 
