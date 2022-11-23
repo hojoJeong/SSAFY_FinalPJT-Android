@@ -3,10 +3,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:animateLayoutChanges="true">
+    xmlns:tools="http://schemas.android.com/tools">
     <ImageView
-        android:id="@+id/img_item_detail_recentorder"
+        android:id="@+id/img_item_detail_admin"
         android:layout_width="100dp"
         android:layout_height="100dp"
         app:layout_constraintStart_toStartOf="parent"
@@ -16,72 +15,71 @@
         android:padding="10dp"
         android:background="@drawable/background_circle"/>
     <TextView
-        android:id="@+id/tv_productname_detail_recentorder"
+        android:id="@+id/tv_productname_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textStyle="bold"
         android:textColor="@color/black"
-        app:layout_constraintTop_toTopOf="@id/img_item_detail_recentorder"
+        app:layout_constraintTop_toTopOf="@id/img_item_detail_admin"
         android:layout_marginStart="12dp"
-        app:layout_constraintStart_toEndOf="@+id/img_item_detail_recentorder"
-
+        app:layout_constraintStart_toEndOf="@+id/img_item_detail_admin"
         tools:text="아이스 아메리카노"
         android:textSize="16sp"/>
 
     <TextView
-        android:id="@+id/tv_quantity_title_detail_recentorder"
+        android:id="@+id/tv_quantity_title_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_productname_detail_recentorder"
-        app:layout_constraintTop_toBottomOf="@id/tv_productname_detail_recentorder"
+        app:layout_constraintStart_toStartOf="@+id/tv_productname_detail_admin"
+        app:layout_constraintTop_toBottomOf="@id/tv_productname_detail_admin"
         android:layout_marginTop="4dp"
         android:text="수량 : "
         android:textSize="16sp"/>
     <TextView
-        android:id="@+id/tv_quantity_detail_recentorder"
+        android:id="@+id/tv_quantity_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/tv_quantity_title_detail_recentorder"
-        app:layout_constraintTop_toTopOf="@+id/tv_quantity_title_detail_recentorder"
-        app:layout_constraintBottom_toBottomOf="@+id/tv_quantity_title_detail_recentorder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_quantity_title_detail_recentorder"
+        app:layout_constraintStart_toEndOf="@+id/tv_quantity_title_detail_admin"
+        app:layout_constraintTop_toTopOf="@+id/tv_quantity_title_detail_admin"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_quantity_title_detail_admin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_quantity_title_detail_admin"
         tools:text="1개"
         android:textSize="16sp"/>
     <TextView
-        android:id="@+id/tv_unitprice_title_detail_recentorder"
+        android:id="@+id/tv_unitprice_title_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_quantity_title_detail_recentorder"
-        app:layout_constraintTop_toBottomOf="@+id/tv_quantity_title_detail_recentorder"
+        app:layout_constraintStart_toStartOf="@+id/tv_quantity_title_detail_admin"
+        app:layout_constraintTop_toBottomOf="@+id/tv_quantity_title_detail_admin"
         android:layout_marginTop="4dp"
         android:text="단가 : "
         android:textSize="16sp"/>
     <TextView
-        android:id="@+id/tv_unitprice_detail_recentorder"
+        android:id="@+id/tv_unitprice_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/tv_unitprice_title_detail_recentorder"
-        app:layout_constraintTop_toTopOf="@+id/tv_unitprice_title_detail_recentorder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_unitprice_title_detail_recentorder"
+        app:layout_constraintStart_toEndOf="@+id/tv_unitprice_title_detail_admin"
+        app:layout_constraintTop_toTopOf="@+id/tv_unitprice_title_detail_admin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_unitprice_title_detail_admin"
         tools:text="1500 원"/>
     <TextView
-        android:id="@+id/tv_price_title_detail_recentorder"
+        android:id="@+id/tv_price_title_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="@+id/tv_unitprice_title_detail_recentorder"
-        app:layout_constraintTop_toBottomOf="@+id/tv_unitprice_title_detail_recentorder"
+        app:layout_constraintStart_toStartOf="@+id/tv_unitprice_title_detail_admin"
+        app:layout_constraintTop_toBottomOf="@+id/tv_unitprice_title_detail_admin"
         app:layout_constraintBottom_toBottomOf="parent"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="4dp"
         android:text="결제 금액 : "
         android:textSize="16sp"/>
     <TextView
-        android:id="@+id/tv_price_detail_recentorder"
+        android:id="@+id/tv_price_detail_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toEndOf="@+id/tv_price_title_detail_recentorder"
-        app:layout_constraintTop_toTopOf="@+id/tv_price_title_detail_recentorder"
-        app:layout_constraintBaseline_toBaselineOf="@+id/tv_price_title_detail_recentorder"
+        app:layout_constraintStart_toEndOf="@+id/tv_price_title_detail_admin"
+        app:layout_constraintTop_toTopOf="@+id/tv_price_title_detail_admin"
+        app:layout_constraintBaseline_toBaselineOf="@+id/tv_price_title_detail_admin"
         android:layout_marginBottom="10dp"
         tools:text="1500 원"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

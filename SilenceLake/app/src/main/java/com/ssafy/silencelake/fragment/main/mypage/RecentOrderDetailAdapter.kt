@@ -16,12 +16,12 @@ class RecentOrderDetailAdapter(context: Context) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: OrderDetailResponse) {
 
-            Glide.with(mContext).load(data.img).into(binding.imgItemRecentorderDetail)
+            Glide.with(mContext).load(data.img).into(binding.imgItemDetailRecentorder)
             binding.apply {
-                tvProductnameRecentordeDetail.text = data.productName
-                tvQuantityRecentorderDetail.text = "${data.quantity} 개"
-                tvUnitpriceRecentorderDetail.text = "${data.unitPrice} 원"
-                tvPriceRecentorderDetail.text = "${data.totalPrice} 원"
+                tvProductnameDetailRecentorder.text = data.productName
+                tvQuantityDetailRecentorder.text = "${data.quantity} 개"
+                tvUnitpriceDetailRecentorder.text = "${data.unitPrice} 원"
+                tvPriceDetailRecentorder.text = "${data.totalPrice} 원"
             }
         }
     }
