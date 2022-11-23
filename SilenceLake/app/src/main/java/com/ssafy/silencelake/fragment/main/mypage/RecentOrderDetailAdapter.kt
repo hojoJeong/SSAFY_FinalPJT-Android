@@ -19,8 +19,8 @@ class RecentOrderDetailAdapter(context: Context) :
             Glide.with(mContext).load(data.img).into(binding.imgItemRecentorderDetail)
             binding.apply {
                 tvProductnameRecentordeDetail.text = data.productName
-                tvQuantityRecentorderDetail.text = data.quantity.toString()
-                tvUnitpriceRecentorderDetail.text = data.unitPrice.toString()
+                tvQuantityRecentorderDetail.text = "${data.quantity} 개"
+                tvUnitpriceRecentorderDetail.text = "${data.unitPrice} 원"
                 tvPriceRecentorderDetail.text = "${data.totalPrice} 원"
             }
         }

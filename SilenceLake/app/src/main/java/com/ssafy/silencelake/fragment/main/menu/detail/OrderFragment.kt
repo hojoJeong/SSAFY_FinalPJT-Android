@@ -64,7 +64,7 @@ class OrderFragment : Fragment() {
                     R.id.chip_venti -> checkedChip = "venti"
                 }
                 val item = activityViewModel.selectedProduct.value?.get(0)!!
-                activityViewModel.list.add(ShoppingCart(activityViewModel.productId, item.productImg, item.productName, textQuantityOrder.text.toString().toInt(),
+                activityViewModel.list.add(ShoppingCart(activityViewModel.productId, item.productImg, item.productName,item.productNameEng, textQuantityOrder.text.toString().toInt(),
                     item.productPrice, item.type, checkedChip))
                 activityViewModel.updateShoppingList()
                 activity!!.onBackPressed()

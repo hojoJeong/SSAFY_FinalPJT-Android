@@ -9,6 +9,7 @@ data class MenuDetailWithCommentResponse (
     @SerializedName("sells") val productTotalSellCnt: Int,
     @SerializedName("price") val productPrice: Int,
     @SerializedName("name") val productName: String,
+    @SerializedName("name_eng") val productNameEng: String,
     @SerializedName("rating") val productRating: Double,
     @SerializedName("commentId") val commentId: Int = -1,
     @SerializedName("comment") val commentContent: String?,

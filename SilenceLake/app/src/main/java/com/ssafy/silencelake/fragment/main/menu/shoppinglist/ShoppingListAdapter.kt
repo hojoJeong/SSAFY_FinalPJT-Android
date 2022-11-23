@@ -37,6 +37,7 @@ class ShoppingListAdapter: RecyclerView.Adapter<ShoppingListAdapter.ViewHolder>(
             productNameEng.text = ""
             quantity.text = item.menuCnt.toString()
             totalPrice.text = "${item.totalPrice}원"
+            productNameEng.text = item.menuNameEng
             btnPlus.setOnClickListener {
                 itemClickListener.plusBtnClicked(layoutPosition)
             }

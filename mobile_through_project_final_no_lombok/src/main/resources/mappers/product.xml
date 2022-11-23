@@ -58,7 +58,7 @@
 	
 	<!-- backend  관통 과정에서 추가됨 -->
 	<select id="selectWithComment" resultType="map" parameterType="int">
-	select p.name, p.price, p.img, p.type, c.id as commentId, c.user_id, c.rating, c.comment, 
+	select p.name, p.name_eng, p.price, p.img, p.type, c.id as commentId, c.user_id, c.rating, c.comment, 
 	(select name from t_user where id=c.user_Id	) userName,
     (select count(rating)  from t_comment where product_id=p.id) as commentCnt,
     (select avg(rating)  from t_comment where product_id=p.id) as avg,
