@@ -18,6 +18,7 @@ import com.ssafy.silencelake.dto.ProductDto
 import com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
+import com.ssafy.silencelake.util.ApplicationClass
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -54,7 +55,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun initData() {
-        productMenuViewModel.getRecommendedMenu()
+        productMenuViewModel.getRecommendedProduct(ApplicationClass.sharedPreferencesUtil.getUser().id)
 
         productMenuViewModel.recommendedMenuLiveData.observe(viewLifecycleOwner) {
             initAdapter()

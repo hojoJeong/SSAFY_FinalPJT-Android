@@ -41,6 +41,19 @@
 	<select id="selectAll" resultType="Product">
 		SELECT id,name, name_eng, type, price, img FROM t_product order by id asc
 	</select>
+    
+    <select id="selectRecommendedProduct" parameterType="String" resultType="Product">
+        select product_id as id, `name`, name_eng, `type`, price, img 
+        from t_order
+        join t_order_detail
+        on t_order.o_id = t_order_detail.order_id
+        join t_product
+        on product_id = t_product.id
+        where user_id = #{userId}
+        group by product_id
+        order by sum(quantity) DESC
+        limit 5
+    </select>
 	
 	
 	<!-- backend  관통 과정에서 추가됨 -->

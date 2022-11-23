@@ -14,7 +14,11 @@ class RecommendedMenuAdapter(val context: Context): RecyclerView.Adapter<Recomme
     inner class RecommendedMenuViewHolder(val binding: ItemListRecommendedmenuBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data: ProductDto){
             Glide.with(context).load(data.img).into(binding.imgItemListRecommendedmenu)
-            binding.tvItemListRecommendedmenu.text = data.name
+            if(data.name.length > 4){
+                binding.tvItemListRecommendedmenu.text = data.name.substring(0, 5) + "..."
+            }else{
+                binding.tvItemListRecommendedmenu.text = data.name
+            }
             binding.imgItemListRecommendedmenu.setOnClickListener {
                 onClickRecommendedItem.onClick(data)
             }

@@ -21,4 +21,6 @@ public interface ProductService {
      * @return
      */
     List<Map<String, Object>> selectWithComment(Integer productId);
+
+    List<Product> selectRecommendedProduct(String userId);
 }

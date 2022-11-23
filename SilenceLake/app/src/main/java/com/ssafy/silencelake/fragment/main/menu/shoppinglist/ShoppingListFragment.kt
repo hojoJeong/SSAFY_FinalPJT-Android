@@ -5,12 +5,15 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentShoppingListBinding
+import com.ssafy.silencelake.dto.OrderDetail
+import com.ssafy.silencelake.dto.OrderDto
+import com.ssafy.silencelake.util.ApplicationClass
+import com.ssafy.smartstore.service.OrderRepository
 
 private const val TAG = "ShoppingListFragment_싸피"
 
@@ -66,7 +69,23 @@ class ShoppingListFragment : Fragment() {
                     activityViewModel.updateShoppingList()
                 }
             }
+        binding.buttonOrderShoppinglist.setOnClickListener {
+            val orderDetailList = mutableListOf<OrderDetail>()
+            val userId = ApplicationClass.sharedPreferencesUtil.getUser().id
+            var sum = 0
+            for(item in activityViewModel.shoppingList.value!!){
+                sum += item.menuCnt
+                orderDetailList.add(OrderDetail(activityViewModel.productId, item.menuCnt, item.volume))
+            }
+            val order = OrderDto(userId, "table 01", orderDetailList)
+            OrderRepository.insertOder(order)
+            activityViewModel.list.clear()
+            activityViewModel.updateShoppingList()
+            (context as MainActivity).onBackPressed()
+        }
     }
+
+
 
 
 }
