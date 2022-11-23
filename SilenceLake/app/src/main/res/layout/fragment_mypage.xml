@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-
     <TextView
         android:id="@+id/tv_username_mypage"
         android:layout_width="wrap_content"
@@ -38,11 +37,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_username_mypage"
-        app:layout_constraintBottom_toTopOf="@+id/tv_level_title_mypagefg"
+
         android:layout_marginTop="10dp"
         android:text="@string/content_welcome_mypage"
         android:textSize="26sp"
         android:textStyle="bold"/>
+    <TextView
+        android:id="@+id/tv_logout_mypage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/tv_welcome_mypage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:text="로그아웃"
+        android:textColor="@color/black"
+        />
 
     <TextView
         android:id="@+id/tv_level_title_mypagefg"
@@ -50,7 +59,7 @@
         android:layout_height="wrap_content"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/tv_level_mypagefg"
-        app:layout_constraintTop_toBottomOf="@+id/tv_welcome_mypage"
+        app:layout_constraintTop_toBottomOf="@+id/tv_logout_mypage"
         app:layout_constraintHorizontal_chainStyle="packed"
         android:layout_marginStart="20dp"
         android:text="LV."
@@ -62,7 +71,6 @@
         app:layout_constraintStart_toEndOf="@+id/tv_level_title_mypagefg"
         app:layout_constraintTop_toTopOf="@+id/tv_level_title_mypagefg"
         app:layout_constraintBaseline_toBaselineOf="@+id/tv_level_title_mypagefg"
-        app:layout_constraintBottom_toTopOf="@+id/divider_mypagefg"
         app:layout_constraintVertical_chainStyle="packed"
         android:textSize="30sp"
         android:text="1"

@@ -1,6 +1,7 @@
 package com.ssafy.silencelake.activity
 
 import android.content.ContentValues.TAG
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -65,6 +66,17 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
+    }
+    fun logout() {
+        //preference 지우기
+        ApplicationClass.sharedPreferencesUtil.deleteUser()
+
+        //화면이동
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(intent)
     }
 
     fun openShoppingList() {

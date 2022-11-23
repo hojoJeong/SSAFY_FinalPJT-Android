@@ -1,6 +1,7 @@
 package com.ssafy.silencelake.fragment.main.mypage
 
 import android.content.ContentValues.TAG
+import android.graphics.Paint
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -9,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentMypageBinding
 import com.ssafy.silencelake.databinding.ItemListRecentOrderBinding
 import com.ssafy.silencelake.dto.*
@@ -58,6 +60,10 @@ class MypageFragment : Fragment() {
             tvUsernameMypage.text = userInfo.name
             tvLevelMypagefg.text = (userInfo.stamps/10).toString()
             progressLevelMypagefg.progress = (userInfo.stamps % 10) * 10
+            tvLogoutMypage.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+            tvLogoutMypage.setOnClickListener {
+                (context as MainActivity).logout()
+            }
         }
     }
 
