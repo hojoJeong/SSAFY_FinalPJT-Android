@@ -26,6 +26,7 @@ class OrderRepository {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.code() == 200) {
                         Log.d(TAG, "onResponse: 주문 성공!")
+                        Log.d(TAG, "onResponse: 주문 : $order")
                         CoroutineScope(Dispatchers.Default).launch {
                             FcmRepository.sendMessageToAdmin()
                         }
