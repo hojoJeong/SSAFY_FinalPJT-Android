@@ -2,13 +2,13 @@ package com.ssafy.silencelake.activity
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import com.google.android.gms.tasks.OnCompleteListener
@@ -27,6 +27,7 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
+private const val TAG = "MainActivity_싸피"
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val userResponseViewModel by viewModels<UserResponseViewModel>()
@@ -49,6 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
+
     }
     @RequiresApi(Build.VERSION_CODES.O)
     // Notification 수신을 위한 체널 추가
@@ -67,6 +69,8 @@ class MainActivity : AppCompatActivity() {
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
         fun uploadToken(token:String){
             // 새로운 토큰 수신 시 서버로 전송
+            ApplicationClass.myToken = token
+            Log.d(TAG, "uploadToken: ${ApplicationClass.myToken}")
             val storeService = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
             storeService.uploadToken(token).enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {

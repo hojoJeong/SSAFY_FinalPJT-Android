@@ -9,11 +9,13 @@ data class OrderDto(
     var orderTime: Date?,
     var completed: Char,
     var details: ArrayList<OrderDetail>,
+    var token: String
 ) {
     var isExpended = false
     constructor(
         userId: String,
         orderTable: String,
-        orderDetail: MutableList<OrderDetail>
-    ): this(0, userId, orderTable, null,'N',orderDetail as ArrayList<OrderDetail>)
+        orderDetail: MutableList<OrderDetail>,
+        token: String
+    ): this(0, userId, orderTable, null,'N',orderDetail as ArrayList<OrderDetail>, token)
 }

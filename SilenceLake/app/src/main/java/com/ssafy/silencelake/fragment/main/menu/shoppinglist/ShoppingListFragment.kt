@@ -77,7 +77,7 @@ class ShoppingListFragment : Fragment() {
                 sum += item.menuCnt
                 orderDetailList.add(OrderDetail(activityViewModel.productId, item.menuCnt, item.volume))
             }
-            val order = OrderDto(userId, "table 01", orderDetailList)
+            val order = OrderDto(userId, "table 01", orderDetailList, ApplicationClass.myToken)
             OrderRepository.insertOder(order)
             activityViewModel.list.clear()
             activityViewModel.updateShoppingList()
