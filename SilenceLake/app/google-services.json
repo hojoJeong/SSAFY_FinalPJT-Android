@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "340874053239-e7m1riqaaqb4m0jbmmh081heeqgm425s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ssafy.silencelake",
+            "certificate_hash": "c43eb9ab33d9f93f6ef6fe7e829420fbbc8d8765"
+          }
+        },
+        {
           "client_id": "340874053239-jke6io7lpf4akecmt8pv6aej1mjcj74s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
