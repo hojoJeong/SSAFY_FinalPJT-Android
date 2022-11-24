@@ -12,13 +12,13 @@ import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {
-    var orderList = mutableListOf<OrderDto>()
-    var orderDetailList = mutableListOf<MutableList<OrderDetailResponse>>()
+    var orderList = listOf<OrderDto>()
+    var orderDetailList = listOf<List<OrderDetailResponse>>()
     lateinit var onFoldButtonLIstener: OnFoldButtonLIstener
 
     inner class RecentOrderViewHolder(val binding: ItemListRecentOrderBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(order: OrderDto, orderDetailList: MutableList<OrderDetailResponse>) {
+        fun bind(order: OrderDto, orderDetailList: List<OrderDetailResponse>) {
             binding.apply {
                 var tPrice = 0;
                 for (i in 0 until orderDetailList.size) {

@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.ssafy.silencelake.R
-import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.FragmentOrderBinding
 import com.ssafy.silencelake.dto.OrderDetail
 import com.ssafy.silencelake.dto.OrderDto

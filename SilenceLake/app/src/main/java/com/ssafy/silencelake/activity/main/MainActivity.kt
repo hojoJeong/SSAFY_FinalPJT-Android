@@ -88,14 +88,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
     private fun init() {
-        initUserResponseData()
         initView()
         initBottomNavigation()
-    }
-
-    private fun initUserResponseData(){
-        var user = ApplicationClass.sharedPreferencesUtil.getUser()
-        userResponseViewModel.getUserResponseInfo(user.id)
     }
 
     private fun initView() {
