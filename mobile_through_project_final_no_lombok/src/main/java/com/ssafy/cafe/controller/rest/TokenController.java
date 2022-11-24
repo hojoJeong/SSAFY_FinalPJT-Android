@@ -60,7 +60,7 @@ public class TokenController {
     	return dataService.broadCastDataMessage(msg);
     }
     @PostMapping("/registAdmin")
-    public Boolean registAdmin(@PathVariable String token) {
+    public Boolean registAdmin(@RequestBody String token) {
         aService.updateAdmin(new Admin(1,token));
         return true;
     }

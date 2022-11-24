@@ -7,5 +7,5 @@ import com.ssafy.cafe.model.dto.Admin;
 public interface AdminDao {
     int updateAdmin(Admin admin);
     List<Admin> select();
-    void insert();
+    void insert(Admin admin);
 }

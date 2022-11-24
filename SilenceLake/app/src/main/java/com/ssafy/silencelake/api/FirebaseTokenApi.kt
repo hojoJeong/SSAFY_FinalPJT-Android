@@ -10,6 +10,8 @@ interface FirebaseTokenApi {
     @POST("token")
     fun uploadToken(@Query("token") token: String): Call<String>
 
+    @POST("registAdmin")
+    fun registAdmin(@Query("token") token: String): Call<String>
     //Token에 해당하는 유저에게 푸쉬알림 전송
     @POST("sendMessageTo")
     suspend fun sendMessageTo(@Query("title") title: String,@Query("body") body: String,@Query("token") token: String): Response<Unit>

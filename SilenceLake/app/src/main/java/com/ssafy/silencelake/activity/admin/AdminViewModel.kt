@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.silencelake.repository.FcmRepository
 import com.ssafy.silencelake.repository.UserRepository
+import com.ssafy.silencelake.util.RetrofitUtil
 import com.ssafy.smartstore.response.OrderDetailResponse
 import com.ssafy.smartstore.service.OrderRepository
 import kotlinx.coroutines.CoroutineScope
@@ -26,7 +27,7 @@ class AdminViewModel : ViewModel() {
         get() = _orderDetailList
 
     fun getUncompletedOrderList() = viewModelScope.launch {
-        _orderList.value = OrderRepository.getUncompletedOrder() as MutableList<OrderDto>
+        _orderList.value = OrderRepository.getUncompletedOrder()
     }
 
     fun getOrderDetailList() = viewModelScope.launch {

@@ -8,12 +8,11 @@
 		VALUES (#{token})
 	</insert>
 	
-	<update id="updateAdmin" parameterType="Comment">
+	<update id="updateAdmin" parameterType="Admin">
 		UPDATE t_admin SET
         token = #{token}
-		WHERE id = 1
 	</update>
 	<select id="select" resultType="Admin">
-		SELECT * FROM t_comment
+		SELECT * FROM t_admin
 	</select>
 </mapper>

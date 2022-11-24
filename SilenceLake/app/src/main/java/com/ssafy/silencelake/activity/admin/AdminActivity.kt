@@ -46,12 +46,12 @@ class AdminActivity : AppCompatActivity() {
 
     companion object {
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
-        fun uploadToken(token: String) {
+        fun registAdmin(token: String) {
             // 새로운 토큰 수신 시 서버로 전송
             ApplicationClass.myToken = token
             Log.d(TAG, "uploadToken: ${ApplicationClass.myToken}")
             val fcmApi = RetrofitUtil.fcmApi
-            fcmApi.uploadToken(token).enqueue(object : Callback<String> {
+            fcmApi.registAdmin(token).enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     if (response.isSuccessful) {
                         val res = response.body()
