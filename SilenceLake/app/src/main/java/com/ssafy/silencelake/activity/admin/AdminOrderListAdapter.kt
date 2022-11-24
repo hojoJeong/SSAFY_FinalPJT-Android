@@ -57,7 +57,7 @@ class AdminOrderListAdapter() :
             }
             totalPrice = "총 가격 : ${decimalFormat.format(price)} 원"
 
-            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
+            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 HH:mm")
             orderDate = dateFormat.format(data.orderTime)
         }
     }

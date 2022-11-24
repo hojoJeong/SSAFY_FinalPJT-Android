@@ -1,0 +1,17 @@
+Index: app/src/main/java/com/ssafy/silencelake/activity/login/LoginActivity.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.activity.login\r\n\r\nimport android.content.Intent\r\nimport androidx.appcompat.app.AppCompatActivity\r\nimport android.os.Bundle\r\nimport com.ssafy.silencelake.R\r\nimport com.ssafy.silencelake.activity.MainActivity\r\nimport com.ssafy.silencelake.fragment.login.JoinFragment\r\nimport com.ssafy.silencelake.fragment.login.LoginFragment\r\nimport com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil\r\n\r\nclass LoginActivity : AppCompatActivity() {\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n        setContentView(R.layout.activity_login)\r\n\r\n        //로그인 상태 체크\r\n        var user = sharedPreferencesUtil.getUser()\r\n\r\n        //로그인 상태 확인. id가 있다면 로그인 된 상태.\r\n        if (user.id != \"\") {\r\n            openFragment(3)\r\n        } else {\r\n            openFragment(1)\r\n        }\r\n    }\r\n\r\n    fun openFragment(number: Int) {\r\n        val transaction = supportFragmentManager.beginTransaction()\r\n        when (number) {\r\n            1 -> transaction.replace(R.id.fragment_container_login, LoginFragment())\r\n            2 -> {\r\n                transaction.setCustomAnimations(\r\n                    R.anim.enter_from_right,\r\n                    R.anim.exit_to_right,\r\n                    R.anim.enter_from_right,\r\n                    R.anim.exit_to_right\r\n                )\r\n                transaction.replace(R.id.fragment_container_login, JoinFragment())\r\n                transaction.addToBackStack(null)\r\n            }\r\n            3 -> {\r\n                val intent = Intent(this, MainActivity::class.java)\r\n                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);\r\n                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);\r\n                startActivity(intent)\r\n            }\r\n        }\r\n        transaction.commit()\r\n    }\r\n\r\n}
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/activity/login/LoginActivity.kt b/app/src/main/java/com/ssafy/silencelake/activity/login/LoginActivity.kt
+--- a/app/src/main/java/com/ssafy/silencelake/activity/login/LoginActivity.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/activity/login/LoginActivity.kt	
+@@ -4,7 +4,7 @@
+ import androidx.appcompat.app.AppCompatActivity
+ import android.os.Bundle
+ import com.ssafy.silencelake.R
+-import com.ssafy.silencelake.activity.MainActivity
++import com.ssafy.silencelake.activity.main.MainActivity
+ import com.ssafy.silencelake.fragment.login.JoinFragment
+ import com.ssafy.silencelake.fragment.login.LoginFragment
+ import com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil
