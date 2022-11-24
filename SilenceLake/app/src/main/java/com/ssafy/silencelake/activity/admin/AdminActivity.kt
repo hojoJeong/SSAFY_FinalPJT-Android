@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.silencelake.activity.main.MainActivity
 import com.ssafy.silencelake.api.FirebaseTokenApi
 import com.ssafy.silencelake.databinding.ActivityAdminBinding
 import com.ssafy.silencelake.databinding.ItemListAdminBinding
@@ -22,6 +23,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 private const val TAG = "AdminActivity_싸피"
+
 class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
     private lateinit var adminAdapter: AdminOrderListAdapter
@@ -41,40 +43,52 @@ class AdminActivity : AppCompatActivity() {
         Log.d(TAG, "onNewIntent: ")
     }
 
-    companion object{
+    companion object {
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
-        fun uploadToken(token:String){
+        fun uploadToken(token: String) {
             // 새로운 토큰 수신 시 서버로 전송
             ApplicationClass.myToken = token
             Log.d(TAG, "uploadToken: ${ApplicationClass.myToken}")
             val storeService = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
             storeService.uploadToken(token).enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
-                    if(response.isSuccessful){
+                    if (response.isSuccessful) {
                         val res = response.body()
                         Log.d(TAG, "onResponse: $res")
                     } else {
                         Log.d(TAG, "onResponse: Error Code ${response.code()}")
                     }
                 }
+
                 override fun onFailure(call: Call<String>, t: Throwable) {
                     Log.d(TAG, t.message ?: "토큰 정보 등록 중 통신오류")
                 }
             })
         }
     }
-    private fun init(){
+
+    private fun init() {
+        logout()
+
         adminAdapter = AdminOrderListAdapter()
         binding.rcvContainerAdmin.apply {
             layoutManager = LinearLayoutManager(this@AdminActivity)
             adapter = adminAdapter
         }
-        adminAdapter.onBtnClickListener = object : AdminOrderListAdapter.OnBtnClickListener{
-            override fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
+        adminAdapter.onBtnClickListener = object : AdminOrderListAdapter.OnBtnClickListener {
+            override fun onFoldBtnClickListener(
+                orderDetailList: List<OrderDetailResponse>,
+                binding: ItemListAdminBinding,
+                isExpended: Boolean
+            ) {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
-            override fun onContainerClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
+            override fun onContainerClickListener(
+                orderDetailList: List<OrderDetailResponse>,
+                binding: ItemListAdminBinding,
+                isExpended: Boolean
+            ) {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
@@ -89,12 +103,12 @@ class AdminActivity : AppCompatActivity() {
         initData()
     }
 
-    private fun initData(){
+    private fun initData() {
         var unCompleteOrderCount = 0
         adminViewModel.getUncompletedOrderList()
-        adminViewModel.orderList.observe(this){ orderList ->
+        adminViewModel.orderList.observe(this) { orderList ->
             adminViewModel.getOrderDetailList()
-            adminViewModel.orderDetailList.observe(this){
+            adminViewModel.orderDetailList.observe(this) {
                 adminAdapter.orderList = orderList
                 adminAdapter.orderDetailList = it
                 adminAdapter.notifyDataSetChanged()
@@ -105,21 +119,33 @@ class AdminActivity : AppCompatActivity() {
     }
 
 
-
-    private fun initAdminOrderDetailAdapter(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
+    private fun initAdminOrderDetailAdapter(
+        orderDetailList: List<OrderDetailResponse>,
+        binding: ItemListAdminBinding,
+        isExpended: Boolean
+    ) {
         val adminDetailAdapter = AdminOrderDetailListAdapter(this)
         val rcvAdminDetail = binding.rcvRecentdetailAdmin
         adminDetailAdapter.orderDetailList = orderDetailList
         rcvAdminDetail.layoutManager = LinearLayoutManager(this@AdminActivity)
 
         ToggleAnimation.toggleArrow(binding.btnFoldAdmin, !isExpended)
-        when(isExpended){
+        when (isExpended) {
             true -> {
                 ToggleAnimation.collapse(binding.rcvRecentdetailAdmin)
             }
             false -> {
                 rcvAdminDetail.adapter = adminDetailAdapter
                 ToggleAnimation.expand(rcvAdminDetail)
+            }
+        }
+    }
+
+    private fun logout() {
+        binding.tvLogoutAdmin.apply {
+            bringToFront()
+            setOnClickListener {
+                MainActivity().logout()
             }
         }
     }
