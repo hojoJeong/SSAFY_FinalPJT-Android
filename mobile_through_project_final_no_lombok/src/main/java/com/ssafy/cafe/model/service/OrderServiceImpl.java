@@ -85,8 +85,21 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public List<Order> selectUncomplitedOrder() {
-        return oDao.selectUnComplitedOrder();
+    public List<Order> selectUncompletedOrder() {
+        return oDao.selectUnCompletedOrder();
+    }
+
+    @Override
+    public void deleteWithDetails(Integer orderId) {
+        oDao.delete(orderId);
+        dDao.deleteByOrderId(orderId);
+      
+    }
+
+    @Override
+    public void updateCompletedState(Integer orderId) {
+        oDao.updateCompletedState(orderId);
+        
     }
     
 }

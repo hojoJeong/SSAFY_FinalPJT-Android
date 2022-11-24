@@ -17,12 +17,12 @@
         #{token})
 	</insert>
 
-	<update id="update" parameterType="Order">
+	<update id="updateCompletedState" parameterType="int">
 		UPDATE t_order
 		SET
 		completed =
-		#{completed}
-		WHERE o_id = #{id}
+		'Y'
+		WHERE o_id = #{orderId}
 	</update>
 
 	<delete id="delete" parameterType="int">
@@ -109,8 +109,8 @@
 		order by o.o_id desc, d.d_id desc
 	</select>
     
-    <select id="selectUnComplitedOrder" resultType="Order">
-        select * 
+    <select id="selectUnCompletedOrder" resultType="Order">
+        select o_id as id, user_id, order_table, order_time, completed, token
         from t_order
         where completed = 'N';
     </select>

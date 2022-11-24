@@ -17,7 +17,7 @@ public interface OrderDao {
     
     Order selectWithDetail(int id);
     
-    List<Order> selectUnComplitedOrder();
+    List<Order> selectUnCompletedOrder();
     List<Order> selectByUser(String userId);
     // back end 관통에서 추가함
     List<Map> selectOrderTotalInfo(int id); 
@@ -28,5 +28,7 @@ public interface OrderDao {
      * @param id
      * @return
      */
-    List<Map<String, Object>> getLastMonthOrder(String id);    
+    List<Map<String, Object>> getLastMonthOrder(String id); 
+    
+    int updateCompletedState(Integer orderId);
 }

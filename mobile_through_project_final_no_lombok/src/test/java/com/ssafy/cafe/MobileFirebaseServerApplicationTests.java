@@ -23,7 +23,7 @@ class MobileFirebaseServerApplicationTests {
     @Test
     void sendMessage() throws IOException {
     	
-        String token = "cuJpYiQARMSftpEQhRfCeW:APA91bGt8VyDJIH2m-vH_7_0RDiESgpQ0HDrZfGwYEaAKFCn-0lgUPmGidC_uwJdjJduGlIueGaqeNQDzdjvTjfAii5V_vFo6JNcFzvJQ_xTrU72J7I3wtQb6QVwsl9FyXtNjth7AdzI";
+        String token = "chSXihAVQKGPuKKCaKSZvQ:APA91bGx_tkwCu8JJR8sCUH_o0p_7TolBPMBwRKYkMYbXcmNhWbvaoxVMXREA2qgjMEt7FcjqXVZ_amAd8C1p2nHgMQIniEoX_lDEjwP2xQKcfmLwRJqIOWs7c3KeUCveOY9TI3PCRn9";
 //        String token1 = "cHI9bL4QQTKQI_nJVtoUt7:APA91bF-VKnKY0NxeikBXORc0FhmS3iRHFYZgH5yBF34GNt-tYaUCvABVal1CSibhAEWkj9DDcmpZWlD4lA481JoC_UjVnykSYhyd5OHi3-91E-kVlX4YjEEK2v0fTQlqoW35yjNnlrd";
 //		한건 메시지
         service.sendMessageTo(token, "from 사무국", "싸피 여러분 화이팅!!");

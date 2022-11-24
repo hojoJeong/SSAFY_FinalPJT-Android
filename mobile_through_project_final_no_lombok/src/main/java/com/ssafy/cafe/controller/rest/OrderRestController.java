@@ -5,9 +5,11 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -46,7 +48,20 @@ public class OrderRestController {
     
     @GetMapping("/ILoveHojo")
     @ApiOperation(value="완료처리 되지 않은 주문을 모두 반환한다.")
-    public List<Order> selectUncomplitedOrder(){
-        return oService.selectUncomplitedOrder();
+    public List<Order> selectUncompletedOrder(){
+        return oService.selectUncompletedOrder();
+    }
+    @PutMapping("/{orderId}")
+    @ApiOperation(value="{orderId}에 해당하는 주문의 완료 상태를 변경한다.")
+    public Boolean updateCompletedState(@PathVariable Integer orderId) {
+        oService.updateCompletedState(orderId);
+        return true;
+    }
+    
+    @DeleteMapping("/{orderId}")
+    @ApiOperation(value="{orderId}에 해당하는 주문과 상세 내역을 삭제한다.")
+    public Boolean deleteOrder(@PathVariable Integer orderId) {
+        oService.deleteWithDetails(orderId);
+        return true;
     }
 }
