@@ -1,0 +1,150 @@
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/RecentOrderAdapter.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.mypage\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.util.Log\r\nimport android.view.LayoutInflater\r\nimport android.view.ViewGroup\r\nimport androidx.recyclerview.widget.RecyclerView\r\nimport com.ssafy.silencelake.databinding.ItemListRecentOrderBinding\r\nimport com.ssafy.silencelake.dto.OrderDto\r\nimport com.ssafy.smartstore.response.OrderDetailResponse\r\nimport java.text.DecimalFormat\r\nimport java.text.SimpleDateFormat\r\n\r\nclass RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {\r\n    var orderList = listOf<OrderDto>()\r\n    var orderDetailList = listOf<List<OrderDetailResponse>>()\r\n    lateinit var onFoldButtonLIstener: OnFoldButtonLIstener\r\n\r\n    inner class RecentOrderViewHolder(val binding: ItemListRecentOrderBinding) :\r\n        RecyclerView.ViewHolder(binding.root) {\r\n        fun bind(order: OrderDto, orderDetailList: List<OrderDetailResponse>) {\r\n            binding.apply {\r\n                var tPrice = 0;\r\n                for (i in 0 until orderDetailList.size) {\r\n                    tPrice += orderDetailList[i].totalPrice\r\n                }\r\n                val decimalFormat = DecimalFormat(\"#,##0\")\r\n                val totalPrice = \"${decimalFormat.format(tPrice)} 원\"\r\n                var orderName = if (orderDetailList.size == 1) {\r\n                    orderDetailList[0].productName\r\n                } else {\r\n                    \"${orderDetailList[0].productName} 외 ${orderDetailList.size - 1}건\"\r\n                }\r\n                val dateFormat = SimpleDateFormat(\"yyyy년 MM월 dd일\")\r\n                val orderTime = dateFormat.format(order.orderTime)\r\n\r\n                tvOrdernameRecentorder.text = orderName\r\n                tvTotalpriceRecentorder.text = totalPrice.toString()\r\n                tvOrderdateRecentorder.text = orderTime\r\n                btnFoldRecentorder.setOnClickListener {\r\n                    onFoldButtonLIstener.onClick(orderDetailList, binding, order.isExpended)\r\n                    order.isExpended = !order.isExpended\r\n                }\r\n            }\r\n        }\r\n    }\r\n\r\n    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecentOrderViewHolder {\r\n        val view =\r\n            ItemListRecentOrderBinding.inflate(LayoutInflater.from(parent.context), parent, false)\r\n        return RecentOrderViewHolder(view)\r\n    }\r\n\r\n    override fun onBindViewHolder(holder: RecentOrderViewHolder, position: Int) {\r\n        holder.bind(orderList[position], orderDetailList[position])\r\n    }\r\n\r\n    override fun getItemCount(): Int = orderList.size\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/RecentOrderAdapter.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/RecentOrderAdapter.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/RecentOrderAdapter.kt	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/RecentOrderAdapter.kt	(date 1669293487154)
+@@ -1,7 +1,5 @@
+ package com.ssafy.silencelake.fragment.main.mypage
+ 
+-import android.content.ContentValues.TAG
+-import android.util.Log
+ import android.view.LayoutInflater
+ import android.view.ViewGroup
+ import androidx.recyclerview.widget.RecyclerView
+Index: app/src/main/java/com/ssafy/silencelake/repository/OrderRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.smartstore.service\r\n\r\nimport android.content.ContentValues\r\nimport android.util.Log\r\nimport androidx.lifecycle.LiveData\r\nimport androidx.lifecycle.MutableLiveData\r\nimport com.ssafy.silencelake.dto.OrderDto\r\nimport com.ssafy.silencelake.repository.FcmRepository\r\nimport com.ssafy.silencelake.util.RetrofitUtil\r\nimport com.ssafy.smartstore.response.LatestOrderResponse\r\nimport com.ssafy.smartstore.response.OrderDetailResponse\r\nimport kotlinx.coroutines.CoroutineScope\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.launch\r\nimport retrofit2.Call\r\nimport retrofit2.Callback\r\nimport retrofit2.Response\r\n\r\nprivate const val TAG = \"OrderService_싸피\"\r\n\r\nclass OrderRepository {\r\n\r\n    companion object {\r\n        fun insertOder(order: OrderDto) {\r\n            RetrofitUtil.orderApi.makeOrder(order).enqueue(object : Callback<Int> {\r\n                override fun onResponse(call: Call<Int>, response: Response<Int>) {\r\n                    if (response.code() == 200) {\r\n                        Log.d(TAG, \"onResponse: 주문 성공!\")\r\n                        CoroutineScope(Dispatchers.Default).launch {\r\n                            FcmRepository.sendMessageToAdmin()\r\n                        }\r\n                    }\r\n                }\r\n\r\n                override fun onFailure(call: Call<Int>, t: Throwable) {\r\n                    Log.d(TAG, \"onFailure: 주문 입력 통신 오류\")\r\n                }\r\n            })\r\n        }\r\n\r\n        suspend fun updateOrder(orderId: Int){\r\n            val response = RetrofitUtil.orderApi.updateOrder(orderId)\r\n            if(response.isSuccessful){\r\n                Log.d(ContentValues.TAG, \"updateOrder: 주문 처리 완료\")\r\n            } else{\r\n                Log.d(ContentValues.TAG, \"updateOrder: 주문 처리 실패\")\r\n            }\r\n        }\r\n\r\n        suspend fun deleteOrder(orderId: Int){\r\n            val response = RetrofitUtil.orderApi.deleteOrder(orderId)\r\n            if(response.isSuccessful){\r\n                Log.d(TAG, \"deleteOrder: 주문 취소 완료\")\r\n            } else{\r\n                Log.d(TAG, \"deleteOrder: 주문 취소 실패\")\r\n            }\r\n        }\r\n\r\n\r\n        // 최근 한달간 주문내역 가져오는 API\r\n        fun getLastMonthOrder(userId: String): LiveData<List<LatestOrderResponse>> {\r\n            val responseLiveData: MutableLiveData<List<LatestOrderResponse>> = MutableLiveData()\r\n            val latestOrderRequest: Call<List<LatestOrderResponse>> =\r\n                RetrofitUtil.orderApi.getLastMonthOrder(userId)\r\n\r\n            latestOrderRequest.enqueue(object : Callback<List<LatestOrderResponse>> {\r\n                override fun onResponse(\r\n                    call: Call<List<LatestOrderResponse>>,\r\n                    response: Response<List<LatestOrderResponse>>\r\n                ) {\r\n                    val res = response.body()\r\n                    if (response.code() == 200) {\r\n                        if (res != null) {\r\n                            // 가공 필요 orderDate 를 기준으로 정렬, o_img 하나로 축약 필요\r\n                            //orderId를 기준으로 새로운 리스트 만들어서 넘기기\r\n                            responseLiveData.value = makeLatestOrderList(res)\r\n                        }\r\n                        Log.d(TAG, \"onResponse: $res\")\r\n                    } else {\r\n                        Log.d(TAG, \"onResponse: Error Code ${response.code()}\")\r\n                    }\r\n                }\r\n\r\n                override fun onFailure(call: Call<List<LatestOrderResponse>>, t: Throwable) {\r\n                    Log.d(TAG, t.message ?: \"최근 주문 내역 받아오는 중 통신오류\")\r\n                }\r\n            })\r\n\r\n            return responseLiveData\r\n        }\r\n\r\n        // 최근 주문 목록에서 총가격, 주문 개수 구하여 List로 반환한다.\r\n        // 반환되는 List의 경우 화면에서 보여주는 최근 주문 목록 List이다.\r\n        private fun makeLatestOrderList(latestOrderList: List<LatestOrderResponse>): List<LatestOrderResponse> {\r\n            val hm = HashMap<Int, LatestOrderResponse>()\r\n            latestOrderList.forEach { order ->\r\n                if (hm.containsKey(order.orderId)) {\r\n                    val tmp = hm[order.orderId]!!\r\n                    tmp.orderCnt += order.orderCnt\r\n                    tmp.totalPrice += order.productPrice * order.orderCnt\r\n                    hm[order.orderId] = tmp\r\n                } else {\r\n                    order.totalPrice = order.productPrice * order.orderCnt\r\n                    hm[order.orderId] = order\r\n                }\r\n            }\r\n            val list = ArrayList<LatestOrderResponse>(hm.values)\r\n            list.sortWith { o1, o2 -> o2.orderDate.compareTo(o1.orderDate) }\r\n            return list\r\n        }\r\n\r\n        suspend fun getOrderDetail(orderId: Int): List<OrderDetailResponse> {\r\n            val response = RetrofitUtil.orderApi.getOrderDetail(orderId)\r\n            if (response.isSuccessful) {\r\n                Log.d(ContentValues.TAG, \"getOrderDetail: orderDetail 호출 성공\")\r\n                return response.body() ?: emptyList()\r\n            } else {\r\n                Log.d(ContentValues.TAG, \"getOrderDetail: orderDetail 호출 실패\")\r\n                return emptyList()\r\n            }\r\n        }\r\n\r\n        suspend fun getUncompletedOrder(): List<OrderDto> {\r\n            val response = RetrofitUtil.orderApi.getUnCompletedOrder()\r\n            if (response.isSuccessful) {\r\n                Log.d(TAG, \"getUncompletedOrder: Success to UnCompleted Order\")\r\n                return response.body()?: emptyList()\r\n            } else {\r\n                Log.d(TAG, \"getUncompletedOrder: Fail to UnCompleted Order\")\r\n                return emptyList()\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/repository/OrderRepository.kt b/app/src/main/java/com/ssafy/silencelake/repository/OrderRepository.kt
+--- a/app/src/main/java/com/ssafy/silencelake/repository/OrderRepository.kt	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ b/app/src/main/java/com/ssafy/silencelake/repository/OrderRepository.kt	(date 1669294173994)
+@@ -26,6 +26,7 @@
+                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
+                     if (response.code() == 200) {
+                         Log.d(TAG, "onResponse: 주문 성공!")
++                        Log.d(TAG, "onResponse: 주문 : $order")
+                         CoroutineScope(Dispatchers.Default).launch {
+                             FcmRepository.sendMessageToAdmin()
+                         }
+Index: app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.util\r\n\r\nimport android.app.Application\r\nimport com.ssafy.smartstore.intercepter.AddCookiesInterceptor\r\nimport com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor\r\nimport okhttp3.OkHttpClient\r\nimport okhttp3.logging.HttpLoggingInterceptor\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.util.concurrent.TimeUnit\r\nimport java.util.prefs.AbstractPreferences\r\n\r\nclass ApplicationClass : Application() {\r\n\r\n    companion object {\r\n        const val SERVER_URL = \"http://192.168.33.134:9999/\"\r\n        lateinit var sharedPreferencesUtil: SharedPreferencesUtil\r\n        lateinit var retrofit: Retrofit\r\n        lateinit var myToken: String\r\n    }\r\n\r\n    override fun onCreate() {\r\n        super.onCreate()\r\n        sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)\r\n\r\n        val okHttpClient = OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)\r\n            .connectTimeout(5000, TimeUnit.MILLISECONDS)\r\n            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))\r\n            .addInterceptor(AddCookiesInterceptor())\r\n            .addInterceptor(ReceivedCookiesInterceptor())\r\n            .connectTimeout(30, TimeUnit.SECONDS).build()\r\n        retrofit = Retrofit.Builder()\r\n            .baseUrl(SERVER_URL)\r\n            .addConverterFactory(GsonConverterFactory.create())\r\n            .client(okHttpClient)\r\n            .build()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+--- a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(date 1669293055831)
+@@ -13,7 +13,7 @@
+ class ApplicationClass : Application() {
+ 
+     companion object {
+-        const val SERVER_URL = "http://192.168.33.134:9999/"
++        const val SERVER_URL = "http://192.168.0.5:9999/"
+         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+         lateinit var retrofit: Retrofit
+         lateinit var myToken: String
+Index: app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/MypageFragment.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.fragment.main.mypage\r\n\r\nimport android.content.ContentValues.TAG\r\nimport android.graphics.Paint\r\nimport android.os.Bundle\r\nimport android.util.Log\r\nimport androidx.fragment.app.Fragment\r\nimport android.view.LayoutInflater\r\nimport android.view.View\r\nimport android.view.ViewGroup\r\nimport androidx.fragment.app.activityViewModels\r\nimport androidx.recyclerview.widget.LinearLayoutManager\r\nimport com.ssafy.silencelake.activity.main.MainActivity\r\nimport com.ssafy.silencelake.databinding.FragmentMypageBinding\r\nimport com.ssafy.silencelake.databinding.ItemListRecentOrderBinding\r\nimport com.ssafy.silencelake.dto.*\r\nimport com.ssafy.silencelake.util.ApplicationClass\r\nimport com.ssafy.silencelake.util.SharedPreferencesUtil\r\nimport com.ssafy.smartstore.response.OrderDetailResponse\r\nimport kotlinx.coroutines.CoroutineScope\r\nimport kotlinx.coroutines.Dispatchers\r\nimport kotlinx.coroutines.withContext\r\n\r\nprivate const val ARG_PARAM1 = \"param1\"\r\nprivate const val ARG_PARAM2 = \"param2\"\r\n\r\nclass MypageFragment : Fragment() {\r\n    private lateinit var binding: FragmentMypageBinding\r\n    private lateinit var userInfo: UserDto\r\n    private lateinit var adapter: RecentOrderAdapter\r\n    private var orderList = mutableListOf<OrderDto>()\r\n    private var orderDetailResponseList = listOf<List<OrderDetailResponse>>()\r\n    private val userResponseViewModel by activityViewModels<UserResponseViewModel>()\r\n    override fun onCreate(savedInstanceState: Bundle?) {\r\n        super.onCreate(savedInstanceState)\r\n\r\n    }\r\n\r\n    override fun onCreateView(\r\n        inflater: LayoutInflater, container: ViewGroup?,\r\n        savedInstanceState: Bundle?\r\n    ): View {\r\n        binding = FragmentMypageBinding.inflate(inflater, container, false)\r\n        return binding.root\r\n    }\r\n\r\n    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {\r\n        super.onViewCreated(view, savedInstanceState)\r\n\r\n        initAdapter()\r\n        initData()\r\n    }\r\n    private fun initData(){\r\n        val userId = SharedPreferencesUtil(requireContext()).getUser().id\r\n        userResponseViewModel.getUserResponseInfo(userId)\r\n\r\n        userResponseViewModel.userResponseDto.observe(viewLifecycleOwner){\r\n            userInfo = userResponseViewModel.userResponseDto.value!!.user\r\n            orderList = userResponseViewModel.userResponseDto.value!!.order\r\n            userResponseViewModel.getOrderDetail()\r\n            userResponseViewModel.orderDetailResponseList.observe(viewLifecycleOwner){\r\n                orderDetailResponseList = userResponseViewModel.orderDetailResponseList.value?: emptyList()\r\n                Log.d(TAG, \"initData: $orderDetailResponseList\")\r\n                adapter.orderList = orderList\r\n                adapter.orderDetailList = orderDetailResponseList\r\n                binding.rcvOrderhistoryMypagefg.adapter = adapter\r\n                adapter.notifyDataSetChanged()\r\n                initView()\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun initView(){\r\n        binding.apply {\r\n            tvUsernameMypage.text = userInfo.name\r\n            tvLevelMypagefg.text = (userInfo.stamps/10).toString()\r\n            progressLevelMypagefg.progress = (userInfo.stamps % 10) * 10\r\n            tvLogoutMypage.paintFlags = Paint.UNDERLINE_TEXT_FLAG\r\n            tvLogoutMypage.setOnClickListener {\r\n                (context as MainActivity).logout()\r\n            }\r\n        }\r\n    }\r\n\r\n    private fun initAdapter(){\r\n        adapter = RecentOrderAdapter()\r\n        binding.rcvOrderhistoryMypagefg.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)\r\n        adapter.onFoldButtonLIstener = object : OnFoldButtonLIstener{\r\n            override fun onClick(\r\n                orderDetailList: List<OrderDetailResponse>,\r\n                binding: ItemListRecentOrderBinding,\r\n                isExpended: Boolean\r\n            ) {\r\n                val isExpanded = isExpended\r\n                val recentDetailAdapter = RecentOrderDetailAdapter(requireContext())\r\n                val recentDetailContainer = binding.rcvRecentdetailRecentorder\r\n                recentDetailAdapter.itemList.addAll(orderDetailList)\r\n                recentDetailContainer.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)\r\n                ToggleAnimation.toggleArrow(binding.btnFoldRecentorder, !isExpanded)\r\n\r\n                when(isExpanded){\r\n                    true -> {\r\n                        ToggleAnimation.collapse(recentDetailContainer)\r\n                    }\r\n                    false -> {\r\n                        recentDetailContainer.adapter = recentDetailAdapter\r\n                        ToggleAnimation.expand(recentDetailContainer)\r\n                    }\r\n                }\r\n            }\r\n        }\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/MypageFragment.kt b/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/MypageFragment.kt
+--- a/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/MypageFragment.kt	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ b/app/src/main/java/com/ssafy/silencelake/fragment/main/mypage/MypageFragment.kt	(date 1669293487144)
+@@ -24,6 +24,7 @@
+ private const val ARG_PARAM1 = "param1"
+ private const val ARG_PARAM2 = "param2"
+ 
++private const val TAG = "MypageFragment_싸피"
+ class MypageFragment : Fragment() {
+     private lateinit var binding: FragmentMypageBinding
+     private lateinit var userInfo: UserDto
+@@ -58,8 +59,10 @@
+             userInfo = userResponseViewModel.userResponseDto.value!!.user
+             orderList = userResponseViewModel.userResponseDto.value!!.order
+             userResponseViewModel.getOrderDetail()
++            Log.d(TAG, "initData: orderList : $orderList")
+             userResponseViewModel.orderDetailResponseList.observe(viewLifecycleOwner){
+                 orderDetailResponseList = userResponseViewModel.orderDetailResponseList.value?: emptyList()
++                Log.d(TAG, "initData: orderdetailList : $orderDetailResponseList")
+                 Log.d(TAG, "initData: $orderDetailResponseList")
+                 adapter.orderList = orderList
+                 adapter.orderDetailList = orderDetailResponseList
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ /dev/null	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]" date="1668673333924" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2022-11-17 오후 5:22 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ /dev/null	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
+@@ -1,19 +0,0 @@
+-Index: app/src/main/res/layout/activity_main.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"SilenceLakeApp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+---- a/app/src/main/res/layout/activity_main.xml	(revision 35be79b39d5d1cb0c1a0ff925f5c31e544bbb39c)
+-+++ b/app/src/main/res/layout/activity_main.xml	(date 1668673171095)
+-@@ -9,7 +9,7 @@
+-     <TextView
+-         android:layout_width="wrap_content"
+-         android:layout_height="wrap_content"
+--        android:text="SilenceLakeApp"
+-+        android:text="SilenceLakeApp!"
+-         app:layout_constraintBottom_toBottomOf="parent"
+-         app:layout_constraintEnd_toEndOf="parent"
+-         app:layout_constraintStart_toStartOf="parent"
+Index: .idea/deploymentTargetDropDown.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/deploymentTargetDropDown.xml b/.idea/deploymentTargetDropDown.xml
+new file mode 100644
+--- /dev/null	(date 1669293034904)
++++ b/.idea/deploymentTargetDropDown.xml	(date 1669293034904)
+@@ -0,0 +1,17 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<project version="4">
++  <component name="deploymentTargetDropDown">
++    <runningDeviceTargetSelectedWithDropDown>
++      <Target>
++        <type value="RUNNING_DEVICE_TARGET" />
++        <deviceKey>
++          <Key>
++            <type value="SERIAL_NUMBER" />
++            <value value="R39M30P1JZZ" />
++          </Key>
++        </deviceKey>
++      </Target>
++    </runningDeviceTargetSelectedWithDropDown>
++    <timeTargetWasSelectedWithDropDown value="2022-11-24T12:29:24.818665400Z" />
++  </component>
++</project>
+\ No newline at end of file

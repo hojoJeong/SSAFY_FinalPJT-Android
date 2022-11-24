@@ -1,0 +1,57 @@
+Index: app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.util\r\n\r\nimport android.app.Application\r\nimport com.ssafy.smartstore.intercepter.AddCookiesInterceptor\r\nimport com.ssafy.smartstore.intercepter.ReceivedCookiesInterceptor\r\nimport okhttp3.OkHttpClient\r\nimport okhttp3.logging.HttpLoggingInterceptor\r\nimport retrofit2.Retrofit\r\nimport retrofit2.converter.gson.GsonConverterFactory\r\nimport java.util.concurrent.TimeUnit\r\nimport java.util.prefs.AbstractPreferences\r\n\r\nclass ApplicationClass : Application() {\r\n\r\n    companion object {\r\n        const val SERVER_URL = \"http://192.168.33.134:9999/\"\r\n        lateinit var sharedPreferencesUtil: SharedPreferencesUtil\r\n        lateinit var retrofit: Retrofit\r\n        lateinit var myToken: String\r\n    }\r\n\r\n    override fun onCreate() {\r\n        super.onCreate()\r\n        sharedPreferencesUtil = SharedPreferencesUtil(applicationContext)\r\n\r\n        val okHttpClient = OkHttpClient.Builder().readTimeout(5000, TimeUnit.MILLISECONDS)\r\n            .connectTimeout(5000, TimeUnit.MILLISECONDS)\r\n            .addInterceptor(HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY))\r\n            .addInterceptor(AddCookiesInterceptor())\r\n            .addInterceptor(ReceivedCookiesInterceptor())\r\n            .connectTimeout(30, TimeUnit.SECONDS).build()\r\n        retrofit = Retrofit.Builder()\r\n            .baseUrl(SERVER_URL)\r\n            .addConverterFactory(GsonConverterFactory.create())\r\n            .client(okHttpClient)\r\n            .build()\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt
+--- a/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ b/app/src/main/java/com/ssafy/silencelake/util/ApplicationClass.kt	(date 1669287795848)
+@@ -13,7 +13,7 @@
+ class ApplicationClass : Application() {
+ 
+     companion object {
+-        const val SERVER_URL = "http://192.168.33.134:9999/"
++        const val SERVER_URL = "http://192.168.0.5:9999/"
+         lateinit var sharedPreferencesUtil: SharedPreferencesUtil
+         lateinit var retrofit: Retrofit
+         lateinit var myToken: String
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17__5_22__Changes_.xml	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ /dev/null	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
+@@ -1,4 +0,0 @@
+-<changelist name="Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]" date="1668673333924" recycled="true" deleted="true">
+-  <option name="PATH" value="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch" />
+-  <option name="DESCRIPTION" value="Uncommitted changes before Checkout at 2022-11-17 오후 5:22 [Changes]" />
+-</changelist>
+\ No newline at end of file
+Index: .idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch
+===================================================================
+diff --git a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch b/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch
+deleted file mode 100644
+--- a/.idea/shelf/Uncommitted_changes_before_Checkout_at_2022-11-17_오후_5_22_[Changes]/shelved.patch	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
++++ /dev/null	(revision 6d33a60797b70cd547027a59e333cfafe097c59e)
+@@ -1,19 +0,0 @@
+-Index: app/src/main/res/layout/activity_main.xml
+-IDEA additional info:
+-Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+-<+><?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<androidx.constraintlayout.widget.ConstraintLayout xmlns:android=\"http://schemas.android.com/apk/res/android\"\r\n    xmlns:app=\"http://schemas.android.com/apk/res-auto\"\r\n    xmlns:tools=\"http://schemas.android.com/tools\"\r\n    android:layout_width=\"match_parent\"\r\n    android:layout_height=\"match_parent\"\r\n    tools:context=\".MainActivity\">\r\n\r\n    <TextView\r\n        android:layout_width=\"wrap_content\"\r\n        android:layout_height=\"wrap_content\"\r\n        android:text=\"SilenceLakeApp\"\r\n        app:layout_constraintBottom_toBottomOf=\"parent\"\r\n        app:layout_constraintEnd_toEndOf=\"parent\"\r\n        app:layout_constraintStart_toStartOf=\"parent\"\r\n        app:layout_constraintTop_toTopOf=\"parent\" />\r\n\r\n</androidx.constraintlayout.widget.ConstraintLayout>
+-Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+-<+>UTF-8
+-===================================================================
+-diff --git a/app/src/main/res/layout/activity_main.xml b/app/src/main/res/layout/activity_main.xml
+---- a/app/src/main/res/layout/activity_main.xml	(revision 35be79b39d5d1cb0c1a0ff925f5c31e544bbb39c)
+-+++ b/app/src/main/res/layout/activity_main.xml	(date 1668673171095)
+-@@ -9,7 +9,7 @@
+-     <TextView
+-         android:layout_width="wrap_content"
+-         android:layout_height="wrap_content"
+--        android:text="SilenceLakeApp"
+-+        android:text="SilenceLakeApp!"
+-         app:layout_constraintBottom_toBottomOf="parent"
+-         app:layout_constraintEnd_toEndOf="parent"
+-         app:layout_constraintStart_toStartOf="parent"
