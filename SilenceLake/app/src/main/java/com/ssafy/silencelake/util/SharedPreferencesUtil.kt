@@ -15,6 +15,20 @@ class SharedPreferencesUtil(context: Context) {
         editor.putString("name", user.name)
         editor.apply()
     }
+    fun addAdminToken(token: String){
+        val editor = preferences.edit()
+        editor.putString("adminToken", token)
+        editor.apply()
+    }
+    fun deleteAdminToken(){
+        val editor = preferences.edit()
+        editor.clear()
+        editor.apply()
+    }
+    fun getAdminToken(): String{
+        val token = preferences.getString("adminToken", "")
+        return token?: ""
+    }
     fun getUser(): UserDto{
         val id = preferences.getString("id", "")
         if(id != ""){

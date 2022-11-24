@@ -7,14 +7,17 @@ import android.content.Intent
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.RequiresApi
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.activity.admin.AdminActivity
 import com.ssafy.silencelake.activity.main.MainActivity
 import com.ssafy.silencelake.fragment.login.JoinFragment
 import com.ssafy.silencelake.fragment.login.LoginFragment
+import com.ssafy.silencelake.util.ApplicationClass
 import com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil
 
+private const val TAG = "LoginActivity_싸피"
 class LoginActivity : AppCompatActivity() {
     @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,7 +26,6 @@ class LoginActivity : AppCompatActivity() {
         createNotificationChannel(channel_id, "ssafy")
         //로그인 상태 체크
         var user = sharedPreferencesUtil.getUser()
-
         //로그인 상태 확인. id가 있다면 로그인 된 상태.
         if (user.id != "") {
             if (user.id == "admin") {

@@ -5,15 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/tv_logout_admin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintEnd_toEndOf="@id/cdv_title_admin"
-        app:layout_constraintTop_toTopOf="@+id/cdv_title_admin"
-        app:layout_constraintBottom_toBottomOf="@+id/cdv_title_admin"
-        android:text="로그아웃"
-        android:textColor="@color/black"/>
 
     <androidx.cardview.widget.CardView
         android:id="@+id/cdv_title_admin"
@@ -55,6 +46,16 @@
         android:textColor="@color/primary"
         android:textSize="20sp"
         tools:text="미완료 주문 : 7건"/>
+    <TextView
+        android:id="@+id/tv_logout_admin"
+        android:layout_width="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/rcv_container_admin"
+        android:text="로그아웃"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

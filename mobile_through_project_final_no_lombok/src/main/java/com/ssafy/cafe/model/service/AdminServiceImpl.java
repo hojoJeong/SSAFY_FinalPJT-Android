@@ -19,14 +19,9 @@ public class AdminServiceImpl implements AdminService{
     @Override
     public void updateAdmin(Admin admin) {
     	List<Admin> list = aDao.select();
-    	System.out.println(list.toString());
-        if(list.size() > 0) {
-        	System.out.println(admin.toString());
-        	System.out.println(list.get(0).getToken());
+        if(list.size() > 0) { 
         	aDao.updateAdmin(admin);
         }else {
-        	System.out.println("insert");
-        	System.out.println(admin.toString());
         	aDao.insert(admin);
         }
         

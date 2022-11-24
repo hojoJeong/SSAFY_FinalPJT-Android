@@ -2,6 +2,7 @@ package com.ssafy.silencelake.api
 
 import retrofit2.Call
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
 
@@ -11,7 +12,7 @@ interface FirebaseTokenApi {
     fun uploadToken(@Query("token") token: String): Call<String>
 
     @POST("registAdmin")
-    fun registAdmin(@Query("token") token: String): Call<String>
+    fun registAdmin(@Body token: String): Call<String>
     //Token에 해당하는 유저에게 푸쉬알림 전송
     @POST("sendMessageTo")
     suspend fun sendMessageTo(@Query("title") title: String,@Query("body") body: String,@Query("token") token: String): Response<Unit>

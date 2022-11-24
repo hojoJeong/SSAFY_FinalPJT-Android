@@ -23,10 +23,6 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
         Log.d(TAG, "onNewToken: $token")
         // 새로운 토큰 수신 시 서버로 전송
         MainActivity.uploadToken(token)
-        if(ApplicationClass.sharedPreferencesUtil.getUser().id == "admin"){
-            AdminActivity.registAdmin(token)
-        }
-        ApplicationClass.myToken = token
     }
 
     // Foreground, Background 모두 처리하기 위해서는 data에 값을 담아서 넘긴다.

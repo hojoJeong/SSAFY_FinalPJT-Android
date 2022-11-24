@@ -11,6 +11,7 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.silencelake.activity.login.LoginActivity
 import com.ssafy.silencelake.activity.main.MainActivity
 import com.ssafy.silencelake.api.FirebaseTokenApi
 import com.ssafy.silencelake.databinding.ActivityAdminBinding
@@ -34,10 +35,25 @@ class AdminActivity : AppCompatActivity() {
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(TAG, "onCreate: ")
-
+        binding.tvLogoutAdmin.setOnClickListener {
+            logout()
+        }
+        binding.cdvTitleAdmin.setOnLongClickListener {
+            registAdmin(ApplicationClass.myToken)
+            true
+        }
         init()
     }
+    fun logout(){
+        ApplicationClass.sharedPreferencesUtil.deleteUser()
 
+        //화면이동
+        val intent = Intent(this, LoginActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+
+        startActivity(intent)
+    }
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         adminViewModel.getUncompletedOrderList()
@@ -48,8 +64,7 @@ class AdminActivity : AppCompatActivity() {
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
         fun registAdmin(token: String) {
             // 새로운 토큰 수신 시 서버로 전송
-            ApplicationClass.myToken = token
-            Log.d(TAG, "uploadToken: ${ApplicationClass.myToken}")
+            Log.d(TAG, "registToken: ${ApplicationClass.myToken}")
             val fcmApi = RetrofitUtil.fcmApi
             fcmApi.registAdmin(token).enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
@@ -69,8 +84,6 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        logout()
-
         adminAdapter = AdminOrderListAdapter()
         binding.rcvContainerAdmin.apply {
             layoutManager = LinearLayoutManager(this@AdminActivity)
@@ -138,15 +151,6 @@ class AdminActivity : AppCompatActivity() {
             false -> {
                 rcvAdminDetail.adapter = adminDetailAdapter
                 ToggleAnimation.expand(rcvAdminDetail)
-            }
-        }
-    }
-
-    private fun logout() {
-        binding.tvLogoutAdmin.apply {
-            bringToFront()
-            setOnClickListener {
-                MainActivity().logout()
             }
         }
     }

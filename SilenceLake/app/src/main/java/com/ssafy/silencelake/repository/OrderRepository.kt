@@ -29,6 +29,7 @@ class OrderRepository {
                         Log.d(TAG, "onResponse: 주문 : $order")
                         CoroutineScope(Dispatchers.Default).launch {
                             FcmRepository.sendMessageToAdmin()
+                            Log.d(TAG, "onResponse: sendMessageToAdmin")
                         }
                     }
                 }
