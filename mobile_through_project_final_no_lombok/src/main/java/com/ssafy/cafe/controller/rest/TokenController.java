@@ -44,6 +44,10 @@ public class TokenController {
     	logger.info("sendMessageTo : token:{}, title:{}, body:{}", token, title, body);
         service.sendMessageTo(token, title, body);
     }
+    @PostMapping("/sendMessageToAdmin")
+    public void sendMessageToAdmin() throws IOException{
+        service.sendMessageToAdmin();
+    };
     
     @PostMapping("/fcm")
     public Boolean sendFCM(@RequestBody FireStoreMessage msg) throws IOException {

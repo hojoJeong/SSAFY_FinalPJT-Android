@@ -101,6 +101,27 @@ public class FirebaseCloudMessageService {
         System.out.println(response.body().string());
 //        logger.info("message : {}", message);
     }
+    public void sendMessageToAdmin() throws IOException {
+        String targetToken = "chSXihAVQKGPuKKCaKSZvQ:APA91bGx_tkwCu8JJR8sCUH_o0p_7TolBPMBwRKYkMYbXcmNhWbvaoxVMXREA2qgjMEt7FcjqXVZ_amAd8C1p2nHgMQIniEoX_lDEjwP2xQKcfmLwRJqIOWs7c3KeUCveOY9TI3PCRn9";
+        String title = "admin";
+        String body = "새로운 주문이 들어왔습니다.";
+        String message = makeMessage(targetToken, title, body);
+        logger.info("message : {}", message);
+        OkHttpClient client = new OkHttpClient();
+        RequestBody requestBody = RequestBody.create(message, MediaType.get("application/json; charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(API_URL)
+                .post(requestBody)
+                // 전송 토큰 추가
+                .addHeader(HttpHeaders.AUTHORIZATION, "Bearer " + getAccessToken())
+                .addHeader(HttpHeaders.CONTENT_TYPE, "application/json; UTF-8")
+                .build();
+
+        Response response = client.newCall(request).execute();
+
+        System.out.println(response.body().string());
+//        logger.info("message : {}", message);
+    }
 
 
     private List<String> clientTokens = new ArrayList<>();
