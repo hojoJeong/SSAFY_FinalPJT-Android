@@ -34,9 +34,9 @@
         app:layout_constraintTop_toBottomOf="@+id/cdv_title_admin"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="10dp"
-        app:layout_constraintBottom_toTopOf="@+id/tv_revenue_admin"/>
+        app:layout_constraintBottom_toTopOf="@+id/tv_stack_admin"/>
     <TextView
-        android:id="@+id/tv_revenue_admin"
+        android:id="@+id/tv_stack_admin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
@@ -44,7 +44,7 @@
         android:layout_margin="10dp"
         android:textColor="@color/primary"
         android:textSize="20sp"
-        tools:text="금일 매출 : 2000원"/>
+        tools:text="미완료 주문 : 7건"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

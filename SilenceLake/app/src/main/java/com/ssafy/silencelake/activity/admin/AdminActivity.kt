@@ -13,7 +13,6 @@ import com.ssafy.smartstore.response.OrderDetailResponse
 class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
     private lateinit var adminAdapter: AdminOrderListAdapter
-    private var orderDetailResponseList = listOf<List<OrderDetailResponse>>()
     private val adminViewModel by viewModels<AdminViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +25,13 @@ class AdminActivity : AppCompatActivity() {
 
     private fun init(){
         adminAdapter = AdminOrderListAdapter()
+
         initData()
-        initView()
     }
 
     private fun initData(){
+        var unCompleteOrderTimes = 0
         adminViewModel.getUncompletedOrderList()
-
         adminViewModel.orderList.observe(this){ orderList ->
             adminViewModel.getOrderDetailList()
             adminViewModel.orderDetailList.observe(this){
@@ -40,6 +39,9 @@ class AdminActivity : AppCompatActivity() {
                 adminAdapter.orderDetailList = it as MutableList<MutableList<OrderDetailResponse>>
                 refreshAdapter()
                 adminAdapter.notifyDataSetChanged()
+
+                unCompleteOrderTimes = orderList.size
+                binding.tvStackAdmin.text = "미완료 주문 : $unCompleteOrderTimes 건"
             }
         }
     }
@@ -54,18 +56,14 @@ class AdminActivity : AppCompatActivity() {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
-            override fun onCompleteBtnClickListener() {
-                TODO("Not yet implemented")
+            override fun onCompleteBtnClickListener(orderId: Int) {
+                adminViewModel.updateOrder(orderId)
             }
 
-            override fun onCancelBtnClickListener() {
-                TODO("Not yet implemented")
+            override fun onCancelBtnClickListener(orderId: Int) {
+                adminViewModel.deleteOrder(orderId)
             }
         }
-    }
-
-    private fun initView(){
-        //일 매출 livedata로 갱신
     }
 
     private fun initAdminOrderDetailAdapter(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
@@ -74,7 +72,7 @@ class AdminActivity : AppCompatActivity() {
         adminDetailAdapter.orderDetailList = orderDetailList
         rcvAdminDetail.layoutManager = LinearLayoutManager(this@AdminActivity, LinearLayoutManager.VERTICAL, false)
 
-        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, isExpended)
+        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, !isExpended)
         when(isExpended){
             true -> {
                 ToggleAnimation.collapse(binding.rcvRecentdetailAdmin)

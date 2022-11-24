@@ -27,24 +27,19 @@ class AdminOrderListAdapter() :
                     tvOrdernameAdmin.text = orderName
                     tvOrderdateAdmin.text = orderDate
                     tvTotalpriceAdmin.text = totalPrice
-                }
+                    tvUsernameAdmin.text = "고객명 : ${data.userId}"
 
-                binding.apply {
                     btnCompleteAdmin.setOnClickListener {
-                        onClick.onCompleteBtnClickListener()
+                        onClick.onCompleteBtnClickListener(data.id)
                     }
                     btnCancelAdmin.setOnClickListener {
-                        onClick.onCancelBtnClickListener()
+                        onClick.onCancelBtnClickListener(data.id)
                     }
                     btnFoldAdmin.setOnClickListener {
                         onClick.onFoldBtnClickListener(orderDetailList, binding, data.isExpended)
                         data.isExpended = !data.isExpended
                     }
                 }
-                orderCompleteBtnListener()
-                orderCancelBtnListener()
-                foldBtnListener(orderDetailList, binding, data.isExpended)
-
             }
         }
 
@@ -65,24 +60,6 @@ class AdminOrderListAdapter() :
             val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
             orderDate = dateFormat.format(data.orderTime)
         }
-
-        private fun orderCompleteBtnListener(){
-            binding.btnCompleteAdmin.setOnClickListener {
-                onClick.onCompleteBtnClickListener()
-            }
-        }
-
-        private fun orderCancelBtnListener(){
-            binding.btnCancelAdmin.setOnClickListener {
-                onClick.onCancelBtnClickListener()
-            }
-        }
-
-        private fun foldBtnListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
-            binding.btnFoldAdmin.setOnClickListener {
-                onClick.onFoldBtnClickListener(orderDetailList, binding, isExpended)
-            }
-        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AdminOrderListViewHolder {
@@ -98,7 +75,7 @@ class AdminOrderListAdapter() :
 
     interface onBtnClickListener {
         fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
-        fun onCompleteBtnClickListener()
-        fun onCancelBtnClickListener()
+        fun onCompleteBtnClickListener(orderId: Int)
+        fun onCancelBtnClickListener(orderId: Int)
     }
 }

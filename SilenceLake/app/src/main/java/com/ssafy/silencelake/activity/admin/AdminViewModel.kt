@@ -1,5 +1,7 @@
 package com.ssafy.silencelake.activity.admin
 
+import android.content.ContentValues.TAG
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -31,5 +33,15 @@ class AdminViewModel : ViewModel() {
             list.add(OrderRepository.getOrderDetail(_orderList.value!![i].id))
         }
         _orderDetailList.value = list
+    }
+
+    fun updateOrder(orderId: Int) = viewModelScope.launch {
+        OrderRepository.updateOrder(orderId)
+        getUncompletedOrderList()
+    }
+
+    fun deleteOrder(orderId: Int) = viewModelScope.launch {
+        OrderRepository.deleteOrder(orderId)
+        getUncompletedOrderList()
     }
 }

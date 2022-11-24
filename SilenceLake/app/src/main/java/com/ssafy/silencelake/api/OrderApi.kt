@@ -12,6 +12,14 @@ interface OrderApi {
     @POST("rest/order")
     fun makeOrder(@Body body: OrderDto): Call<Int>
 
+    //주문 수정
+    @PUT("rest/order/{orderId}")
+    suspend fun updateOrder(@Path("orderId") orderId: Int): Response<Boolean>
+
+    //주문 삭제
+    @DELETE("rest/order/{orderId}")
+    suspend fun deleteOrder(@Path("orderId") orderId: Int): Response<Boolean>
+
     // {orderId}에 해당하는 주문의 상세 내역을 목록 형태로 반환한다.
     // 사용자 정보 화면의 주문 내역 조회에서 사용된다.
     @GET("rest/order/{orderId}")

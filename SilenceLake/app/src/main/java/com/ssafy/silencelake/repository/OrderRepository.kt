@@ -31,6 +31,25 @@ class OrderRepository {
             })
         }
 
+        suspend fun updateOrder(orderId: Int){
+            val response = RetrofitUtil.orderApi.updateOrder(orderId)
+            if(response.isSuccessful){
+                Log.d(ContentValues.TAG, "updateOrder: 주문 처리 완료")
+            } else{
+                Log.d(ContentValues.TAG, "updateOrder: 주문 처리 실패")
+            }
+        }
+
+        suspend fun deleteOrder(orderId: Int){
+            val response = RetrofitUtil.orderApi.deleteOrder(orderId)
+            if(response.isSuccessful){
+                Log.d(TAG, "deleteOrder: 주문 취소 완료")
+            } else{
+                Log.d(TAG, "deleteOrder: 주문 취소 실패")
+            }
+        }
+
+
         // 최근 한달간 주문내역 가져오는 API
         fun getLastMonthOrder(userId: String): LiveData<List<LatestOrderResponse>> {
             val responseLiveData: MutableLiveData<List<LatestOrderResponse>> = MutableLiveData()
