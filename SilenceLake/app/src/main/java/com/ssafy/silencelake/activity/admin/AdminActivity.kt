@@ -85,6 +85,10 @@ class AdminActivity : AppCompatActivity() {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
+            override fun onContainerClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
+                initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
+            }
+
             override fun onCompleteBtnClickListener(orderId: Int, token: String) {
                 adminViewModel.updateOrder(orderId, token)
             }

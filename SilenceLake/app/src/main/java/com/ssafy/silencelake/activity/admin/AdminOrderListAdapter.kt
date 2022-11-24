@@ -39,6 +39,10 @@ class AdminOrderListAdapter() :
                         onBtnClickListener.onFoldBtnClickListener(orderDetailList, binding, data.isExpended)
                         data.isExpended = !data.isExpended
                     }
+                    cdvContentAdmin.setOnClickListener{
+                        onBtnClickListener.onContainerClickListener(orderDetailList, binding, data.isExpended)
+                        data.isExpended = !data.isExpended
+                    }
                 }
             }
         }
@@ -57,7 +61,7 @@ class AdminOrderListAdapter() :
             }
             totalPrice = "총 가격 : ${decimalFormat.format(price)} 원"
 
-            val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일 HH:mm")
+            val dateFormat = SimpleDateFormat("MM월 dd일 HH:mm")
             orderDate = dateFormat.format(data.orderTime)
         }
     }
@@ -75,6 +79,7 @@ class AdminOrderListAdapter() :
 
     interface OnBtnClickListener {
         fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
+        fun onContainerClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
         fun onCompleteBtnClickListener(orderId: Int, token: String)
         fun onCancelBtnClickListener(orderId: Int, token: String)
     }

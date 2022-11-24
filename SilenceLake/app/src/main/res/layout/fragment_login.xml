@@ -27,7 +27,7 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textfield_id_login_value"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             />
 
     </com.google.android.material.textfield.TextInputLayout>
@@ -44,7 +44,9 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/textfield_pw_login_value"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
+            android:layout_marginBottom="16dp"
+            android:inputType="textPassword"
             />
     </com.google.android.material.textfield.TextInputLayout>
     <LinearLayout
