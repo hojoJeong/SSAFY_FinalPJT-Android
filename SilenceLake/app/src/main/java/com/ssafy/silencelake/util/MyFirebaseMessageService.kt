@@ -12,6 +12,7 @@ import com.google.firebase.messaging.RemoteMessage
 import com.ssafy.silencelake.activity.admin.AdminActivity
 import com.ssafy.silencelake.activity.admin.AdminBroadCastReceiver
 import com.ssafy.silencelake.activity.admin.AdminViewModel
+import com.ssafy.silencelake.activity.login.LoginActivity
 import com.ssafy.silencelake.activity.main.MainActivity
 private const val TAG = "MyFirebaseMsgSvc_싸피"
 
@@ -33,6 +34,7 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
 
         if(remoteMessage.notification != null){ // notification이 있는 경우 foreground처리
             //foreground
+            Log.d(TAG, "onMessageReceived: ")
             messageTitle= remoteMessage.notification!!.title.toString()
             messageContent = remoteMessage.notification!!.body.toString()
             if(messageTitle == "admin"){
@@ -63,11 +65,11 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
 
         val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
         val adminPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, adminIntent, PendingIntent.FLAG_IMMUTABLE)
-        val builder1 = NotificationCompat.Builder(this, MainActivity.channel_id)
+        val builder1 = NotificationCompat.Builder(this, LoginActivity.channel_id)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(messageTitle)
             .setContentText(messageContent)
-            .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setPriority(NotificationCompat.PRIORITY_MAX)
             .setAutoCancel(true)
         if(messageTitle == "admin"){
             builder1.setContentIntent(adminPendingIntent)
