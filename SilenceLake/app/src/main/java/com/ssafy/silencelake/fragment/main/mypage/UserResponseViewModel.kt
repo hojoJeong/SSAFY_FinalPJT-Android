@@ -18,7 +18,7 @@ class UserResponseViewModel : ViewModel() {
     var orderDetailResponseList = mutableListOf<MutableList<OrderDetailResponse>>()
     fun getUserResponseInfo(id: String) {
         viewModelScope.launch {
-            val response = RetrofitUtil.userService.getUserInfo(id)
+            val response = RetrofitUtil.userApi.getUserInfo(id)
             if (response.isSuccessful) {
                 Log.d(TAG, "getUserResponseInfo: userResponse 호출 성공")
                 userResponseDto = response.body()!!
@@ -36,7 +36,7 @@ class UserResponseViewModel : ViewModel() {
 
     fun getOrderDetail(orderId: Int){
         viewModelScope.launch {
-            val response = RetrofitUtil.orderService.getOrderDetail(orderId)
+            val response = RetrofitUtil.orderApi.getOrderDetail(orderId)
             if (response.isSuccessful){
                 Log.d(TAG, "getOrderDetail: orderDetail 호출 성공")
                 orderDetailResponseList.add(response.body() as MutableList<OrderDetailResponse>)

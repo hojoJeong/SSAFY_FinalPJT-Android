@@ -7,7 +7,7 @@ import com.ssafy.silencelake.util.RetrofitUtil
 class CommentRepository {
     companion object{
         suspend fun getComment(productId: Int): List<CommentDto> {
-            val response = RetrofitUtil.commentService.getComment(productId)
+            val response = RetrofitUtil.commentApi.getComment(productId)
             if(response.isSuccessful){
                 Log.d("CommentService", "getComment: complete getComment")
                 return response.body()?: emptyList()
@@ -17,7 +17,7 @@ class CommentRepository {
             }
         }
         suspend fun insertComment(comment: CommentDto): Boolean{
-            val response = RetrofitUtil.commentService.insert(comment)
+            val response = RetrofitUtil.commentApi.insert(comment)
             if(response.isSuccessful){
                 Log.d("CommentService", "insertComment: complete insert comment")
                 return true
@@ -27,7 +27,7 @@ class CommentRepository {
             }
         }
         suspend fun updateComment(comment: CommentDto): Boolean{
-            val response = RetrofitUtil.commentService.update(comment)
+            val response = RetrofitUtil.commentApi.update(comment)
             if(response.isSuccessful){
                 Log.d("CommentService", "updateComment: complete updateComment")
                 return true
@@ -37,7 +37,7 @@ class CommentRepository {
             }
         }
         suspend fun deleteComment(id: Int): Boolean{
-            val response = RetrofitUtil.commentService.delete(id)
+            val response = RetrofitUtil.commentApi.delete(id)
             if(response.isSuccessful){
                 Log.d("CommentService", "deleteComment: complete deleteComment")
                 return true

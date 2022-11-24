@@ -7,9 +7,9 @@ import com.ssafy.smartstore.api.ProductApi
 
 class RetrofitUtil {
     companion object{
-        val orderService = ApplicationClass.retrofit.create(OrderApi::class.java)
-        val productService = ApplicationClass.retrofit.create(ProductApi::class.java)
-        val userService = ApplicationClass.retrofit.create(UserApi::class.java)
-        val commentService = ApplicationClass.retrofit.create(CommentApi::class.java)
+        val orderApi = ApplicationClass.retrofit.create(OrderApi::class.java)
+        val productApi = ApplicationClass.retrofit.create(ProductApi::class.java)
+        val userApi = ApplicationClass.retrofit.create(UserApi::class.java)
+        val commentApi = ApplicationClass.retrofit.create(CommentApi::class.java)
     }
 }

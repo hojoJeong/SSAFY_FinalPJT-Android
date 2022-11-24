@@ -13,8 +13,7 @@ import com.ssafy.smartstore.response.OrderDetailResponse
 class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
     private lateinit var adminAdapter: AdminOrderListAdapter
-    private var orderList = mutableListOf<OrderDto>()
-    private var orderDetailResponseList = mutableListOf<MutableList<OrderDetailResponse>>()
+    private var orderDetailResponseList = listOf<List<OrderDetailResponse>>()
     private val adminViewModel by viewModels<AdminViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,33 +25,32 @@ class AdminActivity : AppCompatActivity() {
     }
 
     private fun init(){
+        adminAdapter = AdminOrderListAdapter()
         initData()
-        initAdapter()
+        initView()
     }
 
     private fun initData(){
-        adminViewModel.getOrderList()
-        adminViewModel.getOrderDetailList()
+        adminViewModel.getUncompletedOrderList()
 
-        adminViewModel.orderList.observe(this){
-            adminAdapter.orderList = it
-            adminAdapter.notifyDataSetChanged()
-        }
-        adminViewModel.orderDetailList.observe(this){
-            initView()
+        adminViewModel.orderList.observe(this){ orderList ->
+            adminViewModel.getOrderDetailList()
+            adminViewModel.orderDetailList.observe(this){
+                adminAdapter.orderList = orderList
+                adminAdapter.orderDetailList = it as MutableList<MutableList<OrderDetailResponse>>
+                refreshAdapter()
+                adminAdapter.notifyDataSetChanged()
+            }
         }
     }
 
-    private fun initAdapter(){
-        adminAdapter = AdminOrderListAdapter()
-        adminAdapter.orderList = orderList
-        adminAdapter.orderDetailList = orderDetailResponseList
+    private fun refreshAdapter(){
         binding.rcvContainerAdmin.apply {
             layoutManager = LinearLayoutManager(this@AdminActivity, LinearLayoutManager.VERTICAL, false)
             adapter = adminAdapter
         }
         adminAdapter.onClick = object : AdminOrderListAdapter.onBtnClickListener{
-            override fun onFoldBtnClickListener(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
+            override fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
@@ -70,13 +68,13 @@ class AdminActivity : AppCompatActivity() {
         //일 매출 livedata로 갱신
     }
 
-    private fun initAdminOrderDetailAdapter(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
+    private fun initAdminOrderDetailAdapter(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
         val adminDetailAdapter = AdminOrderDetailListAdapter(this)
         val rcvAdminDetail = binding.rcvRecentdetailAdmin
         adminDetailAdapter.orderDetailList = orderDetailList
         rcvAdminDetail.layoutManager = LinearLayoutManager(this@AdminActivity, LinearLayoutManager.VERTICAL, false)
 
-        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, !isExpended)
+        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, isExpended)
         when(isExpended){
             true -> {
                 ToggleAnimation.collapse(binding.rcvRecentdetailAdmin)

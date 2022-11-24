@@ -11,15 +11,15 @@ import java.text.SimpleDateFormat
 
 class AdminOrderListAdapter() :
     RecyclerView.Adapter<AdminOrderListAdapter.AdminOrderListViewHolder>() {
-    var orderList = mutableListOf<OrderDto>()
-    var orderDetailList = mutableListOf<MutableList<OrderDetailResponse>>()
+    var orderList = listOf<OrderDto>()
+    var orderDetailList = listOf<List<OrderDetailResponse>>()
     lateinit var onClick: onBtnClickListener
     private lateinit var orderName:String
     private lateinit var orderDate: String
     private lateinit var totalPrice: String
     inner class AdminOrderListViewHolder(val binding: ItemListAdminBinding) :
         RecyclerView.ViewHolder(binding.root) {
-        fun bind(data: OrderDto, orderDetailList: MutableList<OrderDetailResponse>) {
+        fun bind(data: OrderDto, orderDetailList: List<OrderDetailResponse>) {
             binding.apply {
                 formatData(data, orderDetailList)
 
@@ -48,7 +48,7 @@ class AdminOrderListAdapter() :
             }
         }
 
-        private fun formatData(data:OrderDto, orderDetailList: MutableList<OrderDetailResponse>){
+        private fun formatData(data:OrderDto, orderDetailList: List<OrderDetailResponse>){
             orderName = if (orderDetailList.size == 1) {
                 orderDetailList[0].productName
             } else {
@@ -78,7 +78,7 @@ class AdminOrderListAdapter() :
             }
         }
 
-        private fun foldBtnListener(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
+        private fun foldBtnListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
             binding.btnFoldAdmin.setOnClickListener {
                 onClick.onFoldBtnClickListener(orderDetailList, binding, isExpended)
             }
@@ -97,7 +97,7 @@ class AdminOrderListAdapter() :
     override fun getItemCount(): Int = orderList.size
 
     interface onBtnClickListener {
-        fun onFoldBtnClickListener(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
+        fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
         fun onCompleteBtnClickListener()
         fun onCancelBtnClickListener()
     }

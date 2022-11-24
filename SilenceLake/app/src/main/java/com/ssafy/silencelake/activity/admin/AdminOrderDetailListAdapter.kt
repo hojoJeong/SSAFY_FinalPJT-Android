@@ -9,7 +9,7 @@ import com.ssafy.silencelake.databinding.ItemListDetailAdminBinding
 import com.ssafy.smartstore.response.OrderDetailResponse
 
 class AdminOrderDetailListAdapter(val context: Context) : RecyclerView.Adapter<AdminOrderDetailListAdapter.AdminDetailViewHolder>(){
-    var orderDetailList = mutableListOf<OrderDetailResponse>()
+    var orderDetailList = listOf<OrderDetailResponse>()
     inner class AdminDetailViewHolder(val binding: ItemListDetailAdminBinding): RecyclerView.ViewHolder(binding.root){
         fun bind(data : OrderDetailResponse){
 

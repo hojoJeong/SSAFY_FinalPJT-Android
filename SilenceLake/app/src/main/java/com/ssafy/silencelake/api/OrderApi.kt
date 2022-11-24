@@ -21,4 +21,8 @@ interface OrderApi {
     // 반환 정보는 1차 주문번호 내림차순, 2차 주문 상세 내림차순으로 정렬된다.
     @GET("rest/order/byUser")
     fun getLastMonthOrder(@Query("id") id: String): Call<List<LatestOrderResponse>>
+
+    //완료되지 않은 전체 주문을 반환
+    @GET("rest/order/ILoveHojo")
+    suspend fun getUnCompletedOrder(): Response<List<OrderDto>>
 }

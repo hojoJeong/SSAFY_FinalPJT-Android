@@ -16,7 +16,7 @@ class UserRepository {
 
     companion object{
         fun login(user: UserDto, callback: RetrofitCallback<UserDto>) {
-            RetrofitUtil.userService.login(user).enqueue(object : Callback<UserDto> {
+            RetrofitUtil.userApi.login(user).enqueue(object : Callback<UserDto> {
                 override fun onResponse(call: Call<UserDto>, response: Response<UserDto>) {
                     val res = response.body()
                     if (response.code() == 200) {
@@ -35,7 +35,7 @@ class UserRepository {
         }
 
         fun signUpUser(user: UserDto, callback: RetrofitCallback<Boolean>) {
-            RetrofitUtil.userService.insert(user).enqueue(object : Callback<Boolean> {
+            RetrofitUtil.userApi.insert(user).enqueue(object : Callback<Boolean> {
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                     if (response.code() == 200) {
                         callback.onSuccess(response.code(), response.body() ?: false)
@@ -50,7 +50,7 @@ class UserRepository {
         }
 
         fun checkDuplicatedId(id: String, callback: RetrofitCallback<Boolean>) {
-            RetrofitUtil.userService.isUsedId(id).enqueue(object : Callback<Boolean> {
+            RetrofitUtil.userApi.isUsedId(id).enqueue(object : Callback<Boolean> {
                 override fun onResponse(call: Call<Boolean>, response: Response<Boolean>) {
                     if (response.code() == 200) {
                         callback.onSuccess(response.code(), response.body() ?: true)

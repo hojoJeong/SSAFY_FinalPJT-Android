@@ -1,21 +1,24 @@
 package com.ssafy.smartstore.service
 
+import android.content.ContentValues
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.silencelake.util.RetrofitUtil
 import com.ssafy.smartstore.response.LatestOrderResponse
+import com.ssafy.smartstore.response.OrderDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 private const val TAG = "OrderService_싸피"
-class OrderRepository{
 
-    companion object{
+class OrderRepository {
+
+    companion object {
         fun insertOder(order: OrderDto) {
-            RetrofitUtil.orderService.makeOrder(order).enqueue(object : Callback<Int> {
+            RetrofitUtil.orderApi.makeOrder(order).enqueue(object : Callback<Int> {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.code() == 200) {
                         Log.d(TAG, "onResponse: 주문 성공!")
@@ -32,7 +35,7 @@ class OrderRepository{
         fun getLastMonthOrder(userId: String): LiveData<List<LatestOrderResponse>> {
             val responseLiveData: MutableLiveData<List<LatestOrderResponse>> = MutableLiveData()
             val latestOrderRequest: Call<List<LatestOrderResponse>> =
-                RetrofitUtil.orderService.getLastMonthOrder(userId)
+                RetrofitUtil.orderApi.getLastMonthOrder(userId)
 
             latestOrderRequest.enqueue(object : Callback<List<LatestOrderResponse>> {
                 override fun onResponse(
@@ -79,6 +82,27 @@ class OrderRepository{
             list.sortWith { o1, o2 -> o2.orderDate.compareTo(o1.orderDate) }
             return list
         }
-    }
 
+        suspend fun getOrderDetail(orderId: Int): List<OrderDetailResponse> {
+            val response = RetrofitUtil.orderApi.getOrderDetail(orderId)
+            if (response.isSuccessful) {
+                Log.d(ContentValues.TAG, "getOrderDetail: orderDetail 호출 성공")
+                return response.body() ?: emptyList()
+            } else {
+                Log.d(ContentValues.TAG, "getOrderDetail: orderDetail 호출 실패")
+                return emptyList()
+            }
+        }
+
+        suspend fun getUncompletedOrder(): List<OrderDto> {
+            val response = RetrofitUtil.orderApi.getUnCompletedOrder()
+            if (response.isSuccessful) {
+                Log.d(TAG, "getUncompletedOrder: Success to UnCompleted Order")
+                return response.body()?: emptyList()
+            } else {
+                Log.d(TAG, "getUncompletedOrder: Fail to UnCompleted Order")
+                return emptyList()
+            }
+        }
+    }
 }

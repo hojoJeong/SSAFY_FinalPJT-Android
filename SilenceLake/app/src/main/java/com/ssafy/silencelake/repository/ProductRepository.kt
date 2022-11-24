@@ -10,21 +10,21 @@ class ProductRepository {
 
     companion object{
         suspend fun getProductList(): List<ProductDto> {
-            val response = RetrofitUtil.productService.getProductList()
+            val response = RetrofitUtil.productApi.getProductList()
             if (response.isSuccessful) {
                 return response.body() ?: emptyList()
             } else return emptyList()
         }
 
         suspend fun getProductWithComments(productId: Int): List<MenuDetailWithCommentResponse> {
-            val response = RetrofitUtil.productService.getProductWithComments(productId)
+            val response = RetrofitUtil.productApi.getProductWithComments(productId)
             if (response.isSuccessful) {
                 return response.body() ?: emptyList()
             } else return emptyList()
         }
 
         suspend fun getRecommendedProduct(userId: String): List<ProductDto> {
-            val response = RetrofitUtil.productService.getRecommendedProduct(userId)
+            val response = RetrofitUtil.productApi.getRecommendedProduct(userId)
             if (response.isSuccessful) {
                 return response.body() ?: emptyList()
             } else return emptyList()
