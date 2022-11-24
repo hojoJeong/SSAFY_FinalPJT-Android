@@ -112,7 +112,8 @@
     <select id="selectUnCompletedOrder" resultType="Order">
         select o_id as id, user_id, order_table, order_time, completed, token
         from t_order
-        where completed = 'N';
+        where completed = 'N'
+        order by order_time ASC
     </select>
 
 </mapper>

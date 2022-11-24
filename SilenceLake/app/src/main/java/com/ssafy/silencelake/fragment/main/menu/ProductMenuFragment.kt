@@ -12,7 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView.VERTICAL
-import com.ssafy.silencelake.activity.MainActivity
+import com.ssafy.silencelake.activity.main.MainActivity
 import com.ssafy.silencelake.databinding.FragmentProductMenuBinding
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
 

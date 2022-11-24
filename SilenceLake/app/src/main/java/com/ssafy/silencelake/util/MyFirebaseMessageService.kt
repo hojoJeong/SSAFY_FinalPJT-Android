@@ -7,8 +7,8 @@ import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
-import com.ssafy.silencelake.activity.MainActivity
-
+import com.ssafy.silencelake.activity.admin.AdminActivity
+import com.ssafy.silencelake.activity.main.MainActivity
 private const val TAG = "MyFirebaseMsgSvc_싸피"
 
 class MyFirebaseMessageService : FirebaseMessagingService() {
@@ -31,6 +31,10 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
             //foreground
             messageTitle= remoteMessage.notification!!.title.toString()
             messageContent = remoteMessage.notification!!.body.toString()
+            if(messageTitle == "admin"){
+                AdminActivity.updateUI()
+                return
+            }
         }else{  // background 에 있을경우 혹은 foreground에 있을경우 두 경우 모두
             var data = remoteMessage.data
             Log.d(TAG, "data.message: ${data}")
@@ -44,16 +48,22 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
         val mainIntent = Intent(this, MainActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
+        val adminIntent = Intent(this, AdminActivity::class.java).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
 
         val mainPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, mainIntent, PendingIntent.FLAG_IMMUTABLE)
-
+        val adminPendingIntent: PendingIntent = PendingIntent.getActivity(this, 0, adminIntent, PendingIntent.FLAG_IMMUTABLE)
         val builder1 = NotificationCompat.Builder(this, MainActivity.channel_id)
             .setSmallIcon(android.R.drawable.ic_dialog_info)
             .setContentTitle(messageTitle)
             .setContentText(messageContent)
             .setAutoCancel(true)
-            .setContentIntent(mainPendingIntent)
-
+        if(messageTitle == "admin"){
+            builder1.setContentIntent(adminPendingIntent)
+        }else{
+            builder1.setContentIntent(mainPendingIntent)
+        }
         NotificationManagerCompat.from(this).apply {
             notify(101, builder1.build())
         }

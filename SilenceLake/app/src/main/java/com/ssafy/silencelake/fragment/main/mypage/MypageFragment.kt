@@ -1,24 +1,18 @@
 package com.ssafy.silencelake.fragment.main.mypage
 
-import android.content.ContentValues.TAG
 import android.graphics.Paint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.ssafy.silencelake.activity.MainActivity
+import com.ssafy.silencelake.activity.main.MainActivity
 import com.ssafy.silencelake.databinding.FragmentMypageBinding
 import com.ssafy.silencelake.databinding.ItemListRecentOrderBinding
 import com.ssafy.silencelake.dto.*
-import com.ssafy.silencelake.util.ApplicationClass
 import com.ssafy.smartstore.response.OrderDetailResponse
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"

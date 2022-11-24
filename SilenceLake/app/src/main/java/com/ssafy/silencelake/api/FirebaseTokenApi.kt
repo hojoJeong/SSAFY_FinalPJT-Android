@@ -12,5 +12,8 @@ interface FirebaseTokenApi {
 
     //Token에 해당하는 유저에게 푸쉬알림 전송
     @POST("sendMessageTo")
-    fun sendMessageTo(@Query("title") title: String,@Query("body") body: String,@Query("token") token: String): Response<String>
+    suspend fun sendMessageTo(@Query("title") title: String,@Query("body") body: String,@Query("token") token: String): Response<Unit>
+
+    @POST("sendMessageToAdmin")
+    suspend fun sendMessageToAdmin():Response<Unit>
 }

@@ -5,9 +5,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.ssafy.silencelake.dto.OrderDto
+import com.ssafy.silencelake.repository.FcmRepository
 import com.ssafy.silencelake.util.RetrofitUtil
 import com.ssafy.smartstore.response.LatestOrderResponse
 import com.ssafy.smartstore.response.OrderDetailResponse
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -22,6 +26,9 @@ class OrderRepository {
                 override fun onResponse(call: Call<Int>, response: Response<Int>) {
                     if (response.code() == 200) {
                         Log.d(TAG, "onResponse: 주문 성공!")
+                        CoroutineScope(Dispatchers.Default).launch {
+                            FcmRepository.sendMessageToAdmin()
+                        }
                     }
                 }
 

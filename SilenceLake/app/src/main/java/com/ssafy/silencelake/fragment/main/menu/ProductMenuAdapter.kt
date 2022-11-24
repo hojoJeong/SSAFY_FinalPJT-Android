@@ -11,7 +11,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.silencelake.R
-import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.databinding.ProductMenuItemBinding
 import com.ssafy.silencelake.dto.ProductDto
 import com.ssafy.silencelake.util.ApplicationClass

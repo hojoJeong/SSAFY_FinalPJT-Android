@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
     @RequiresApi(Build.VERSION_CODES.O)
     // Notification 수신을 위한 체널 추가
     private fun createNotificationChannel(id: String, name: String) {
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
+        val importance = NotificationManager.IMPORTANCE_MAX
         val channel = NotificationChannel(id, name, importance)
 
         val notificationManager: NotificationManager

@@ -11,9 +11,18 @@ class FcmRepository {
             if(response.isSuccessful){
                 Log.d(TAG, "sendMessageTo: ${response.message()}")
             }else{
-                Log.d(TAG, "sendMessageTo: isFailed")
+                Log.d(TAG, "sendMessageTo: f")
             }
             
+        }
+        suspend fun sendMessageToAdmin(){
+            val response = RetrofitUtil.fcmApi.sendMessageToAdmin()
+            if(response.isSuccessful){
+                Log.d(TAG, "sendMessageTo: ${response.message()}")
+            }else{
+                Log.d(TAG, "sendMessageTo: f")
+            }
+
         }
     }
 }
