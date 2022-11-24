@@ -22,7 +22,6 @@ class UserResponseViewModel : ViewModel() {
             if (response.isSuccessful) {
                 Log.d(TAG, "getUserResponseInfo: userResponse 호출 성공")
                 userResponseDto = response.body()!!
-                Log.d(TAG, "getUserResponseInfo: $userResponseDto")
                 for(i in 0 until userResponseDto.order.size){
                     withContext(Dispatchers.Main){
                         getOrderDetail(userResponseDto.order[i].id)
@@ -41,7 +40,6 @@ class UserResponseViewModel : ViewModel() {
             if (response.isSuccessful){
                 Log.d(TAG, "getOrderDetail: orderDetail 호출 성공")
                 orderDetailResponseList.add(response.body() as MutableList<OrderDetailResponse>)
-                Log.d(TAG, "getOrderDetail: $orderDetailResponseList")
             } else{
                 Log.d(TAG, "getOrderDetail: orderDetail 호출 실패")
             }

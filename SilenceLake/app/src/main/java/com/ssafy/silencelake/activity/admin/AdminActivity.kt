@@ -4,10 +4,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView.LayoutManager
 import com.ssafy.silencelake.databinding.ActivityAdminBinding
 import com.ssafy.silencelake.databinding.ItemListAdminBinding
-import com.ssafy.silencelake.databinding.ItemListDetailAdminBinding
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.silencelake.fragment.main.mypage.ToggleAnimation
 import com.ssafy.smartstore.response.OrderDetailResponse
@@ -30,16 +28,19 @@ class AdminActivity : AppCompatActivity() {
     private fun init(){
         initData()
         initAdapter()
-        initView()
+    }
+
+    private fun initData(){
+        adminViewModel.getOrderList()
+        adminViewModel.getOrderDetailList()
 
         adminViewModel.orderList.observe(this){
             adminAdapter.orderList = it
             adminAdapter.notifyDataSetChanged()
         }
-    }
-
-    private fun initData(){
-
+        adminViewModel.orderDetailList.observe(this){
+            initView()
+        }
     }
 
     private fun initAdapter(){
@@ -69,14 +70,14 @@ class AdminActivity : AppCompatActivity() {
         //일 매출 livedata로 갱신
     }
 
-    private fun initAdminOrderDetailAdapter(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpanded: Boolean){
-        val adminDetailAdapter = AdminOrderDetailListAdapter()
-        adminDetailAdapter.orderDetailList = orderDetailList
+    private fun initAdminOrderDetailAdapter(orderDetailList: MutableList<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean){
+        val adminDetailAdapter = AdminOrderDetailListAdapter(this)
         val rcvAdminDetail = binding.rcvRecentdetailAdmin
+        adminDetailAdapter.orderDetailList = orderDetailList
         rcvAdminDetail.layoutManager = LinearLayoutManager(this@AdminActivity, LinearLayoutManager.VERTICAL, false)
 
-        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, !isExpanded)
-        when(isExpanded){
+        ToggleAnimation.toggleArrow(binding.btnFoldAdmin, !isExpended)
+        when(isExpended){
             true -> {
                 ToggleAnimation.collapse(binding.rcvRecentdetailAdmin)
             }

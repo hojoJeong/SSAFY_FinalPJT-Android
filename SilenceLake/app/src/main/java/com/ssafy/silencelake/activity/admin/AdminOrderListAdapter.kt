@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.silencelake.databinding.ItemListAdminBinding
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.smartstore.response.OrderDetailResponse
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class AdminOrderListAdapter() :
@@ -55,10 +56,11 @@ class AdminOrderListAdapter() :
             }
 
             var price = 0
+            val decimalFormat = DecimalFormat("#,###")
             for (i in 0 until orderDetailList.size) {
                 price += orderDetailList[i].totalPrice
             }
-            totalPrice = "총 가격 : $price 원"
+            totalPrice = "총 가격 : ${decimalFormat.format(price)} 원"
 
             val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
             orderDate = dateFormat.format(data.orderTime)

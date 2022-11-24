@@ -32,7 +32,7 @@ class ProductMenuFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentProductMenuBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -54,7 +54,6 @@ class ProductMenuFragment : Fragment() {
             rcvProductmenuMenu.addItemDecoration(DividerItemDecoration(context, VERTICAL))
         }
         productViewModel.menuProductList.observe(viewLifecycleOwner){
-            Log.d(TAG, "onViewCreated: it")
             menuAdapter.list = it
             menuAdapter.notifyDataSetChanged()
         }
