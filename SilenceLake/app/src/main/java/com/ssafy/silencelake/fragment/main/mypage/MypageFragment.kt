@@ -24,6 +24,7 @@ import kotlinx.coroutines.withContext
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
+private const val TAG = "MypageFragment_싸피"
 class MypageFragment : Fragment() {
     private lateinit var binding: FragmentMypageBinding
     private lateinit var userInfo: UserDto
@@ -58,8 +59,10 @@ class MypageFragment : Fragment() {
             userInfo = userResponseViewModel.userResponseDto.value!!.user
             orderList = userResponseViewModel.userResponseDto.value!!.order
             userResponseViewModel.getOrderDetail()
+            Log.d(TAG, "initData: orderList : $orderList")
             userResponseViewModel.orderDetailResponseList.observe(viewLifecycleOwner){
                 orderDetailResponseList = userResponseViewModel.orderDetailResponseList.value?: emptyList()
+                Log.d(TAG, "initData: orderdetailList : $orderDetailResponseList")
                 Log.d(TAG, "initData: $orderDetailResponseList")
                 adapter.orderList = orderList
                 adapter.orderDetailList = orderDetailResponseList
