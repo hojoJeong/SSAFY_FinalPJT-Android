@@ -9,10 +9,12 @@
 		</selectKey>
 		INSERT INTO t_order
 		(user_id,
-		order_table)
+		order_table,
+        token)
 		VALUES
 		(#{userId},
-		#{orderTable})
+		#{orderTable},
+        #{token})
 	</insert>
 
 	<update id="update" parameterType="Order">
@@ -106,5 +108,11 @@
 		where user_id=#{id} and order_time > date_add(now(), interval -1 month)
 		order by o.o_id desc, d.d_id desc
 	</select>
+    
+    <select id="selectUnComplitedOrder" resultType="Order">
+        select * 
+        from t_order
+        where completed = 'N';
+    </select>
 
 </mapper>

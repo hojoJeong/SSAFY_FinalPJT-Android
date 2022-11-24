@@ -43,4 +43,10 @@ public class OrderRestController {
     public List<Map<String, Object>> getLastMonthOrder(String id) {
         return oService.getLastMonthOrder(id);
     }    
+    
+    @GetMapping("/ILoveHojo")
+    @ApiOperation(value="완료처리 되지 않은 주문을 모두 반환한다.")
+    public List<Order> selectUncomplitedOrder(){
+        return oService.selectUncomplitedOrder();
+    }
 }

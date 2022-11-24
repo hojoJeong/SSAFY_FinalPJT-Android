@@ -17,6 +17,7 @@ public interface OrderDao {
     
     Order selectWithDetail(int id);
     
+    List<Order> selectUnComplitedOrder();
     List<Order> selectByUser(String userId);
     // back end 관통에서 추가함
     List<Map> selectOrderTotalInfo(int id); 

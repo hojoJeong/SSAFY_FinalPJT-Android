@@ -12,13 +12,23 @@ public class Order {
 
     private Character completed;
     private List<OrderDetail> details ;
+    private String token;
     
-    public Order(Integer id, String userId, String orderTable, Date orderTime, Character complited) {
+    public Order(Integer id, String userId, String orderTable, Date orderTime, Character complited, String token) {
         this.id = id;
         this.userId = userId;
         this.orderTable = orderTable;
         this.orderTime = orderTime;
         this.completed = complited;
+        this.token = token;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     public Order(String userId, String orderTable, Date orderTime, Character complited) {
@@ -79,11 +89,9 @@ public class Order {
 		this.details = details;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [id=" + id + ", userId=" + userId + ", orderTable=" + orderTable + ", orderTime=" + orderTime
-				+ ", completed=" + completed + ", details=" + details + "]";
-	}
-    
-    
+    @Override
+    public String toString() {
+        return "Order [id=" + id + ", userId=" + userId + ", orderTable=" + orderTable + ", orderTime=" + orderTime
+                + ", completed=" + completed + ", details=" + details + ", token=" + token + "]";
+    }
 }

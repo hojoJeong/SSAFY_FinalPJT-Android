@@ -53,4 +53,10 @@ public interface OrderService {
      * @return
      */
     List<Map<String, Object>> getLastMonthOrder(String id);
+    
+    /**
+     * 완료처리 되지 않은 주문을 모두 반환한다.
+     * @return
+     */
+    List<Order> selectUncomplitedOrder();
 }
