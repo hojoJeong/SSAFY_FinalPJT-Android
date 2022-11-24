@@ -12,4 +12,6 @@ public interface OrderDetailDao {
     OrderDetail select(Integer detailId);
 
     List<OrderDetail> selectAll();
+    
+    int deleteByOrderId(Integer orderId);
 }

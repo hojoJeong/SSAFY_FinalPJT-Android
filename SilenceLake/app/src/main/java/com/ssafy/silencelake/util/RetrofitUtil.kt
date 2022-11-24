@@ -1,5 +1,6 @@
 package com.ssafy.silencelake.util
 
+import com.ssafy.silencelake.api.FirebaseTokenApi
 import com.ssafy.silencelake.api.UserApi
 import com.ssafy.smartstore.api.CommentApi
 import com.ssafy.smartstore.api.OrderApi
@@ -11,5 +12,6 @@ class RetrofitUtil {
         val productApi = ApplicationClass.retrofit.create(ProductApi::class.java)
         val userApi = ApplicationClass.retrofit.create(UserApi::class.java)
         val commentApi = ApplicationClass.retrofit.create(CommentApi::class.java)
+        val fcmApi = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
     }
 }

@@ -7,9 +7,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.ssafy.silencelake.dto.OrderDto
+import com.ssafy.silencelake.repository.FcmRepository
 import com.ssafy.silencelake.repository.UserRepository
 import com.ssafy.smartstore.response.OrderDetailResponse
 import com.ssafy.smartstore.service.OrderRepository
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -35,13 +37,15 @@ class AdminViewModel : ViewModel() {
         _orderDetailList.value = list
     }
 
-    fun updateOrder(orderId: Int) = viewModelScope.launch {
+    fun updateOrder(orderId: Int, token: String) = viewModelScope.launch {
         OrderRepository.updateOrder(orderId)
+        FcmRepository.sendMessageTo("📢알림📢","☕주문하신 커피가 나왔습니다☕", token)
         getUncompletedOrderList()
     }
-
-    fun deleteOrder(orderId: Int) = viewModelScope.launch {
+    
+    fun deleteOrder(orderId: Int, token: String) = viewModelScope.launch {
         OrderRepository.deleteOrder(orderId)
+        FcmRepository.sendMessageTo("📢알림📢","사장님이 주문을 취소했습니다.", token)
         getUncompletedOrderList()
     }
 }

@@ -6,9 +6,9 @@ import androidx.activity.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ssafy.silencelake.databinding.ActivityAdminBinding
 import com.ssafy.silencelake.databinding.ItemListAdminBinding
-import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.silencelake.fragment.main.mypage.ToggleAnimation
 import com.ssafy.smartstore.response.OrderDetailResponse
+
 
 class AdminActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAdminBinding
@@ -19,7 +19,6 @@ class AdminActivity : AppCompatActivity() {
 
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         init()
     }
 
@@ -51,17 +50,17 @@ class AdminActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@AdminActivity, LinearLayoutManager.VERTICAL, false)
             adapter = adminAdapter
         }
-        adminAdapter.onClick = object : AdminOrderListAdapter.onBtnClickListener{
+        adminAdapter.onBtnClickListener = object : AdminOrderListAdapter.OnBtnClickListener{
             override fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean) {
                 initAdminOrderDetailAdapter(orderDetailList, binding, isExpended)
             }
 
-            override fun onCompleteBtnClickListener(orderId: Int) {
-                adminViewModel.updateOrder(orderId)
+            override fun onCompleteBtnClickListener(orderId: Int, token: String) {
+                adminViewModel.updateOrder(orderId, token)
             }
 
-            override fun onCancelBtnClickListener(orderId: Int) {
-                adminViewModel.deleteOrder(orderId)
+            override fun onCancelBtnClickListener(orderId: Int, token: String) {
+                adminViewModel.deleteOrder(orderId, token)
             }
         }
     }

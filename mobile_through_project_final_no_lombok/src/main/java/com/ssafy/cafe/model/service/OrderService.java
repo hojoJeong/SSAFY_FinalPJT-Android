@@ -58,5 +58,10 @@ public interface OrderService {
      * 완료처리 되지 않은 주문을 모두 반환한다.
      * @return
      */
-    List<Order> selectUncomplitedOrder();
+    List<Order> selectUncompletedOrder();
+    
+    public void deleteWithDetails(Integer orderId);
+    
+    public void updateCompletedState(Integer orderId);
+    
 }

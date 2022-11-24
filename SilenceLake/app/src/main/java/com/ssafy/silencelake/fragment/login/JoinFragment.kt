@@ -12,7 +12,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import com.ssafy.silencelake.R
-import com.ssafy.silencelake.activity.LoginActivity
+import com.ssafy.silencelake.activity.login.LoginActivity
 import com.ssafy.silencelake.databinding.FragmentJoinBinding
 
 import com.ssafy.silencelake.dto.UserDto
