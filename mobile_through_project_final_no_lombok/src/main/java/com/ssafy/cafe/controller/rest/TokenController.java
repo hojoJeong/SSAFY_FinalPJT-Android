@@ -6,11 +6,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ssafy.cafe.model.dto.Admin;
 import com.ssafy.cafe.model.dto.FireStoreMessage;
+import com.ssafy.cafe.model.service.AdminService;
 import com.ssafy.cafe.model.service.FirebaseCloudMessageDataService;
 import com.ssafy.cafe.model.service.FirebaseCloudMessageService;
 
@@ -25,6 +28,9 @@ public class TokenController {
     
     @Autowired
     FirebaseCloudMessageDataService dataService;
+    
+    @Autowired
+    AdminService aService;
     
     @PostMapping("/token")
     public String registToken(String token) {
@@ -52,6 +58,11 @@ public class TokenController {
     @PostMapping("/fcm")
     public Boolean sendFCM(@RequestBody FireStoreMessage msg) throws IOException {
     	return dataService.broadCastDataMessage(msg);
+    }
+    @PostMapping("/registAdmin")
+    public Boolean registAdmin(@PathVariable String token) {
+        aService.updateAdmin(new Admin(1,token));
+        return true;
     }
 }
 

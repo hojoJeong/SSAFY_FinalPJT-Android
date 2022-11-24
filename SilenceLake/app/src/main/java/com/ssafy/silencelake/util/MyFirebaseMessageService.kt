@@ -23,6 +23,7 @@ class MyFirebaseMessageService : FirebaseMessagingService() {
         Log.d(TAG, "onNewToken: $token")
         // 새로운 토큰 수신 시 서버로 전송
         MainActivity.uploadToken(token)
+        AdminActivity.uploadToken(token)
         ApplicationClass.myToken = token
     }
 

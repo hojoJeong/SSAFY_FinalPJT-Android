@@ -16,6 +16,7 @@ import com.ssafy.silencelake.databinding.ActivityAdminBinding
 import com.ssafy.silencelake.databinding.ItemListAdminBinding
 import com.ssafy.silencelake.fragment.main.mypage.ToggleAnimation
 import com.ssafy.silencelake.util.ApplicationClass
+import com.ssafy.silencelake.util.RetrofitUtil
 import com.ssafy.smartstore.response.OrderDetailResponse
 import retrofit2.Call
 import retrofit2.Callback
@@ -47,8 +48,8 @@ class AdminActivity : AppCompatActivity() {
             // 새로운 토큰 수신 시 서버로 전송
             ApplicationClass.myToken = token
             Log.d(TAG, "uploadToken: ${ApplicationClass.myToken}")
-            val storeService = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
-            storeService.uploadToken(token).enqueue(object : Callback<String> {
+            val fcmApi = RetrofitUtil.fcmApi
+            fcmApi.uploadToken(token).enqueue(object : Callback<String> {
                 override fun onResponse(call: Call<String>, response: Response<String>) {
                     if(response.isSuccessful){
                         val res = response.body()

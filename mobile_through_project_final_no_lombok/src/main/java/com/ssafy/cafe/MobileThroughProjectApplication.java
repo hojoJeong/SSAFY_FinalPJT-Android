@@ -21,7 +21,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @MapperScan(basePackageClasses = OrderDao.class)
 public class MobileThroughProjectApplication {
-
 	public static void main(String[] args) {
 		SpringApplication.run(MobileThroughProjectApplication.class, args);
 	}

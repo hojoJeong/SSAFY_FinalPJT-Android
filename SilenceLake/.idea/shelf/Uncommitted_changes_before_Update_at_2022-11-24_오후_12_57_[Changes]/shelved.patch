@@ -1,0 +1,307 @@
+Index: app/src/main/java/com/ssafy/silencelake/util/RetrofitUtil.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.util\r\n\r\nimport com.ssafy.silencelake.api.UserApi\r\nimport com.ssafy.smartstore.api.CommentApi\r\nimport com.ssafy.smartstore.api.OrderApi\r\nimport com.ssafy.smartstore.api.ProductApi\r\n\r\nclass RetrofitUtil {\r\n    companion object{\r\n        val orderApi = ApplicationClass.retrofit.create(OrderApi::class.java)\r\n        val productApi = ApplicationClass.retrofit.create(ProductApi::class.java)\r\n        val userApi = ApplicationClass.retrofit.create(UserApi::class.java)\r\n        val commentApi = ApplicationClass.retrofit.create(CommentApi::class.java)\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/util/RetrofitUtil.kt b/app/src/main/java/com/ssafy/silencelake/util/RetrofitUtil.kt
+--- a/app/src/main/java/com/ssafy/silencelake/util/RetrofitUtil.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/util/RetrofitUtil.kt	
+@@ -1,5 +1,6 @@
+ package com.ssafy.silencelake.util
+ 
++import com.ssafy.silencelake.api.FirebaseTokenApi
+ import com.ssafy.silencelake.api.UserApi
+ import com.ssafy.smartstore.api.CommentApi
+ import com.ssafy.smartstore.api.OrderApi
+@@ -11,5 +12,6 @@
+         val productApi = ApplicationClass.retrofit.create(ProductApi::class.java)
+         val userApi = ApplicationClass.retrofit.create(UserApi::class.java)
+         val commentApi = ApplicationClass.retrofit.create(CommentApi::class.java)
++        val fcmApi = ApplicationClass.retrofit.create(FirebaseTokenApi::class.java)
+     }
+ }
+\ No newline at end of file
+Index: app/src/main/res/values/themes.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><resources xmlns:tools=\"http://schemas.android.com/tools\">\r\n    <!-- Base application theme. -->\r\n    <style name=\"Theme.SilenceLake\" parent=\"Theme.MaterialComponents.DayNight.NoActionBar\">\r\n        <!-- Primary brand color. -->\r\n        <item name=\"colorPrimary\">@color/primary</item>\r\n        <item name=\"colorPrimaryVariant\">@color/purple_700</item>\r\n        <item name=\"colorOnPrimary\">@color/white</item>\r\n        <!-- Secondary brand color. -->\r\n        <item name=\"colorSecondary\">@color/background_bnv</item>\r\n        <item name=\"colorSecondaryVariant\">@color/teal_700</item>\r\n        <item name=\"colorOnSecondary\">@color/black</item>\r\n        <!-- Status bar color. -->\r\n        <item name=\"android:statusBarColor\">@color/background_bnv</item>\r\n        <!-- Customize your theme here. -->\r\n        <item name=\"android:windowContentTransitions\">true</item>\r\n        <item name=\"android:fontFamily\">@font/cafe24_ssurround_air</item>\r\n        <item name=\"fontFamily\">@font/font_regular</item>\r\n    </style>\r\n\r\n</resources>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/res/values/themes.xml b/app/src/main/res/values/themes.xml
+--- a/app/src/main/res/values/themes.xml	
++++ b/app/src/main/res/values/themes.xml	
+@@ -13,8 +13,5 @@
+         <item name="android:statusBarColor">@color/background_bnv</item>
+         <!-- Customize your theme here. -->
+         <item name="android:windowContentTransitions">true</item>
+-        <item name="android:fontFamily">@font/cafe24_ssurround_air</item>
+-        <item name="fontFamily">@font/font_regular</item>
+     </style>
+-
+ </resources>
+\ No newline at end of file
+Index: app/src/main/java/com/ssafy/silencelake/api/FirebaseTokenApi.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.silencelake.api\r\n\r\nimport retrofit2.Call\r\nimport retrofit2.http.POST\r\nimport retrofit2.http.Query\r\n\r\ninterface FirebaseTokenApi {\r\n    // Token정보 서버로 전송\r\n    @POST(\"token\")\r\n    fun uploadToken(@Query(\"token\") token: String): Call<String>\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/api/FirebaseTokenApi.kt b/app/src/main/java/com/ssafy/silencelake/api/FirebaseTokenApi.kt
+--- a/app/src/main/java/com/ssafy/silencelake/api/FirebaseTokenApi.kt	
++++ b/app/src/main/java/com/ssafy/silencelake/api/FirebaseTokenApi.kt	
+@@ -1,6 +1,7 @@
+ package com.ssafy.silencelake.api
+ 
+ import retrofit2.Call
++import retrofit2.Response
+ import retrofit2.http.POST
+ import retrofit2.http.Query
+ 
+@@ -8,4 +9,8 @@
+     // Token정보 서버로 전송
+     @POST("token")
+     fun uploadToken(@Query("token") token: String): Call<String>
++
++    // Token으로 알림 전송
++    @POST("sendMessageTo")
++    suspend fun sendMessageTo(@Query("title") title:String, @Query("body") body: String, @Query("token") token: String): Response<String>
+ }
+\ No newline at end of file
+Index: ../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/controller/rest/OrderRestController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.controller.rest;\r\n\r\nimport java.util.List;\r\nimport java.util.Map;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.transaction.annotation.Transactional;\r\nimport org.springframework.web.bind.annotation.CrossOrigin;\r\nimport org.springframework.web.bind.annotation.GetMapping;\r\nimport org.springframework.web.bind.annotation.PathVariable;\r\nimport org.springframework.web.bind.annotation.PostMapping;\r\nimport org.springframework.web.bind.annotation.RequestBody;\r\nimport org.springframework.web.bind.annotation.RequestMapping;\r\nimport org.springframework.web.bind.annotation.RestController;\r\nimport com.ssafy.cafe.model.dto.Order;\r\nimport com.ssafy.cafe.model.service.OrderService;\r\nimport io.swagger.annotations.ApiOperation;\r\n\r\n@RestController\r\n@RequestMapping(\"/rest/order\")\r\n@CrossOrigin(\"*\")\r\npublic class OrderRestController {\r\n    @Autowired\r\n    private OrderService oService;\r\n    \r\n    @PostMapping\r\n    @ApiOperation(value=\"order 객체를 저장하고 추가된 Order의 id를 반환한다.\", response = Integer.class )\r\n    @Transactional\r\n    public Integer makeOrder(@RequestBody Order order) {\r\n        oService.makeOrder(order);\r\n        return order.getId();\r\n    }\r\n    \r\n    @GetMapping(\"/{orderId}\")\r\n    @ApiOperation(value=\"{orderId}에 해당하는 주문의 상세 내역을 목록 형태로 반환한다.\"\r\n            + \"이 정보는 사용자 정보 화면의 주문 내역 조회에서 사용된다.\", response = List.class)\r\n    public List<Map> getOrderDetail(@PathVariable Integer orderId) {\r\n        return oService.selectOrderTotalInfo(orderId);\r\n    }\r\n    \r\n    @GetMapping(\"/byUser\")\r\n    @ApiOperation(value=\"{id}에 해당하는 사용자의 최근 1개월간 주문 내역을 반환한다.\"\r\n            + \"반환 정보는 1차 주문번호 내림차순, 2차 주문 상세 내림차순으로 정렬된다.\", response = List.class)\r\n    public List<Map<String, Object>> getLastMonthOrder(String id) {\r\n        return oService.getLastMonthOrder(id);\r\n    }    \r\n    \r\n    @GetMapping(\"/ILoveHojo\")\r\n    @ApiOperation(value=\"완료처리 되지 않은 주문을 모두 반환한다.\")\r\n    public List<Order> selectUncomplitedOrder(){\r\n        return oService.selectUncomplitedOrder();\r\n    }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/controller/rest/OrderRestController.java b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/controller/rest/OrderRestController.java
+--- a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/controller/rest/OrderRestController.java	
++++ b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/controller/rest/OrderRestController.java	
+@@ -5,9 +5,11 @@
+ import org.springframework.beans.factory.annotation.Autowired;
+ import org.springframework.transaction.annotation.Transactional;
+ import org.springframework.web.bind.annotation.CrossOrigin;
++import org.springframework.web.bind.annotation.DeleteMapping;
+ import org.springframework.web.bind.annotation.GetMapping;
+ import org.springframework.web.bind.annotation.PathVariable;
+ import org.springframework.web.bind.annotation.PostMapping;
++import org.springframework.web.bind.annotation.PutMapping;
+ import org.springframework.web.bind.annotation.RequestBody;
+ import org.springframework.web.bind.annotation.RequestMapping;
+ import org.springframework.web.bind.annotation.RestController;
+@@ -46,7 +48,20 @@
+     
+     @GetMapping("/ILoveHojo")
+     @ApiOperation(value="완료처리 되지 않은 주문을 모두 반환한다.")
+-    public List<Order> selectUncomplitedOrder(){
+-        return oService.selectUncomplitedOrder();
++    public List<Order> selectUncompletedOrder(){
++        return oService.selectUncompletedOrder();
++    }
++    @PutMapping("/{orderId}")
++    @ApiOperation(value="{orderId}에 해당하는 주문의 완료 상태를 변경한다.")
++    public Boolean updateCompletedState(@PathVariable Integer orderId) {
++        oService.updateCompletedState(orderId);
++        return true;
++    }
++    
++    @DeleteMapping("/{orderId}")
++    @ApiOperation(value="{orderId}에 해당하는 주문과 상세 내역을 삭제한다.")
++    public Boolean deleteOrder(@PathVariable Integer orderId) {
++        oService.deleteWithDetails(orderId);
++        return true;
+     }
+ }
+Index: ../mobile_through_project_final_no_lombok/src/main/resources/mappers/order.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \r\n\t\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\r\n<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->\r\n<mapper namespace=\"com.ssafy.cafe.model.dao.OrderDao\">\r\n\t<insert id=\"insert\" parameterType=\"Order\">\r\n\t\t<selectKey keyProperty=\"id\" resultType=\"int\" order=\"AFTER\">\r\n\t\t\tselect max(o_id) from t_order\r\n\t\t</selectKey>\r\n\t\tINSERT INTO t_order\r\n\t\t(user_id,\r\n\t\torder_table,\r\n        token)\r\n\t\tVALUES\r\n\t\t(#{userId},\r\n\t\t#{orderTable},\r\n        #{token})\r\n\t</insert>\r\n\r\n\t<update id=\"update\" parameterType=\"Order\">\r\n\t\tUPDATE t_order\r\n\t\tSET\r\n\t\tcompleted =\r\n\t\t#{completed}\r\n\t\tWHERE o_id = #{id}\r\n\t</update>\r\n\r\n\t<delete id=\"delete\" parameterType=\"int\">\r\n\t\tDELETE FROM t_order\r\n\t\tWHERE o_id\r\n\t\t=\r\n\t\t#{id}\r\n\t</delete>\r\n\t<select id=\"select\" parameterType=\"int\" resultMap=\"OrderBasic\">\r\n\t\tSELECT * FROM\r\n\t\tt_order\r\n\t\tWHERE o_id = #{id}\r\n\t\torder by o_id desc\r\n\t</select>\r\n\t<select id=\"selectAll\" resultMap=\"OrderBasic\">\r\n\t\tSELECT * FROM t_order order by\r\n\t\to_id desc\r\n\t\tlimit 10\r\n\t</select>\r\n\r\n\t<select id=\"selectByUser\" resultMap=\"OrderBasic\"\r\n\t\tparameterType=\"string\">\r\n\t\tSELECT * FROM t_order where user_id=#{userId} order by\r\n\t\to_id desc\r\n\t\tlimit 10\r\n\t</select>\r\n\r\n\t<select id=\"selectWithDetail\" resultMap=\"OrderWithDetail\">\r\n\t\tselect o.o_id, o.user_id, o.order_table, o.order_time, o.completed,\r\n\t\td.d_id, d.order_id, d.product_id, d.quantity, d.volume\r\n\t\tfrom t_order o join\r\n\t\tt_order_detail d on o.o_id = d.order_id\r\n\t\twhere o.o_id=#{id}\r\n\t\torder by d.d_id desc\r\n\t\tlimit 10\r\n\t</select>\r\n\r\n\t<resultMap type=\"Order\" id=\"OrderBasic\">\r\n\t\t<id column=\"o_id\" property=\"id\" />\r\n\t\t<result column=\"user_id\" property=\"userId\" />\r\n\t\t<result column=\"order_table\" property=\"orderTable\" />\r\n\t\t<result column=\"order_time\" property=\"orderTime\" />\r\n\t\t<result column=\"completed\" property=\"completed\" />\r\n\t</resultMap>\r\n\r\n\t<resultMap type=\"Order\" id=\"OrderWithDetail\"\r\n\t\textends=\"OrderBasic\">\r\n\t\t<association property=\"stamp\" column=\"order_id\"\r\n\t\t\tjavaType=\"Stamp\"\r\n\t\t\tresultMap=\"com.ssafy.cafe.model.dao.StampDao.StampBasic\"></association>\r\n\t\t<collection property=\"details\" column=\"order_id\"\r\n\t\t\tjavaType=\"list\" ofType=\"OrderDetail\"\r\n\t\t\tresultMap=\"com.ssafy.cafe.model.dao.OrderDetailDao.OrderDetailBasic\" />\r\n\t</resultMap>\r\n\r\n\t<select id=\"selectOrderTotalInfo\" resultType=\"map\"\r\n\t\tparameterType=\"int\">\r\n\t\tselect \r\n\t\t    o.o_id, \r\n\t\t    o.order_table, \r\n\t\t    o.order_time, \r\n\t\t    d.quantity,\r\n            d.volume,\r\n\t\t    p.name, \r\n\t\t    p.price as unitprice, \r\n\t\t\tp.id as product_id, \r\n\t\t\tp.type, \r\n\t\t\tp.img, \r\n\t\t\ts.quantity as stamp, \r\n\t\t\td.quantity*p.price as totalprice\r\n\t\tfrom t_order o join t_order_detail d on o.o_id = d.order_id\r\n\t\tjoin t_product p on d.product_id =p.id\r\n\t\tjoin t_stamp s on o.o_id=s.order_id\r\n\r\n\t\twhere o_id=#{oid};\r\n\t</select>\r\n\r\n\t<!-- 관통 프로젝트 6단계에서 추가됨 -->\r\n\t<select id=\"getLastMonthOrder\" parameterType=\"string\" resultType=\"map\">\r\n\tselect o.o_id, o.user_id, o.order_time, d.quantity, p.name, p.type, p.price, p.img\r\n\t\tfrom t_order o join t_order_detail d on d.order_id=o.o_id\r\n               join t_product p on d.product_id = p.id\r\n\t\twhere user_id=#{id} and order_time > date_add(now(), interval -1 month)\r\n\t\torder by o.o_id desc, d.d_id desc\r\n\t</select>\r\n    \r\n    <select id=\"selectUnComplitedOrder\" resultType=\"Order\">\r\n        select * \r\n        from t_order\r\n        where completed = 'N';\r\n    </select>\r\n\r\n</mapper>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order.xml b/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order.xml
+--- a/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order.xml	
++++ b/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order.xml	
+@@ -17,12 +17,12 @@
+         #{token})
+ 	</insert>
+ 
+-	<update id="update" parameterType="Order">
++	<update id="updateCompletedState" parameterType="int">
+ 		UPDATE t_order
+ 		SET
+ 		completed =
+-		#{completed}
+-		WHERE o_id = #{id}
++		'Y'
++		WHERE o_id = #{orderId}
+ 	</update>
+ 
+ 	<delete id="delete" parameterType="int">
+@@ -109,8 +109,8 @@
+ 		order by o.o_id desc, d.d_id desc
+ 	</select>
+     
+-    <select id="selectUnComplitedOrder" resultType="Order">
+-        select * 
++    <select id="selectUnCompletedOrder" resultType="Order">
++        select o_id as id, user_id, order_table, order_time, completed, token
+         from t_order
+         where completed = 'N';
+     </select>
+Index: ../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderService.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.model.service;\r\n\r\nimport java.util.List;\r\nimport java.util.Map;\r\nimport com.ssafy.cafe.model.dto.Order;\r\n\r\npublic interface OrderService {\r\n    /**\r\n     * 새로운 Order를 생성한다.\r\n     * Order와 OrderDetail에 정보를 추가한다.\r\n     * [심화]User 테이블에 사용자의 Stamp 개수를 업데이트 한다.\r\n     * [심화]Stamp 테이블에 Stamp 이력을 추가한다.\r\n     * @param order\r\n     */\r\n    public void makeOrder(Order order);\r\n    \r\n    /**\r\n     * orderId에 대한 Order를 반환한다.\r\n     * 이때 Order에 해당하는 OrderDetail에 대한 내용까지 반환한다.\r\n     * OrderDetail의 내용은 id에 대한 내림차순으로 조회한다.\r\n     * @param orderId\r\n     * @return\r\n     */\r\n    public Order getOrderWithDetails(Integer orderId);\r\n    \r\n    \r\n    /**\r\n     * id에 해당하는 사용자의 Order 목록을 주문 번호의 내림차순으로 반환한다.\r\n     * \r\n     * @param id\r\n     * @return\r\n     */\r\n    public List<Order> getOrdreByUser(String id);\r\n    \r\n    /**\r\n     * 주문 정보를 수정한다. - 주문의 상태만 변경된다.\r\n     * @param order\r\n     */\r\n    public void updateOrder(Order order);\r\n    \r\n    /**\r\n     *  back end 관통에서 추가함\r\n     *  화면에 뿌려주기 위한 합성 정보 전달\r\n     * @param id\r\n     * @return\r\n     */\r\n    List<Map> selectOrderTotalInfo(int id); \r\n\r\n    /**\r\n     * 최근 1개월의 주문 내역을 반환한다.\r\n     * 관통 6단계에서 추가됨\r\n     * @param id\r\n     * @return\r\n     */\r\n    List<Map<String, Object>> getLastMonthOrder(String id);\r\n    \r\n    /**\r\n     * 완료처리 되지 않은 주문을 모두 반환한다.\r\n     * @return\r\n     */\r\n    List<Order> selectUncomplitedOrder();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderService.java b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderService.java
+--- a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderService.java	
++++ b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderService.java	
+@@ -58,5 +58,10 @@
+      * 완료처리 되지 않은 주문을 모두 반환한다.
+      * @return
+      */
+-    List<Order> selectUncomplitedOrder();
++    List<Order> selectUncompletedOrder();
++    
++    public void deleteWithDetails(Integer orderId);
++    
++    public void updateCompletedState(Integer orderId);
++    
+ }
+Index: ../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.model.dao;\r\n\r\nimport java.util.List;\r\nimport java.util.Map;\r\nimport com.ssafy.cafe.model.dto.Order;\r\n\r\npublic interface OrderDao {\r\n    int insert(Order order);\r\n\r\n    int update(Order order);\r\n\r\n    int delete(Integer orderId);\r\n\r\n    Order select(Integer orderId);\r\n\r\n    List<Order> selectAll();\r\n    \r\n    Order selectWithDetail(int id);\r\n    \r\n    List<Order> selectUnComplitedOrder();\r\n    List<Order> selectByUser(String userId);\r\n    // back end 관통에서 추가함\r\n    List<Map> selectOrderTotalInfo(int id); \r\n    \r\n    /**\r\n     * 최근 1개월의 주문 내역을 반환한다.\r\n     * 관통 6단계에서 추가됨\r\n     * @param id\r\n     * @return\r\n     */\r\n    List<Map<String, Object>> getLastMonthOrder(String id);    \r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDao.java b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDao.java
+--- a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDao.java	
++++ b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDao.java	
+@@ -17,7 +17,7 @@
+     
+     Order selectWithDetail(int id);
+     
+-    List<Order> selectUnComplitedOrder();
++    List<Order> selectUnCompletedOrder();
+     List<Order> selectByUser(String userId);
+     // back end 관통에서 추가함
+     List<Map> selectOrderTotalInfo(int id); 
+@@ -28,5 +28,7 @@
+      * @param id
+      * @return
+      */
+-    List<Map<String, Object>> getLastMonthOrder(String id);    
++    List<Map<String, Object>> getLastMonthOrder(String id); 
++    
++    int updateCompletedState(Integer orderId);
+ }
+Index: ../mobile_through_project_final_no_lombok/src/main/resources/mappers/order_detail.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\" ?>\r\n<!DOCTYPE mapper PUBLIC \"-//mybatis.org//DTD Mapper 3.0//EN\" \r\n\t\"http://mybatis.org/dtd/mybatis-3-mapper.dtd\">\r\n<!-- name space는 BookRepo의 fully qualified name으로 설정한다. -->\r\n<mapper namespace=\"com.ssafy.cafe.model.dao.OrderDetailDao\">\r\n\t<insert id=\"insert\" parameterType=\"OrderDetail\">\r\nINSERT INTO t_order_detail\r\n    (\r\n    order_id,\r\n    product_id, \r\n    quantity,\r\n    volume)\r\nVALUES\r\n    ( \r\n    #{orderId},\r\n    #{productId}, \r\n    #{quantity},\r\n    #{volume})\r\n\t</insert>\r\n\r\n\r\n\t<delete id=\"delete\" parameterType=\"int\">\r\n\t\tDELETE FROM t_order_detail\r\n\t\tWHERE d_id =\r\n\t\t#{id}\r\n\t</delete>\r\n\t<select id=\"select\" parameterType=\"int\" resultMap=\"OrderDetailBasic\">\r\n\t\tSELECT * FROM\r\n\t\tt_order_detail\r\n\t\tWHERE d_id = #{id} order by d_id desc\r\n\t</select>\r\n\t<select id=\"selectAll\" resultMap=\"OrderDetailBasic\">\r\n\t\tSELECT * FROM t_order_detail order by d_id desc\r\n\t</select>\r\n\t\r\n\t<resultMap type=\"OrderDetail\" id=\"OrderDetailBasic\">\r\n\t\t<id column=\"d_id\" property=\"id\"/>\r\n\t\t<result column=\"order_id\" property=\"orderId\"/>\r\n\t\t<result column=\"product_id\" property=\"productId\"/>\r\n\t\t<result column=\"quantity\" property=\"quantity\"/>\r\n\t</resultMap>\r\n</mapper>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order_detail.xml b/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order_detail.xml
+--- a/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order_detail.xml	
++++ b/../mobile_through_project_final_no_lombok/src/main/resources/mappers/order_detail.xml	
+@@ -24,6 +24,10 @@
+ 		WHERE d_id =
+ 		#{id}
+ 	</delete>
++    <delete id="deleteByOrderId" parameterType="int">
++        Delete from t_order_detail
++        where order_id = #{orderId}
++    </delete>
+ 	<select id="select" parameterType="int" resultMap="OrderDetailBasic">
+ 		SELECT * FROM
+ 		t_order_detail
+Index: app/src/main/java/com/ssafy/silencelake/repository/FcmRepository.kt
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/ssafy/silencelake/repository/FcmRepository.kt b/app/src/main/java/com/ssafy/silencelake/repository/FcmRepository.kt
+new file mode 100644
+--- /dev/null	
++++ b/app/src/main/java/com/ssafy/silencelake/repository/FcmRepository.kt	
+@@ -0,0 +1,19 @@
++package com.ssafy.silencelake.repository
++
++import android.util.Log
++import com.ssafy.silencelake.util.RetrofitUtil
++import retrofit2.http.Body
++
++private const val TAG = "FcmRepository_싸피"
++class FcmRepository {
++    companion object{
++        suspend fun sendMessageTo(title:String, body: String, token:String){
++            val response = RetrofitUtil.fcmApi.sendMessageTo(title, body, token)
++            if(response.isSuccessful){
++                Log.d(TAG, "sendMessageTo: isSuccessful")
++            }else{
++                Log.d(TAG, "sendMessageTo: isFailed")
++            }
++        }
++    }
++}
+\ No newline at end of file
+Index: ../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDetailDao.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.model.dao;\r\n\r\nimport java.util.List;\r\nimport com.ssafy.cafe.model.dto.Order;\r\nimport com.ssafy.cafe.model.dto.OrderDetail;\r\n\r\npublic interface OrderDetailDao {\r\n    int insert(OrderDetail detail);\r\n\r\n    int delete(Integer detailId);\r\n\r\n    OrderDetail select(Integer detailId);\r\n\r\n    List<OrderDetail> selectAll();\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDetailDao.java b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDetailDao.java
+--- a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDetailDao.java	
++++ b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/dao/OrderDetailDao.java	
+@@ -12,4 +12,6 @@
+     OrderDetail select(Integer detailId);
+ 
+     List<OrderDetail> selectAll();
++    
++    int deleteByOrderId(Integer orderId);
+ }
+Index: ../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderServiceImpl.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.ssafy.cafe.model.service;\r\n\r\nimport java.util.List;\r\nimport java.util.Map;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\nimport org.springframework.transaction.annotation.Transactional;\r\nimport com.ssafy.cafe.model.dao.OrderDao;\r\nimport com.ssafy.cafe.model.dao.OrderDetailDao;\r\nimport com.ssafy.cafe.model.dao.StampDao;\r\nimport com.ssafy.cafe.model.dao.UserDao;\r\nimport com.ssafy.cafe.model.dto.Order;\r\nimport com.ssafy.cafe.model.dto.OrderDetail;\r\nimport com.ssafy.cafe.model.dto.Stamp;\r\nimport com.ssafy.cafe.model.dto.User;\r\n\r\n/**\r\n * @author ssafy\r\n * @since 2021. 6. 23.\r\n */\r\n@Service\r\npublic class OrderServiceImpl implements OrderService {\r\n\r\n    @Autowired\r\n    OrderDao oDao;\r\n    @Autowired\r\n    OrderDetailDao dDao;\r\n    @Autowired\r\n    StampDao sDao;\r\n    @Autowired\r\n    UserDao uDao;\r\n\r\n    @Override\r\n    @Transactional\r\n    public void makeOrder(Order order) {\r\n    \t//client에서 들어온 id 는 무시해야 오류생기지 않음.\r\n    \torder.setId(null);\r\n    \t\r\n        // 주문 및 주문 상세 테이블 저장\r\n        oDao.insert(order);\r\n        List<OrderDetail> details = order.getDetails();\r\n        int quantitySum = 0;\r\n        for(OrderDetail detail: details) {\r\n            detail.setOrderId(order.getId());\r\n            dDao.insert(detail);\r\n            quantitySum += detail.getQuantity();\r\n        }\r\n        // 스템프 정보 저장\r\n//        Stamp stamp = Stamp.builder().userId(order.getUserId()).quantity(quantitySum).orderId(order.getId()).build();\r\n        Stamp stamp = new Stamp(order.getUserId(), order.getId(), quantitySum);\r\n        sDao.insert(stamp);\r\n        \r\n        // 사용자 정보 업데이트\r\n//      User user = User.builder().id(order.getUserId()).stamps(stamp.getQuantity()).build();\r\n      User user = new User();\r\n      user.setId(order.getUserId());\r\n      user.setStamps(stamp.getQuantity());\r\n      uDao.updateStamp(user);\r\n\r\n    }\r\n\r\n    @Override\r\n    public Order getOrderWithDetails(Integer orderId) {\r\n        return oDao.selectWithDetail(orderId);\r\n    }\r\n\r\n    @Override\r\n    public List<Order> getOrdreByUser(String id) {\r\n        return oDao.selectByUser(id);\r\n    }\r\n\r\n    @Override\r\n    public void updateOrder(Order order) {\r\n        oDao.update(order);\r\n    }\r\n\r\n    @Override\r\n    public List<Map> selectOrderTotalInfo(int id) {\r\n        return oDao.selectOrderTotalInfo(id);\r\n    }\r\n\r\n    @Override\r\n    public List<Map<String, Object>> getLastMonthOrder(String id) {\r\n        return oDao.getLastMonthOrder(id);\r\n    }\r\n\r\n    @Override\r\n    public List<Order> selectUncomplitedOrder() {\r\n        return oDao.selectUnComplitedOrder();\r\n    }\r\n    \r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderServiceImpl.java b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderServiceImpl.java
+--- a/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderServiceImpl.java	
++++ b/../mobile_through_project_final_no_lombok/src/main/java/com/ssafy/cafe/model/service/OrderServiceImpl.java	
+@@ -85,8 +85,21 @@
+     }
+ 
+     @Override
+-    public List<Order> selectUncomplitedOrder() {
+-        return oDao.selectUnComplitedOrder();
++    public List<Order> selectUncompletedOrder() {
++        return oDao.selectUnCompletedOrder();
++    }
++
++    @Override
++    public void deleteWithDetails(Integer orderId) {
++        oDao.delete(orderId);
++        dDao.deleteByOrderId(orderId);
++      
++    }
++
++    @Override
++    public void updateCompletedState(Integer orderId) {
++        oDao.updateCompletedState(orderId);
++        
+     }
+     
+ }
