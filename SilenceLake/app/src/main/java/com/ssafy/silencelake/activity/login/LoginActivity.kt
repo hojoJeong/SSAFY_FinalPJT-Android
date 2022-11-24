@@ -1,8 +1,13 @@
 package com.ssafy.silencelake.activity.login
 
+import android.app.NotificationChannel
+import android.app.NotificationManager
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.annotation.RequiresApi
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.activity.admin.AdminActivity
 import com.ssafy.silencelake.activity.main.MainActivity
@@ -11,10 +16,11 @@ import com.ssafy.silencelake.fragment.login.LoginFragment
 import com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil
 
 class LoginActivity : AppCompatActivity() {
+    @RequiresApi(api = Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
-
+        createNotificationChannel(channel_id, "ssafy")
         //로그인 상태 체크
         var user = sharedPreferencesUtil.getUser()
 
@@ -29,7 +35,16 @@ class LoginActivity : AppCompatActivity() {
             openFragment(1)
         }
     }
+    @RequiresApi(Build.VERSION_CODES.O)
+    // Notification 수신을 위한 체널 추가
+    private fun createNotificationChannel(id: String, name: String) {
+        val importance = NotificationManager.IMPORTANCE_MAX
+        val channel = NotificationChannel(id, name, importance)
 
+        val notificationManager: NotificationManager
+                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+        notificationManager.createNotificationChannel(channel)
+    }
     fun openFragment(number: Int) {
         val transaction = supportFragmentManager.beginTransaction()
         when (number) {
@@ -59,5 +74,8 @@ class LoginActivity : AppCompatActivity() {
         }
         transaction.commit()
     }
-
+    companion object{
+        // Notification Channel ID
+        const val channel_id = "ssafy_channel"
+    }
 }

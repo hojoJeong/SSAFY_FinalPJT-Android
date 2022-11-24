@@ -31,6 +31,7 @@ class AdminActivity : AppCompatActivity() {
         binding = ActivityAdminBinding.inflate(layoutInflater)
         setContentView(binding.root)
         Log.d(TAG, "onCreate: ")
+
         init()
     }
 
@@ -39,20 +40,8 @@ class AdminActivity : AppCompatActivity() {
         adminViewModel.getUncompletedOrderList()
         Log.d(TAG, "onNewIntent: ")
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    // Notification 수신을 위한 체널 추가
-    private fun createNotificationChannel(id: String, name: String) {
-        val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel(id, name, importance)
-
-        val notificationManager: NotificationManager
-                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
 
     companion object{
-        // Notification Channel ID
-        const val channel_id = "ssafy_channel"
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
         fun uploadToken(token:String){
             // 새로운 토큰 수신 시 서버로 전송

@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val userResponseViewModel by viewModels<UserResponseViewModel>()
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
@@ -46,26 +45,15 @@ class MainActivity : AppCompatActivity() {
                 uploadToken(task.result!!)
             }
         })
-        createNotificationChannel(channel_id, "ssafy")
+
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         init()
 
     }
-    @RequiresApi(Build.VERSION_CODES.O)
-    // Notification 수신을 위한 체널 추가
-    private fun createNotificationChannel(id: String, name: String) {
-        val importance = NotificationManager.IMPORTANCE_HIGH
-        val channel = NotificationChannel(id, name, importance)
 
-        val notificationManager: NotificationManager
-                = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
-    }
 
     companion object{
-        // Notification Channel ID
-        const val channel_id = "ssafy_channel"
         // ratrofit  수업 후 network 에 업로드 할 수 있도록 구성
         fun uploadToken(token:String){
             // 새로운 토큰 수신 시 서버로 전송

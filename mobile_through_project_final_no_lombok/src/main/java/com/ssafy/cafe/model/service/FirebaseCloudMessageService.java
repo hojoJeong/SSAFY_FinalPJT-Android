@@ -102,7 +102,7 @@ public class FirebaseCloudMessageService {
 //        logger.info("message : {}", message);
     }
     public void sendMessageToAdmin() throws IOException {
-        String targetToken = "chSXihAVQKGPuKKCaKSZvQ:APA91bGx_tkwCu8JJR8sCUH_o0p_7TolBPMBwRKYkMYbXcmNhWbvaoxVMXREA2qgjMEt7FcjqXVZ_amAd8C1p2nHgMQIniEoX_lDEjwP2xQKcfmLwRJqIOWs7c3KeUCveOY9TI3PCRn9";
+        String targetToken = "dehJIT39SwK2VgZd03GBQj:APA91bF1NT2nRPybqeRCY6rBMXhk_8YZBMJnCbyp2j2C_aAt-gkJdBAJFVdiLkH3OjtgzJpLWVTiiV5lj1co1AQCzI7nrbDBp-YAvHtqEvy_PlDZTR31qg-GJ9YkRfHr_9g7eGW8znNf";
         String title = "admin";
         String body = "새로운 주문이 들어왔습니다.";
         String message = makeMessage(targetToken, title, body);
