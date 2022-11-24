@@ -48,4 +48,5 @@ class AdminViewModel : ViewModel() {
         FcmRepository.sendMessageTo("📢알림📢","사장님이 주문을 취소했습니다.", token)
         getUncompletedOrderList()
     }
+
 }

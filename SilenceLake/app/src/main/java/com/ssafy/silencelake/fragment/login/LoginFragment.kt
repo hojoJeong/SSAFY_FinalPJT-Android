@@ -61,6 +61,7 @@ class LoginFragment : Fragment() {
         override fun onSuccess(code: Int, user: UserDto) {
             if (user.id != null) {
                 if(user.id == "admin" && user.pass == "admin"){
+                    ApplicationClass.sharedPreferencesUtil.addUser(user)
                     val intent = Intent(requireActivity(), AdminActivity::class.java)
                     startActivity(intent)
                 } else{
