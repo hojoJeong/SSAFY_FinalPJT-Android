@@ -21,7 +21,6 @@ class CommentAdapter( val context: Context) :
         lateinit var id: String
         fun bindInfo(data: CommentDto) {
             hideAllButton()
-            Log.d(TAG, "bindInfo: ${data.comment}")
             binding.textNoticeContentComment.text = data.comment
 
             id = data.userId
@@ -56,7 +55,6 @@ class CommentAdapter( val context: Context) :
                 val rating = data.rating
                 val contents = binding.editTextContentComment.text.toString()
                 val comment = CommentDto(commentId, userId, productId, rating, contents)
-                Log.d(TAG, "modifyAcceptBtnEventListener: $comment")
                 itemClickListner.onModifyClick(comment)
                 binding.editTextContentComment.text.clear()
                 hideAllButton()

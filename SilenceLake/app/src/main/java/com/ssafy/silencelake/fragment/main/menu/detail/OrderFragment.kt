@@ -33,7 +33,6 @@ class OrderFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         updateTotalPrice()
-        Log.d(TAG, "onViewCreated: ${activityViewModel.productId}")
         initCLickListener()
     }
 

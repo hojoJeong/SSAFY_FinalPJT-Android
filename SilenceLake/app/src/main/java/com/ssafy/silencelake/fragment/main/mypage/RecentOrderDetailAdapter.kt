@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.ssafy.silencelake.databinding.ItemListRecentOrderDetailBinding
 import com.ssafy.smartstore.response.OrderDetailResponse
+import java.text.DecimalFormat
 
 class RecentOrderDetailAdapter(context: Context) :
     RecyclerView.Adapter<RecentOrderDetailAdapter.RecentOrderDetailViewHolder>() {
@@ -15,13 +16,13 @@ class RecentOrderDetailAdapter(context: Context) :
     inner class RecentOrderDetailViewHolder(val binding: ItemListRecentOrderDetailBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(data: OrderDetailResponse) {
-
+            val decimalFormat = DecimalFormat("#,##0")
             Glide.with(mContext).load(data.img).into(binding.imgItemDetailRecentorder)
             binding.apply {
                 tvProductnameDetailRecentorder.text = data.productName
                 tvQuantityDetailRecentorder.text = "${data.quantity} 개"
-                tvUnitpriceDetailRecentorder.text = "${data.unitPrice} 원"
-                tvPriceDetailRecentorder.text = "${data.totalPrice} 원"
+                tvUnitpriceDetailRecentorder.text = "${decimalFormat.format(data.unitPrice)} 원"
+                tvPriceDetailRecentorder.text = "${decimalFormat.format(data.totalPrice)} 원"
             }
         }
     }

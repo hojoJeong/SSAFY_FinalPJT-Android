@@ -52,14 +52,12 @@ class ShoppingListFragment : Fragment() {
 
 
         activityViewModel.shoppingList.observe(viewLifecycleOwner) {
-            Log.d(TAG, "onViewCreated: observe")
             shoppingListAdapter.list = activityViewModel.shoppingList.value!!
             shoppingListAdapter.notifyDataSetChanged()
         }
         shoppingListAdapter.itemClickListener =
             object : ShoppingListAdapter.ShoppingListItemClickListener {
                 override fun plusBtnClicked(pos: Int) {
-                    Log.d(TAG, "plusBtnClicked: ")
                     activityViewModel.list[pos].menuCnt += 1
                     activityViewModel.updateShoppingList()
                 }

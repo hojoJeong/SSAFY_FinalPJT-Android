@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ssafy.silencelake.databinding.ItemListRecentOrderBinding
 import com.ssafy.silencelake.dto.OrderDto
 import com.ssafy.smartstore.response.OrderDetailResponse
+import java.text.DecimalFormat
 import java.text.SimpleDateFormat
 
 class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderViewHolder>() {
@@ -19,16 +20,17 @@ class RecentOrderAdapter : RecyclerView.Adapter<RecentOrderAdapter.RecentOrderVi
         RecyclerView.ViewHolder(binding.root) {
         fun bind(order: OrderDto, orderDetailList: MutableList<OrderDetailResponse>) {
             binding.apply {
-                var totalPrice = 0;
+                var tPrice = 0;
                 for (i in 0 until orderDetailList.size) {
-                    totalPrice += orderDetailList[i].totalPrice
+                    tPrice += orderDetailList[i].totalPrice
                 }
+                val decimalFormat = DecimalFormat("#,##0")
+                val totalPrice = "${decimalFormat.format(tPrice)} 원"
                 var orderName = if (orderDetailList.size == 1) {
                     orderDetailList[0].productName
                 } else {
                     "${orderDetailList[0].productName} 외 ${orderDetailList.size - 1}건"
                 }
-                Log.d(TAG, "bind: ${order.orderTime}")
                 val dateFormat = SimpleDateFormat("yyyy년 MM월 dd일")
                 val orderTime = dateFormat.format(order.orderTime)
 
