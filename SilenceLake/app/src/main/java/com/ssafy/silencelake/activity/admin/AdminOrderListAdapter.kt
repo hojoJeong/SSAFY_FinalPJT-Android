@@ -13,7 +13,7 @@ class AdminOrderListAdapter() :
     RecyclerView.Adapter<AdminOrderListAdapter.AdminOrderListViewHolder>() {
     var orderList = listOf<OrderDto>()
     var orderDetailList = listOf<List<OrderDetailResponse>>()
-    lateinit var onClick: onBtnClickListener
+    lateinit var onBtnClickListener: OnBtnClickListener
     private lateinit var orderName:String
     private lateinit var orderDate: String
     private lateinit var totalPrice: String
@@ -30,13 +30,13 @@ class AdminOrderListAdapter() :
                     tvUsernameAdmin.text = "고객명 : ${data.userId}"
 
                     btnCompleteAdmin.setOnClickListener {
-                        onClick.onCompleteBtnClickListener(data.id)
+                        onBtnClickListener.onCompleteBtnClickListener(data.id, data.token)
                     }
                     btnCancelAdmin.setOnClickListener {
-                        onClick.onCancelBtnClickListener(data.id)
+                        onBtnClickListener.onCancelBtnClickListener(data.id, data.token)
                     }
                     btnFoldAdmin.setOnClickListener {
-                        onClick.onFoldBtnClickListener(orderDetailList, binding, data.isExpended)
+                        onBtnClickListener.onFoldBtnClickListener(orderDetailList, binding, data.isExpended)
                         data.isExpended = !data.isExpended
                     }
                 }
@@ -73,9 +73,9 @@ class AdminOrderListAdapter() :
 
     override fun getItemCount(): Int = orderList.size
 
-    interface onBtnClickListener {
+    interface OnBtnClickListener {
         fun onFoldBtnClickListener(orderDetailList: List<OrderDetailResponse>, binding: ItemListAdminBinding, isExpended: Boolean)
-        fun onCompleteBtnClickListener(orderId: Int)
-        fun onCancelBtnClickListener(orderId: Int)
+        fun onCompleteBtnClickListener(orderId: Int, token: String)
+        fun onCancelBtnClickListener(orderId: Int, token: String)
     }
 }

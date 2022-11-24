@@ -1,4 +1,4 @@
-package com.ssafy.silencelake.activity
+package com.ssafy.silencelake.activity.main
 
 import android.app.NotificationChannel
 import android.app.NotificationManager
@@ -8,12 +8,12 @@ import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.annotation.RequiresApi
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.activity.login.LoginActivity
 import com.ssafy.silencelake.api.FirebaseTokenApi
 import com.ssafy.silencelake.databinding.ActivityMainBinding
 import com.ssafy.silencelake.fragment.main.home.HomeFragment

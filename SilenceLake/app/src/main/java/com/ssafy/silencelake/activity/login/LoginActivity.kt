@@ -1,9 +1,10 @@
-package com.ssafy.silencelake.activity
+package com.ssafy.silencelake.activity.login
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ssafy.silencelake.R
+import com.ssafy.silencelake.activity.MainActivity
 import com.ssafy.silencelake.fragment.login.JoinFragment
 import com.ssafy.silencelake.fragment.login.LoginFragment
 import com.ssafy.silencelake.util.ApplicationClass.Companion.sharedPreferencesUtil

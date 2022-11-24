@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import com.ssafy.silencelake.activity.admin.AdminActivity
-import com.ssafy.silencelake.activity.LoginActivity
+import com.ssafy.silencelake.activity.login.LoginActivity
 import com.ssafy.silencelake.databinding.FragmentLoginBinding
 import com.ssafy.silencelake.dto.UserDto
 import com.ssafy.silencelake.repository.UserRepository
