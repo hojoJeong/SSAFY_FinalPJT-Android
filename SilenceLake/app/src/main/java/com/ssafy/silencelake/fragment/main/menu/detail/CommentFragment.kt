@@ -14,6 +14,7 @@ import com.ssafy.silencelake.databinding.FragmentCommentBinding
 import com.ssafy.silencelake.dto.CommentDto
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
 import com.ssafy.silencelake.util.SharedPreferencesUtil
+import com.ssafy.silencelake.util.showSnackbar
 
 class CommentFragment : Fragment() {
     private lateinit var binding: FragmentCommentBinding
@@ -67,7 +68,7 @@ class CommentFragment : Fragment() {
         binding.ivInsertComment.setOnClickListener {
             val contents = binding.etvCommentCommentfg.text.toString()
             if (contents.isEmpty()) {
-                Toast.makeText(requireContext(), "댓글을 입력해주세요", Toast.LENGTH_SHORT).show()
+                binding.root.showSnackbar("댓글을 입력해주세요")
             } else {
                 val userId = SharedPreferencesUtil(requireContext()).getUser().id
                 val productId = commentViewModel.productId

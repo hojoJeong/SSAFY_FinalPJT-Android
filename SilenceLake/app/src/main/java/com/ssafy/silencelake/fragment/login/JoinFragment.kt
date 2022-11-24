@@ -18,6 +18,7 @@ import com.ssafy.silencelake.databinding.FragmentJoinBinding
 import com.ssafy.silencelake.dto.UserDto
 import com.ssafy.silencelake.repository.UserRepository
 import com.ssafy.silencelake.util.RetrofitCallback
+import com.ssafy.silencelake.util.showSnackbar
 
 private const val TAG = "JoinFragment_싸피"
 
@@ -72,7 +73,7 @@ class JoinFragment : Fragment() {
                         UserRepository.signUpUser(user, SignUpCallback())
                     }
                 } else {
-                    Toast.makeText(context, "중복 확인이 필요한 아이디", Toast.LENGTH_SHORT).show()
+                    binding.root.showSnackbar("중복 확인이 필요한 아이디")
                 }
             }
         }
@@ -89,12 +90,12 @@ class JoinFragment : Fragment() {
 
         override fun onSuccess(code: Int, responseData: Boolean) {
             if (responseData) {
-                Toast.makeText(context, "이미 사용중인 아이디 입니다.", Toast.LENGTH_SHORT).show()
+                binding.root.showSnackbar("이미 사용중인 아이디 입니다.")
                 checkedId = false
                 binding.checkboxDuplicateJoin.backgroundTintList =
                     ColorStateList.valueOf(Color.LTGRAY)
             } else {
-                Toast.makeText(context, "사용 가능한 아이디 입니다.", Toast.LENGTH_SHORT).show()
+                binding.root.showSnackbar("사용 가능한 아이디 입니다.")
                 checkedId = true
                 binding.checkboxDuplicateJoin.backgroundTintList =
                     ColorStateList.valueOf(context!!.resources.getColor(R.color.primary, null))
@@ -112,13 +113,12 @@ class JoinFragment : Fragment() {
         }
 
         override fun onSuccess(code: Int, responseData: Boolean) {
-            Toast.makeText(context, "회원가입 성공!", Toast.LENGTH_SHORT).show()
+            binding.root.showSnackbar("회원가입 성공!")
             loginActivity.openFragment(1)
         }
 
         override fun onFailure(code: Int) {
             Log.d(TAG, "onFailure: $code")
         }
-
     }
 }
