@@ -89,6 +89,7 @@
         android:backgroundTint="@color/lightbrown"
         >
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layout_container_nfc"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="24dp"

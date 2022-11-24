@@ -25,4 +25,7 @@
     <string name="hint_comment">댓글을 입력하세요</string>
     <string name="title_admin">관리자 페이지</string>
     <string name="daily_revanue">금일 매출</string>
+    <string name="wifi_password">Wifi 비밀번호 : *23#</string>
+    <string name="toilet_password">화장실 비밀번호 : 0318</string>
+    <string name="request_dialog">테이블에 부착된 NFC를 태그해주세요</string>
 </resources>

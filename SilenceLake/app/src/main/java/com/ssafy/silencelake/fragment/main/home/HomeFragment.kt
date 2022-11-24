@@ -1,17 +1,15 @@
 package com.ssafy.silencelake.fragment.main.home
 
-import android.content.ContentValues.TAG
 import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.FrameLayout
 import android.widget.ImageView
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.ssafy.hw_android_network_05_hojojeong.util.CustomDialog
 import com.ssafy.silencelake.R
 import com.ssafy.silencelake.databinding.FragmentHomeBinding
 import com.ssafy.silencelake.dto.ProductDto
@@ -19,14 +17,8 @@ import com.ssafy.silencelake.fragment.main.menu.ProductMenuViewModel
 import com.ssafy.silencelake.fragment.main.menu.detail.ProductDetailFragment
 import com.ssafy.silencelake.fragment.main.menu.shoppinglist.ShoppingListViewModel
 import com.ssafy.silencelake.util.ApplicationClass
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import pyxis.uzuki.live.rollingbanner.RollingViewPagerAdapter
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -34,6 +26,7 @@ class HomeFragment : Fragment() {
     private var bannerItemList = arrayListOf<String>()
     private val productMenuViewModel by activityViewModels<ProductMenuViewModel>()
     private val shoppingListViewModel by activityViewModels<ShoppingListViewModel>()
+    private val nfcStateViewModel by activityViewModels<NFCStateViewModel>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -52,6 +45,7 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         initData()
         initBanner()
+        startNFCTag()
     }
 
     private fun initData() {
@@ -113,6 +107,14 @@ class HomeFragment : Fragment() {
             )
             bannerImg.setImageResource(resId)
             return view
+        }
+    }
+
+    private fun startNFCTag() {
+        binding.layoutContainerNfc.setOnClickListener {
+            nfcStateViewModel.customDialog.showCafeInfo(false)
+            nfcStateViewModel.customDialog.showDialog()
+            nfcStateViewModel.customDialog.confirmBtnEventListener()
         }
     }
 }
